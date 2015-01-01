@@ -66,7 +66,7 @@ class Hooks
 	 *
 	 * @return EngineCollection
 	 */
-	static public function lazy_get_render_engines()
+	static public function lazy_get_engines()
 	{
 		return self::get_engines();
 	}
@@ -76,7 +76,7 @@ class Hooks
 	 *
 	 * @return TemplateResolver
 	 */
-	static public function lazy_get_render_template_resolver()
+	static public function lazy_get_template_resolver()
 	{
 		return clone self::get_template_resolver();
 	}

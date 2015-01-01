@@ -15,7 +15,7 @@ $hooks = __NAMESPACE__ . '\Hooks::';
 
 return [
 
-	'ICanBoogie\Core::lazy_get_render_engines' => $hooks . 'lazy_get_render_engines',
-	'ICanBoogie\Core::lazy_get_render_template_resolver' => $hooks . 'lazy_get_render_template_resolver'
+	'ICanBoogie\Core::lazy_get_render_engines' => $hooks . 'lazy_get_engines',
+	'ICanBoogie\Core::lazy_get_render_template_resolver' => $hooks . 'lazy_get_template_resolver'
 
 ];
