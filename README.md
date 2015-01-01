@@ -1,9 +1,43 @@
 # Render
 
-This library provides an API to render and decorate objects.
+An API to render templates.
 
-The goal of this library is to provide a simply API to render and decorate any kind of object,
-providing a renderer or a decorator is defined to do so.
+
+
+
+
+## Template engines
+
+Templates can be rendered with a variety of template engines. A shared collection is
+provided through the `$app->render_engines` lazy getter. When it is first created the
+`EngineCollection::alter` event of class [EngineCollection\AlterEvent][] is fired. The package
+provides only an engine to render PHP templates, but event hooks may use this event to add others.
+
+The following example demonstrate how a Patron engine can be added to handle `.patron` extensions:
+
+```php
+<?php
+
+use ICanBoogie\Render\EngineCollection;
+
+$app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
+
+	$target['.patron'] = 'Icybee\Patron\ViewEngine';
+
+});
+```
+
+
+
+
+
+## Template resolver
+
+A template resolver tries to match a template name with an actual template file. A set of path
+can be defined for the resolver to search in.
+
+The `TemplateResolver::alter` event of class [TemplateResolver\AlterEvent][] is fired on the 
+shared template resolver when it is created. Event hooks may use this event to add templates paths.
 
 
 
@@ -13,9 +47,8 @@ providing a renderer or a decorator is defined to do so.
 
 The package support ICanBoogie's auto-config and provides the following:
 
-- A synthesizer for the config "renderers".
-- A lazy getter for the `ICanBoogie\Core::$renderer` property.
-- A callback for the `ICanBoogie\Core::render()` method.
+- A lazy getter for the `ICanBoogie\Core::$render_engines` property.
+- A lazy getter for the `ICanBoogie\Core::$render_template_resolver` property.
 
 
 

@@ -18,17 +18,16 @@
 		"source": "https://github.com/ICanBoogie/Render"
 	},
 	"require": {
-		"php": ">=5.4.0"
+		"php": ">=5.4.0",
+		"icanboogie/prototype": "~2.0"
 	},
 	"autoload": {
-		"classmap": [ "lib/" ]
+		"psr-4": {
+			"ICanBoogie\\Render\\": "lib/"
+		}
 	},
 	"extra": {
 		"icanboogie": {
-			"config-constructor": {
-				"renderers": "ICanBoogie\\Render\\Hooks::synthesize_config"
-			},
-
 			"config-path": "config/"
 		}
 	}

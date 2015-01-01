@@ -11,11 +11,9 @@
 
 namespace ICanBoogie\Render;
 
-$hooks = __NAMESPACE__ . '\Hooks::';
+use ICanBoogie\OffsetNotDefined;
 
-return [
+class EngineNotDefined extends OffsetNotDefined implements Exception
+{
 
-	'ICanBoogie\Core::lazy_get_render_engines' => $hooks . 'lazy_get_render_engines',
-	'ICanBoogie\Core::lazy_get_render_template_resolver' => $hooks . 'lazy_get_render_template_resolver'
-
-];
+}

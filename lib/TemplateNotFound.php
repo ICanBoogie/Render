@@ -11,11 +11,12 @@
 
 namespace ICanBoogie\Render;
 
-$hooks = __NAMESPACE__ . '\Hooks::';
+/**
+ * Exception throw when a template cannot be found.
+ *
+ * @package ICanBoogie\Render
+ */
+class TemplateNotFound extends \LogicException implements Exception
+{
 
-return [
-
-	'ICanBoogie\Core::lazy_get_render_engines' => $hooks . 'lazy_get_render_engines',
-	'ICanBoogie\Core::lazy_get_render_template_resolver' => $hooks . 'lazy_get_render_template_resolver'
-
-];
+}
