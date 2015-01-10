@@ -57,6 +57,18 @@ class Hooks
 		return $template_resolver;
 	}
 
+	static public function get_renderer()
+	{
+		static $renderer;
+
+		if (!$renderer)
+		{
+			$renderer = new Renderer(self::get_template_resolver(), self::get_engines());
+		}
+
+		return $renderer;
+	}
+
 	/*
 	 * Prototypes
 	 */
