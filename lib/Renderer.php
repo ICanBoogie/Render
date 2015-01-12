@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the ICanBoogie package.
+ *
+ * (c) Olivier Laviale <olivier.laviale@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ICanBoogie\Render;
 
 use ICanBoogie\ActiveRecord\Query;
@@ -34,7 +43,7 @@ class Renderer
 
 		if (isset($options['partial']))
 		{
-			$template = '_' . $options['partial']; // TODO: articles/_partial
+			$template = TemplateName::from($options['partial'])->as_partial;
 			$template_pathname = $this->template_resolver->resolve($template, $this->engines);
 
 			if (!$template_pathname)
@@ -70,7 +79,7 @@ class Renderer
 		{
 			$additional_options['content'] = $target_or_options;
 			$additional_options['locals']['this'] = $target_or_options;
-			$additional_options['template'] = $this->resolve_template($target_or_options);
+			$additional_options['partial'] = $this->resolve_template($target_or_options);
 
 			if ($target_or_options instanceof Query)
 			{
@@ -89,11 +98,6 @@ class Renderer
 
 	protected function resolve_template($content)
 	{
-		if ($content instanceof Query)
-		{
-			return $content->model->id . '/index';
-		}
-
-		var_dump($content); exit;
+		return TemplateName::from($content);
 	}
 }

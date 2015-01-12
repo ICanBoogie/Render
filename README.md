@@ -116,3 +116,10 @@ clean the directory with the `make clean` command.
 ## License
 
 This package is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
+
+
+
+
+
+[EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[TemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html
