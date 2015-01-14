@@ -26,5 +26,5 @@ interface EngineInterface
 	 *
 	 * @return mixed
 	 */
-	public function __invoke($template_pathname, $thisArg, array $variables, $options=[]);
+	public function __invoke($template_pathname, $thisArg, array $variables, array $options=[]);
 }
