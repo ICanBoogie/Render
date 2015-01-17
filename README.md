@@ -27,6 +27,19 @@ $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollecti
 });
 ```
 
+The following example demonstrates how to replace the engine collection with a decorator:
+
+```php
+<?php
+use ICanBoogie\Render\EngineCollection;
+
+$app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
+
+	$event->instance = new MyEngineCollectionDecorator($event->instance);
+
+});
+```
+
 
 
 
@@ -37,8 +50,37 @@ A template resolver tries to match a template name with an actual template file.
 can be defined for the resolver to search in.
 
 The `TemplateResolver::alter` event of class [TemplateResolver\AlterEvent][] is fired on the 
-shared template resolver when it is created. Event hooks may use this event to add templates paths.
+shared template resolver when it is created. Event hooks may use this event to add templates paths
+or replace the template resolver.
 
+The following example demonstrates how to add template paths:
+
+```php
+<?php
+
+use ICanBoogie\Render\TemplateResolver;
+
+$app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
+
+	$target->add_paths(__DIR__ . '/my/own/path);
+
+};
+```
+
+The following example demonstrates how to replace the template resolver with a decorator:
+
+**Note:** The decorator must implement the [TemplateResolverInterface][].
+
+```
+<?php
+use ICanBoogie\Render\TemplateResolver;
+
+$app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
+
+	$event->instance = new MyTemplateResolverDecorator($event->instance);
+
+};
+```
 
 
 
@@ -123,3 +165,4 @@ This package is licensed under the New BSD License - See the [LICENSE](LICENSE) 
 
 [EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
 [TemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[TemplateResolverInterface]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolverInterface.AlterEvent.html
