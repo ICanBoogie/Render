@@ -31,6 +31,7 @@ The following example demonstrates how to replace the engine collection with a d
 
 ```php
 <?php
+
 use ICanBoogie\Render\EngineCollection;
 
 $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
@@ -71,8 +72,9 @@ The following example demonstrates how to replace the template resolver with a d
 
 **Note:** The decorator must implement the [TemplateResolverInterface][].
 
-```
+```php
 <?php
+
 use ICanBoogie\Render\TemplateResolver;
 
 $app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
