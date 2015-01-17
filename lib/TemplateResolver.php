@@ -11,58 +11,24 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\GetterTrait;
-
 /**
  * Resolve templates pathname.
  *
  * @package ICanBoogie\Render
- *
- * @property-read array $tries The filename tried during the last resolving.
  */
-class TemplateResolver
+class TemplateResolver implements TemplateResolverInterface
 {
-	use GetterTrait;
-
-	private $paths = [];
-
-	protected $tries = [];
-
-	protected function get_tries()
-	{
-		return $this->tries;
-	}
+	protected $paths = [];
 
 	/**
-	 * Return the pathname to the matching template.
-	 *
-	 * @param string $name The base name of the template.
-	 * @param EngineCollectionInterface $engines The available engine.
-	 *
-	 * @return string The pathname to the matching template or `null` if none match.
+	 * @inheritdoc
 	 */
-	public function __invoke($name, EngineCollectionInterface $engines)
+	public function resolve($name, array $extensions, &$tries = [])
 	{
-		return $this->resolve($name, $engines);
-	}
-
-	/**
-	 * Return the pathname to the matching template.
-	 *
-	 * @param string $name The base name of the template.
-	 * @param EngineCollectionInterface $engines The available engine.
-	 *
-	 * @return string The pathname to the matching template or `null` if none match.
-	 */
-	public function resolve($name, EngineCollectionInterface $engines)
-	{
-		$this->tries = [];
 		$dirname = dirname($name);
 		$basename = basename($name);
 
-		$extensions = $engines->extensions;
-
-		foreach (array_keys(array_reverse($this->paths)) as $path)
+		foreach ($this->get_paths() as $path)
 		{
 			foreach ($extensions as $extension)
 			{
@@ -76,7 +42,7 @@ class TemplateResolver
 				$filename = $filename . $extension;
 				$pathname = $path . $filename;
 
-				$this->tries[] = $pathname;
+				$tries[] = $pathname;
 
 				if (file_exists($pathname))
 				{
@@ -87,27 +53,28 @@ class TemplateResolver
 	}
 
 	/**
-	 * Add a path to search templates in.
-	 *
-	 * Note: The path is discarded if it cannot be resolved with `realpath()`.
-	 *
-	 * @param $path
-	 * @param int $weight
-	 *
-	 * @return string|void The real path, or `null` if the path was not added.
+	 * @inheritdoc
 	 */
-	public function add_path($path, $weight=0)
+	public function add_path($path, $weight = 0)
 	{
 		$path = realpath($path);
 
 		if (!$path)
 		{
-			return;
+			return false;
 		}
 
 		$path = $path . DIRECTORY_SEPARATOR;
 		$this->paths[$path] = $weight;
 
 		return $path;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function get_paths()
+	{
+		return array_keys(array_reverse($this->paths));
 	}
 }

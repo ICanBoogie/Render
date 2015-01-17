@@ -30,7 +30,7 @@ class Renderer
 	 */
 	protected $template_resolver;
 
-	public function __construct(TemplateResolver $template_resolver, EngineCollection $engines)
+	public function __construct(TemplateResolverInterface $template_resolver, EngineCollection $engines)
 	{
 		$this->original_template_resolver = $template_resolver;
 		$this->engines = $engines;
@@ -43,13 +43,14 @@ class Renderer
 
 		if (isset($options['partial']))
 		{
+			$tries = [];
 			$template = TemplateName::from($options['partial'])->as_partial;
-			$template_pathname = $this->template_resolver->resolve($template, $this->engines);
+			$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tries);
 
 			if (!$template_pathname)
 			{
 				$type_name = 'partial';
-				$tries = implode("\n", array_map(function($v) { return "- $v"; }, $this->template_resolver->tries));
+				$tries = implode("\n", array_map(function($v) { return "- $v"; }, $tries));
 
 				throw new TemplateNotFound("There is no $type_name matching <q>$template</q>, tried the following files:\n\n" . $tries);
 			}
@@ -57,13 +58,14 @@ class Renderer
 			return $this->engines->render($template_pathname, null, $options['locals']);
 		}
 
+		$tries = [];
 		$template = $options['template'];
-		$template_pathname = $this->template_resolver->resolve($template, $this->engines);
+		$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tries);
 
 		if (!$template_pathname)
 		{
 			$type_name = 'template';
-			$tries = implode("\n", array_map(function($v) { return "- $v"; }, $this->template_resolver->tries));
+			$tries = implode("\n", array_map(function($v) { return "- $v"; }, $tries));
 
 			throw new TemplateNotFound("There is no $type_name matching <q>$template</q>, tried the following files:\n\n" . $tries);
 		}
