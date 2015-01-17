@@ -17,14 +17,23 @@ use ICanBoogie\Render\TemplateResolver;
 /**
  * Event class for the `ICanBoogie\Render\TemplateResolver::alter` event.
  *
- * Event hooks may use this event to alter the engine collection.
+ * Event hooks may use this event to alter the engine collection, or replace it.
  *
- * @package ICanBoogie\Render\TemplateResolver
+ * @package ICanBoogie\Render
  */
 class AlterEvent extends Event
 {
-	public function __construct(TemplateResolver $target)
+	/**
+	 * Reference to the target instance.
+	 *
+	 * @var TemplateResolver
+	 */
+	public $instance;
+
+	public function __construct(TemplateResolver &$target)
 	{
+		$this->instance = &$target;
+
 		parent::__construct($target, 'alter');
 	}
 }
