@@ -45,7 +45,7 @@ trait EngineCollectionTrait
 	 *
 	 * @return mixed
 	 *
-	 * @throws EngineNotAvailable if there is no engine available to render the template.
+	 * @throws EngineNotAvailable when there is no engine available to render the template.
 	 */
 	public function render($template_pathname, $thisArg, $variables, array $options=[])
 	{
