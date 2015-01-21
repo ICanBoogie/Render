@@ -21,7 +21,7 @@ class PHPEngine implements EngineInterface
 	/**
 	 * @inheritdoc
 	 */
-	public function __invoke($template_pathname, $thisArg, array $variables, array $options=[])
+	public function render($template_pathname, $thisArg, array $variables, array $options=[])
 	{
 		$f = function($template_pathname, $variables) {
 

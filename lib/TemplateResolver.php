@@ -50,6 +50,8 @@ class TemplateResolver implements TemplateResolverInterface
 				}
 			}
 		}
+
+		return false;
 	}
 
 	/**

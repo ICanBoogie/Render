@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the ICanBoogie package.
+ *
+ * (c) Olivier Laviale <olivier.laviale@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ICanBoogie\Render;
 
 /**
@@ -56,6 +65,6 @@ trait EngineCollectionTrait
 			throw new EngineNotAvailable("There is no engine available to render template $template_pathname.");
 		}
 
-		return $engine($template_pathname, $thisArg, $variables, $options);
+		return $engine->render($template_pathname, $thisArg, $variables, $options);
 	}
 }

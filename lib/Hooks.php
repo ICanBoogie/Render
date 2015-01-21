@@ -16,7 +16,7 @@ use ICanBoogie\Core;
 class Hooks
 {
 	/**
-	 * Return the available template engines.
+	 * Returns a shared engine collection.
 	 *
 	 * @return EngineCollection
 	 */
@@ -39,7 +39,7 @@ class Hooks
 	}
 
 	/**
-	 * Return the template resolver.
+	 * Returns a shared template resolver.
 	 *
 	 * @return TemplateResolver
 	 */
@@ -57,6 +57,15 @@ class Hooks
 		return $template_resolver;
 	}
 
+	/**
+	 * Returns a shared renderer.
+	 *
+	 * The renderer is created with the shared template resolver and the shared engine collection
+	 * respectively provided by the {@link get_template_resolver()} and {@link get_engines()}
+	 * functions.
+	 *
+	 * @return Renderer
+	 */
 	static public function get_renderer()
 	{
 		static $renderer;
@@ -74,7 +83,7 @@ class Hooks
 	 */
 
 	/**
-	 * Return the shared engine collection.
+	 * Returns the shared engine collection.
 	 *
 	 * @return EngineCollection
 	 */
@@ -84,7 +93,7 @@ class Hooks
 	}
 
 	/**
-	 * Return a clone of the shared template resolver.
+	 * Returns a clone of the shared template resolver.
 	 *
 	 * @return TemplateResolver
 	 */

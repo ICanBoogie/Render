@@ -20,6 +20,8 @@ use ICanBoogie\Render\EngineCollectionInterface;
  * Event hooks may use this event to alter the engine collection, or replace it.
  *
  * @package ICanBoogie\Render
+ *
+ * @property-read EngineCollectionInterface $instance
  */
 class AlterEvent extends Event
 {
@@ -28,12 +30,32 @@ class AlterEvent extends Event
 	 *
 	 * @var EngineCollectionInterface
 	 */
-	public $instance;
+	private $instance;
 
 	public function __construct(EngineCollectionInterface &$target)
 	{
 		$this->instance = &$target;
 
 		parent::__construct($target, 'alter');
+	}
+
+	public function __get($property)
+	{
+		if ($property == 'instance')
+		{
+			return $this->instance;
+		}
+
+		return parent::__get($property);
+	}
+
+	/**
+	 * Replaces the instance.
+	 *
+	 * @param EngineCollectionInterface $engines
+	 */
+	public function replace_with(EngineCollectionInterface $engines)
+	{
+		$this->instance = $engines;
 	}
 }

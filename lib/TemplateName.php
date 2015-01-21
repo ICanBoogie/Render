@@ -33,6 +33,11 @@ class TemplateName
 
 	static private $instances = [];
 
+	/**
+	 * @param string|TemplateName $source
+	 *
+	 * @return TemplateName
+	 */
 	static public function from($source)
 	{
 		if ($source instanceof self)
@@ -56,7 +61,7 @@ class TemplateName
 	}
 
 	/**
-	 * Normalize a template name by removing any known prefix.
+	 * Normalizes a template name by removing any known prefix.
 	 *
 	 * @param string $name
 	 *
@@ -82,23 +87,38 @@ class TemplateName
 
 	private $name;
 
+	/**
+	 * Returns the name as template name.
+	 *
+	 * @return string
+	 */
 	protected function get_as_template()
 	{
 		return $this->name;
 	}
 
+	/**
+	 * Returns the name as partial name.
+	 *
+	 * @return string
+	 */
 	protected function get_as_partial()
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
 	}
 
+	/**
+	 * Returns the name as layout name.
+	 *
+	 * @return string
+	 */
 	protected function get_as_layout()
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
 	}
 
 	/**
-	 * Return the template name with the specified prefix.
+	 * Returns the template name with the specified prefix.
 	 *
 	 * @param string $prefix
 	 *
@@ -126,11 +146,21 @@ class TemplateName
 		return $name;
 	}
 
+	/**
+	 * Initializes the {@link $name} property.
+	 *
+	 * @param string $name
+	 */
 	protected function __construct($name)
 	{
 		$this->name = (string) $name;
 	}
 
+	/**
+	 * Returns the {@link $name} property.
+	 *
+	 * @return string
+	 */
 	public function __toString()
 	{
 		return $this->name;

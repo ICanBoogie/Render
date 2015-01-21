@@ -25,7 +25,7 @@ interface TemplateResolverInterface
 	 * @param array $extensions The supported extensions.
 	 * @param array $tries Path name tried.
 	 *
-	 * @return string The pathname to the matching template or `null` if none match.
+	 * @return string|false The pathname to the matching template or `false` if none match.
 	 */
 	public function resolve($name, array $extensions, &$tries = []);
 

@@ -37,7 +37,7 @@ class EngineCollection implements EngineCollectionInterface
 
 	private $instances;
 
-	public function __construct(array $engines)
+	public function __construct(array $engines=[])
 	{
 		foreach ($engines as $extension => $engine)
 		{
@@ -65,8 +65,14 @@ class EngineCollection implements EngineCollectionInterface
 
 		if (empty($this->instances[$extension]))
 		{
-			$class = $this->engines[$extension];
-			$this->instances[$extension] = new $class;
+			$instance = $this->engines[$extension];
+
+			if (is_string($instance))
+			{
+				$instance = new $instance;
+			}
+
+			$this->instances[$extension] = $instance;
 		}
 
 		return $this->instances[$extension];
