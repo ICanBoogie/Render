@@ -49,10 +49,7 @@ class Renderer
 
 			if (!$template_pathname)
 			{
-				$type_name = 'partial';
-				$tries = implode("\n", array_map(function($v) { return "- $v"; }, $tries));
-
-				throw new TemplateNotFound("There is no $type_name matching <q>$template</q>, tried the following files:\n\n" . $tries);
+				throw new TemplateNotFound("There is no partial matching <q>$template</q>.", $tries);
 			}
 
 			return $this->engines->render($template_pathname, null, $options['locals']);
@@ -64,10 +61,7 @@ class Renderer
 
 		if (!$template_pathname)
 		{
-			$type_name = 'template';
-			$tries = implode("\n", array_map(function($v) { return "- $v"; }, $tries));
-
-			throw new TemplateNotFound("There is no $type_name matching <q>$template</q>, tried the following files:\n\n" . $tries);
+			throw new TemplateNotFound("There is no template matching <q>$template</q>.", $tries);
 		}
 
 		return $this->engines->render($template_pathname, $options['content'], $options['locals']);

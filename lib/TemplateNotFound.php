@@ -11,12 +11,36 @@
 
 namespace ICanBoogie\Render;
 
+use ICanBoogie\GetterTrait;
+
 /**
  * Exception throw when a template cannot be found.
  *
  * @package ICanBoogie\Render
+ *
+ * @property-read array $tries The files that were tried.
  */
 class TemplateNotFound extends \LogicException implements Exception
 {
+    use GetterTrait;
 
+    private $tries;
+
+    protected function get_tries()
+    {
+        return $this->tries;
+    }
+
+    public function __construct($message, array $tries, $code = 404, \Exception $exception = null)
+    {
+        $this->tries = $tries;
+
+        if ($tries)
+        {
+            $tries = implode("\n", array_map(function ($v) { return "- $v"; }, $tries));
+            $message .= " The following files were tried:\n\n" . $tries;
+        }
+
+        parent::__construct($message, $code, $exception);
+    }
 }
