@@ -118,6 +118,17 @@ $app->events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
 
 
 
+## Helpers
+
+The following helpers are defined:
+
+- `get_engines`: Returns a shared engine collection.
+- `get_template_resolver`: Returns a shared template resolver.
+- `get_renderer`: Returns a shared renderer.
+
+
+
+
 
 ----------
 
