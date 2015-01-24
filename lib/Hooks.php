@@ -71,6 +71,8 @@ class Hooks
 		if (!$renderer)
 		{
 			$renderer = new Renderer(self::get_template_resolver(), self::get_engines());
+
+			new Renderer\AlterEvent($renderer);
 		}
 
 		return $renderer;
