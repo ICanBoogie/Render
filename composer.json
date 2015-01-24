@@ -26,10 +26,5 @@
 		"psr-4": {
 			"ICanBoogie\\Render\\": "lib/"
 		}
-	},
-	"extra": {
-		"icanboogie": {
-			"config-path": "config/"
-		}
 	}
 }

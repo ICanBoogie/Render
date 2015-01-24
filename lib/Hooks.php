@@ -11,8 +11,6 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\Core;
-
 class Hooks
 {
 	/**
