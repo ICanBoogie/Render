@@ -6,12 +6,15 @@ An API to render templates.
 
 
 
-## Template engines
+## Render engines
 
 Templates can be rendered with a variety of template engines. A shared collection is
-provided through the `$app->render_engines` lazy getter. When it is first created the
-`EngineCollection::alter` event of class [EngineCollection\AlterEvent][] is fired. The package
-provides only an engine to render PHP templates, but event hooks may use this event to add others.
+provided by the `get_engines` helper. When it is first created the `EngineCollection::alter` event of
+class [EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines or replace
+the engine collection altogether.
+
+**Note:** Currently, the package only provides an engine to render PHP templates, but others may provide more, for
+instance the [Patron engine][].
 
 The following example demonstrate how a Patron engine can be added to handle `.patron` extensions:
 
@@ -36,7 +39,7 @@ use ICanBoogie\Render\EngineCollection;
 
 $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->replace(new MyEngineCollectionDecorator($event->instance));
+	$event->replace_with(new MyEngineCollectionDecorator($event->instance));
 
 });
 ```
@@ -79,7 +82,7 @@ use ICanBoogie\Render\TemplateResolver;
 
 $app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
 
-	$event->replace(new MyTemplateResolverDecorator($event->instance));
+	$event->replace_with(new MyTemplateResolverDecorator($event->instance));
 
 };
 ```
@@ -88,12 +91,29 @@ $app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolv
 
 
 
-## Support for ICanBoogie's auto-config
+### Renderer
 
-The package support ICanBoogie's auto-config and provides the following:
+[Renderer][] instances are used to render templates with subjects and options. They use an engine collection and
+a template resolver to find suitable templates and render them.
 
-- A lazy getter for the `ICanBoogie\Core::$render_engines` property.
-- A lazy getter for the `ICanBoogie\Core::$render_template_resolver` property.
+A shared renderer is provided by the `get_renderer()` helper. When it is first created the
+`Renderer::alter` event of class [Renderer\AlterEvent][] is fired. Event hooks may use this event the alter the
+renderer or replace it.
+
+The following example demonstrate how to replace the a renderer:
+
+```php
+<?php
+
+use ICanBoogie\Render\Renderer;
+
+$app->events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
+
+	$event->replace_with(new MyRenderer($event->instance->engines, $event->instance->template_resolver));
+
+});
+```
+
 
 
 
@@ -167,5 +187,7 @@ This package is licensed under the New BSD License - See the [LICENSE](LICENSE) 
 
 
 [EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[Patron engine]: https://github.com/Icybee/PatronViewSupport
+[Renderer\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
 [TemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html
 [TemplateResolverInterface]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolverInterface.AlterEvent.html
