@@ -15,16 +15,10 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 {
 	public function test_resolve()
 	{
-		$engines = new EngineCollection([
-
-			'.php' => 'ICanBoogie\Render\PHPEngine'
-
-		]);
-
-		$tr = new TemplateResolver($engines);
+		$tr = new TemplateResolver;
 		$ds = DIRECTORY_SEPARATOR;
 
-		$extensions = $engines->extensions;
+		$extensions = [ '.patron', '.php'];
 
 		$tries = [];
 		$this->assertFalse($tr->resolve('posts/index', $extensions, $tries));
@@ -36,6 +30,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
+			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.patron",
 			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.php"
 
 		], $tries);
@@ -46,7 +41,9 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
+			__DIR__ . "{$ds}templates{$ds}custom{$ds}posts{$ds}index.patron",
 			__DIR__ . "{$ds}templates{$ds}custom{$ds}posts{$ds}index.php",
+			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.patron",
 			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.php"
 
 		], $tries);
@@ -57,6 +54,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
+			__DIR__ . "{$ds}templates{$ds}all{$ds}posts{$ds}index.patron",
 			__DIR__ . "{$ds}templates{$ds}all{$ds}posts{$ds}index.php",
 
 		], $tries);
