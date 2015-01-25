@@ -13,6 +13,13 @@ namespace ICanBoogie\Render;
 
 class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 {
+	static private $templates_root;
+
+	static public function setupBeforeClass()
+	{
+		self::$templates_root = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+	}
+
 	public function test_resolve()
 	{
 		$tr = new TemplateResolver;
@@ -30,8 +37,8 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
-			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.patron",
-			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.php"
+			self::$templates_root . "default{$ds}posts{$ds}index.patron",
+			self::$templates_root . "default{$ds}posts{$ds}index.php"
 
 		], $tries);
 
@@ -41,22 +48,42 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
-			__DIR__ . "{$ds}templates{$ds}custom{$ds}posts{$ds}index.patron",
-			__DIR__ . "{$ds}templates{$ds}custom{$ds}posts{$ds}index.php",
-			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.patron",
-			__DIR__ . "{$ds}templates{$ds}default{$ds}posts{$ds}index.php"
+			self::$templates_root . "custom{$ds}posts{$ds}index.patron",
+			self::$templates_root . "custom{$ds}posts{$ds}index.php",
+			self::$templates_root . "default{$ds}posts{$ds}index.patron",
+			self::$templates_root . "default{$ds}posts{$ds}index.php"
 
 		], $tries);
 
 		$tr->add_path(__DIR__ . '/templates/all');
 		$tries = [];
-		$this->assertEquals(__DIR__ . "{$ds}templates{$ds}all{$ds}posts{$ds}index.php", $tr->resolve('posts/index', $extensions, $tries));
+		$this->assertEquals(self::$templates_root . "all{$ds}posts{$ds}index.php", $tr->resolve('posts/index', $extensions, $tries));
 		$this->assertNotEmpty($tries);
 		$this->assertEquals([
 
-			__DIR__ . "{$ds}templates{$ds}all{$ds}posts{$ds}index.patron",
-			__DIR__ . "{$ds}templates{$ds}all{$ds}posts{$ds}index.php",
+			self::$templates_root . "all{$ds}posts{$ds}index.patron",
+			self::$templates_root . "all{$ds}posts{$ds}index.php",
 
 		], $tries);
+	}
+
+	public function test_resolve_with_extension()
+	{
+		$tr = new TemplateResolver;
+		$tr->add_path(self::$templates_root . 'all');
+		$pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
+		$this->assertFalse($pathname);
+		$pathname = $tr->resolve('with-extension.html', [ '.html', '.patron' ]);
+		$this->assertStringEndsWith('with-extension.html', $pathname);
+	}
+
+	public function test_resolve_with_double_extension()
+	{
+		$tr = new TemplateResolver;
+		$tr->add_path(self::$templates_root . 'all');
+		$pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
+		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
+		$pathname = $tr->resolve('with-double-extension.html', [ '.html', '.patron' ]);
+		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
 	}
 }

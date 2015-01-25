@@ -25,6 +25,14 @@ class TemplateResolver implements TemplateResolverInterface
 	 */
 	public function resolve($name, array $extensions, &$tries = [])
 	{
+		$original_extension = pathinfo($name, PATHINFO_EXTENSION);
+
+		if ($original_extension)
+		{
+			$extensions = array_merge([ '' ],  $extensions);
+			$original_extension = '.' . $original_extension;
+		}
+
 		$dirname = dirname($name);
 		$basename = basename($name);
 
@@ -46,6 +54,11 @@ class TemplateResolver implements TemplateResolverInterface
 
 				if (file_exists($pathname))
 				{
+					if (!$extension && $original_extension && !in_array($original_extension, $extensions))
+					{
+						continue;
+					}
+
 					return $pathname;
 				}
 			}
