@@ -19,8 +19,8 @@
 	},
 	"require": {
 		"php": ">=5.4.0",
-		"icanboogie/prototype": "2.0.x",
-		"icanboogie/event": "1.2.x"
+		"icanboogie/prototype": "~2.1.0",
+		"icanboogie/event": "~1.3.0"
 	},
 	"autoload": {
 		"psr-4": {

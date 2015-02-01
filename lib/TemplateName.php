@@ -11,8 +11,8 @@
 
 namespace ICanBoogie\Render;
 
+use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\ActiveRecord\Query;
-use ICanBoogie\GetterTrait;
 
 /**
  * Representation of a template name.
@@ -25,7 +25,7 @@ use ICanBoogie\GetterTrait;
  */
 class TemplateName
 {
-	use GetterTrait;
+	use AccessorTrait;
 
 	const TEMPLATE_PREFIX_VIEW = '';
 	const TEMPLATE_PREFIX_LAYOUT = '@';

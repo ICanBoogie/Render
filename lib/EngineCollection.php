@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\GetterTrait;
+use ICanBoogie\Accessor\AccessorTrait;
 
 /**
  * An engine collection.
@@ -22,7 +22,7 @@ use ICanBoogie\GetterTrait;
  */
 class EngineCollection implements EngineCollectionInterface
 {
-	use GetterTrait;
+	use AccessorTrait;
 	use EngineCollectionTrait;
 
 	private $engines;

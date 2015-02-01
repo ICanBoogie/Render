@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\GetterTrait;
+use ICanBoogie\Accessor\AccessorTrait;
 
 /**
  * Exception throw when a template cannot be found.
@@ -22,7 +22,7 @@ use ICanBoogie\GetterTrait;
  */
 class TemplateNotFound extends \LogicException implements Exception
 {
-    use GetterTrait;
+    use AccessorTrait;
 
     private $tries;
 
