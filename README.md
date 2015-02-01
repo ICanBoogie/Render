@@ -1,5 +1,12 @@
 # Render
 
+[![Release](https://img.shields.io/github/release/ICanBoogie/Render.svg)](https://github.com/ICanBoogie/Render/releases)
+[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/master.svg)](http://travis-ci.org/ICanBoogie/Render)
+[![HHVM](https://img.shields.io/hhvm/icanboogie/render.svg)](http://hhvm.h4cc.de/package/icanboogie/render)
+[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render/master.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/master.svg)](https://coveralls.io/r/ICanBoogie/Render)
+[![Packagist](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
+
 An API to render templates.
 
 
@@ -182,8 +189,13 @@ The documentation for the complete framework is also available online: <http://i
 ## Testing
 
 The test suite is ran with the `make test` command. [Composer](http://getcomposer.org/) is
-automatically installed as well as all dependencies required to run the suite. You can later
-clean the directory with the `make clean` command.
+automatically installed as well as all the dependencies required to run the suite.
+The directory can later be cleaned with the `make clean` command.
+
+The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
+
+[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/master.svg)](https://travis-ci.org/ICanBoogie/Render)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/master.svg)](https://coveralls.io/r/ICanBoogie/Render)
 
 
 
