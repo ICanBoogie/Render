@@ -109,7 +109,7 @@ class EngineCollectionTest extends \PHPUnit_Framework_TestCase
 		$expected = 'RENDERED';
 
 		$engine_stub = $this
-			->getMockBuilder('ICanBoogie\Render\EngineInterface')
+			->getMockBuilder('ICanBoogie\Render\Engine')
 			->getMock();
 		$engine_stub
 			->expects($this->once())

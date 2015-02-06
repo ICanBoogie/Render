@@ -16,7 +16,7 @@ namespace ICanBoogie\Render;
  *
  * @package ICanBoogie\Render
  */
-interface EngineInterface
+interface Engine
 {
 	/**
 	 * @param string $template_pathname Pathname to the template to render.

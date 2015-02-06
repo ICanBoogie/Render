@@ -16,7 +16,7 @@ namespace ICanBoogie\Render;
  *
  * @package ICanBoogie\Render
  */
-class PHPEngine implements EngineInterface
+class PHPEngine implements Engine
 {
 	/**
 	 * @inheritdoc
