@@ -37,7 +37,7 @@ function get_engines()
 /**
  * Returns a shared template resolver.
  *
- * @return TemplateResolver
+ * @return BasicTemplateResolver
  */
 function get_template_resolver()
 {
@@ -45,7 +45,7 @@ function get_template_resolver()
 
     if (!$template_resolver)
     {
-        $template_resolver = new TemplateResolver;
+        $template_resolver = new BasicTemplateResolver;
 
         new TemplateResolver\AlterEvent($template_resolver);
     }

@@ -22,7 +22,7 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 			->getMockBuilder('ICanBoogie\Render\EngineCollection')
 			->getMock();
 
-		/* @var $template_resolver_stub \ICanBoogie\Render\TemplateResolver */
+		/* @var $template_resolver_stub \ICanBoogie\Render\BasicTemplateResolver */
 		$template_resolver_stub = $this
 			->getMockBuilder('ICanBoogie\Render\TemplateResolver')
 			->getMock();

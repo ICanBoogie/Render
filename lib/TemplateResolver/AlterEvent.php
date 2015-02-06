@@ -12,27 +12,27 @@
 namespace ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Event;
-use ICanBoogie\Render\TemplateResolverInterface;
+use ICanBoogie\Render\TemplateResolver;
 
 /**
- * Event class for the `ICanBoogie\Render\TemplateResolver::alter` event.
+ * Event class for the `ICanBoogie\Render\BasicTemplateResolver::alter` event.
  *
  * Event hooks may use this event to alter the engine collection, or replace it.
  *
  * @package ICanBoogie\Render
  *
- * @property-read TemplateResolverInterface $instance
+ * @property-read TemplateResolver $instance
  */
 class AlterEvent extends Event
 {
 	/**
 	 * Reference to the target instance.
 	 *
-	 * @var TemplateResolverInterface
+	 * @var TemplateResolver
 	 */
 	public $instance;
 
-	public function __construct(TemplateResolverInterface &$target)
+	public function __construct(TemplateResolver &$target)
 	{
 		$this->instance = &$target;
 
@@ -52,9 +52,9 @@ class AlterEvent extends Event
 	/**
 	 * Replaces the instance.
 	 *
-	 * @param TemplateResolverInterface $template_resolver
+	 * @param TemplateResolver $template_resolver
 	 */
-	public function replace_with(TemplateResolverInterface $template_resolver)
+	public function replace_with(TemplateResolver $template_resolver)
 	{
 		$this->instance = $template_resolver;
 	}

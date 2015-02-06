@@ -16,7 +16,7 @@ use ICanBoogie\ActiveRecord\Query;
 class Renderer
 {
 	/**
-	 * @var TemplateResolver
+	 * @var BasicTemplateResolver
 	 */
 	private $original_template_resolver;
 
@@ -26,11 +26,11 @@ class Renderer
 	private $engines;
 
 	/**
-	 * @var TemplateResolver
+	 * @var BasicTemplateResolver
 	 */
 	protected $template_resolver;
 
-	public function __construct(TemplateResolverInterface $template_resolver, EngineCollection $engines)
+	public function __construct(TemplateResolver $template_resolver, EngineCollection $engines)
 	{
 		$this->original_template_resolver = $template_resolver;
 		$this->engines = $engines;

@@ -12,84 +12,39 @@
 namespace ICanBoogie\Render;
 
 /**
- * Resolve templates pathname.
+ * An interface for template resolvers.
  *
  * @package ICanBoogie\Render
  */
-class TemplateResolver implements TemplateResolverInterface
+interface TemplateResolver
 {
-	protected $paths = [];
+	/**
+	 * Returns the pathname to the matching template.
+	 *
+	 * @param string $name The base name of the template.
+	 * @param array $extensions The supported extensions.
+	 * @param array $tries Path name tried.
+	 *
+	 * @return string|false The pathname to the matching template or `false` if none match.
+	 */
+	public function resolve($name, array $extensions, &$tries = []);
 
 	/**
-	 * @inheritdoc
+	 * Adds a path to search templates in.
+	 *
+	 * Note: The path is discarded if it cannot be resolved with `realpath()`.
+	 *
+	 * @param string $path
+	 * @param int $weight
+	 *
+	 * @return string|false The real path, or `false` if the path was not added.
 	 */
-	public function resolve($name, array $extensions, &$tries = [])
-	{
-		$original_extension = pathinfo($name, PATHINFO_EXTENSION);
-
-		if ($original_extension)
-		{
-			$extensions = array_merge([ '' ],  $extensions);
-			$original_extension = '.' . $original_extension;
-		}
-
-		$dirname = dirname($name);
-		$basename = basename($name);
-
-		foreach ($this->get_paths() as $path)
-		{
-			foreach ($extensions as $extension)
-			{
-				$filename = $name;
-
-				if ($dirname && $dirname == basename(dirname($path)))
-				{
-					$filename = $basename;
-				}
-
-				$filename = $filename . $extension;
-				$pathname = $path . $filename;
-
-				$tries[] = $pathname;
-
-				if (file_exists($pathname))
-				{
-					if (!$extension && $original_extension && !in_array($original_extension, $extensions))
-					{
-						continue;
-					}
-
-					return $pathname;
-				}
-			}
-		}
-
-		return false;
-	}
+	public function add_path($path, $weight = 0);
 
 	/**
-	 * @inheritdoc
+	 * Returns the paths used to search templates.
+	 *
+	 * @return array
 	 */
-	public function add_path($path, $weight = 0)
-	{
-		$path = realpath($path);
-
-		if (!$path)
-		{
-			return false;
-		}
-
-		$path = $path . DIRECTORY_SEPARATOR;
-		$this->paths[$path] = $weight;
-
-		return $path;
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function get_paths()
-	{
-		return array_keys(array_reverse($this->paths));
-	}
+	public function get_paths();
 }

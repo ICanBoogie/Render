@@ -1,6 +1,6 @@
 # Render
 
-[![Release](https://img.shields.io/github/release/ICanBoogie/Render.svg)](https://github.com/ICanBoogie/Render/releases)
+[![Release](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://github.com/ICanBoogie/Render/releases)
 [![Build Status](https://img.shields.io/travis/ICanBoogie/Render/master.svg)](http://travis-ci.org/ICanBoogie/Render)
 [![HHVM](https://img.shields.io/hhvm/icanboogie/render.svg)](http://hhvm.h4cc.de/package/icanboogie/render)
 [![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render/master.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
@@ -60,7 +60,7 @@ $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollecti
 A template resolver tries to match a template name with an actual template file. A set of path
 can be defined for the resolver to search in.
 
-The `TemplateResolver::alter` event of class [TemplateResolver\AlterEvent][] is fired on the 
+The `BasicTemplateResolver::alter` event of class [BasicTemplateResolver\AlterEvent][] is fired on the 
 shared template resolver when it is created. Event hooks may use this event to add templates paths
 or replace the template resolver.
 
@@ -69,9 +69,9 @@ The following example demonstrates how to add template paths:
 ```php
 <?php
 
-use ICanBoogie\Render\TemplateResolver;
+use ICanBoogie\Render\BasicTemplateResolver;
 
-$app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
+$app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
 	$target->add_paths(__DIR__ . '/my/own/path);
 
@@ -80,14 +80,14 @@ $app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolv
 
 The following example demonstrates how to replace the template resolver with a decorator:
 
-**Note:** The decorator must implement the [TemplateResolverInterface][].
+**Note:** The decorator must implement the [TemplateResolver][].
 
 ```php
 <?php
 
-use ICanBoogie\Render\TemplateResolver;
+use ICanBoogie\Render\BasicTemplateResolver;
 
-$app->events->attach(function(TemplateResolver\AlterEvent $event, TemplateResolver $target) {
+$app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
 	$event->replace_with(new MyTemplateResolverDecorator($event->instance));
 
@@ -212,5 +212,5 @@ This package is licensed under the New BSD License - See the [LICENSE](LICENSE) 
 [EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
 [Patron engine]: https://github.com/Icybee/PatronViewSupport
 [Renderer\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
-[TemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[TemplateResolverInterface]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolverInterface.AlterEvent.html
+[BasicTemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.BasicTemplateResolver.AlterEvent.html
+[TemplateResolver]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html

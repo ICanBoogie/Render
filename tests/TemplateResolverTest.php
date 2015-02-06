@@ -22,7 +22,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 
 	public function test_resolve()
 	{
-		$tr = new TemplateResolver;
+		$tr = new BasicTemplateResolver;
 		$ds = DIRECTORY_SEPARATOR;
 
 		$extensions = [ '.patron', '.php'];
@@ -69,7 +69,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 
 	public function test_resolve_with_extension()
 	{
-		$tr = new TemplateResolver;
+		$tr = new BasicTemplateResolver;
 		$tr->add_path(self::$templates_root . 'all');
 		$pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
 		$this->assertFalse($pathname);
@@ -79,7 +79,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 
 	public function test_resolve_with_double_extension()
 	{
-		$tr = new TemplateResolver;
+		$tr = new BasicTemplateResolver;
 		$tr->add_path(self::$templates_root . 'all');
 		$pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
 		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
