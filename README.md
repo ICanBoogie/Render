@@ -46,7 +46,7 @@ use ICanBoogie\Render\EngineCollection;
 
 $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->replace_with(new MyEngineCollectionDecorator($event->instance));
+	$event->replace_with(new MyEngineCollection);
 
 });
 ```

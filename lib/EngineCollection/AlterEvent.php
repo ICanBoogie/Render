@@ -12,7 +12,7 @@
 namespace ICanBoogie\Render\EngineCollection;
 
 use ICanBoogie\Event;
-use ICanBoogie\Render\EngineCollectionInterface;
+use ICanBoogie\Render\EngineCollection;
 
 /**
  * Event class for the `ICanBoogie\Render\EngineCollection::alter` event.
@@ -21,18 +21,18 @@ use ICanBoogie\Render\EngineCollectionInterface;
  *
  * @package ICanBoogie\Render
  *
- * @property-read EngineCollectionInterface $instance
+ * @property-read EngineCollection $instance
  */
 class AlterEvent extends Event
 {
 	/**
 	 * Reference to the target instance.
 	 *
-	 * @var EngineCollectionInterface
+	 * @var EngineCollection
 	 */
 	private $instance;
 
-	public function __construct(EngineCollectionInterface &$target)
+	public function __construct(EngineCollection &$target)
 	{
 		$this->instance = &$target;
 
@@ -52,9 +52,9 @@ class AlterEvent extends Event
 	/**
 	 * Replaces the instance.
 	 *
-	 * @param EngineCollectionInterface $engines
+	 * @param EngineCollection $engines
 	 */
-	public function replace_with(EngineCollectionInterface $engines)
+	public function replace_with(EngineCollection $engines)
 	{
 		$this->instance = $engines;
 	}

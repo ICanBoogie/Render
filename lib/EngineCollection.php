@@ -20,10 +20,9 @@ use ICanBoogie\Accessor\AccessorTrait;
  *
  * @property-read array $extensions The extensions supported by the engines.
  */
-class EngineCollection implements EngineCollectionInterface
+class EngineCollection implements \ArrayAccess, \IteratorAggregate
 {
 	use AccessorTrait;
-	use EngineCollectionTrait;
 
 	private $engines;
 
@@ -100,5 +99,55 @@ class EngineCollection implements EngineCollectionInterface
 	public function getIterator()
 	{
 		return new \ArrayIterator($this->engines);
+	}
+
+	/**
+	 * Resolves the engine to use from the specified pathname.
+	 *
+	 * @param $pathname
+	 *
+	 * @return Engine|bool An engine or `false` if none matches the extension.
+	 */
+	public function resolve_engine($pathname)
+	{
+		$extension = pathinfo($pathname, PATHINFO_EXTENSION);
+
+		if (!$extension)
+		{
+			return false;
+		}
+
+		$extension = "." . $extension;
+
+		if (!isset($this[$extension]))
+		{
+			return false;
+		}
+
+		return $this[$extension];
+	}
+
+	/**
+	 * Renders a template with the specified variables.
+	 *
+	 * @param string $template_pathname The pathname of the template.
+	 * @param mixed $thisArg The subject of the rendering.
+	 * @param array $variables
+	 * @param array $options
+	 *
+	 * @return string
+	 *
+	 * @throws EngineNotAvailable when there is no engine available to render the template.
+	 */
+	public function render($template_pathname, $thisArg, $variables, array $options=[])
+	{
+		$engine = $this->resolve_engine($template_pathname);
+
+		if (!$engine)
+		{
+			throw new EngineNotAvailable("There is no engine available to render template $template_pathname.");
+		}
+
+		return $engine->render($template_pathname, $thisArg, $variables, $options);
 	}
 }
