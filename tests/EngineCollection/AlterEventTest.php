@@ -20,7 +20,7 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 		$instance = $backup = new EngineCollection;
 
 		$event = new AlterEvent($instance);
-		$event->replace_with(new EngineCollection);
+		$event->instance = new EngineCollection;
 
 		$this->assertSame($instance, $event->instance);
 		$this->assertNotSame($backup, $event->instance);

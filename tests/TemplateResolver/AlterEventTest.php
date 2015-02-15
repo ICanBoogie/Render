@@ -20,7 +20,7 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 		$instance = $backup = new BasicTemplateResolver;
 
 		$event = new AlterEvent($instance);
-		$event->replace_with(new BasicTemplateResolver);
+		$event->instance = new BasicTemplateResolver;
 
 		$this->assertSame($instance, $event->instance);
 		$this->assertNotSame($backup, $event->instance);

@@ -38,7 +38,7 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 		$event = new AlterEvent($instance);
 		$this->assertSame($instance, $event->instance);
 
-		$event->replace_with($renderer_stub);
+		$event->instance = $renderer_stub;
 		$this->assertSame($renderer_stub, $event->instance);
 		$this->assertSame($renderer_stub, $instance);
 	}

@@ -32,30 +32,20 @@ class AlterEvent extends Event
 	 */
 	public $instance;
 
+	protected function get_instance()
+	{
+		return $this->instance;
+	}
+
+	protected function set_instance(Renderer $renderer)
+	{
+		$this->instance = $renderer;
+	}
+
 	public function __construct(Renderer &$target)
 	{
 		$this->instance = &$target;
 
 		parent::__construct($target, 'alter');
-	}
-
-	public function __get($property)
-	{
-		if ($property == 'instance')
-		{
-			return $this->instance;
-		}
-
-		return parent::__get($property);
-	}
-
-	/**
-	 * Replaces the instance.
-	 *
-	 * @param Renderer $template_resolver
-	 */
-	public function replace_with(Renderer $template_resolver)
-	{
-		$this->instance = $template_resolver;
 	}
 }

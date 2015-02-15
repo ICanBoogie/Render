@@ -46,7 +46,7 @@ use ICanBoogie\Render\EngineCollection;
 
 $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->replace_with(new MyEngineCollection);
+	$event->instance = new MyEngineCollection;
 
 });
 ```
@@ -89,7 +89,7 @@ use ICanBoogie\Render\BasicTemplateResolver;
 
 $app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
-	$event->replace_with(new MyTemplateResolverDecorator($event->instance));
+	$event->instance = new MyTemplateResolverDecorator($event->instance);
 
 };
 ```
@@ -116,7 +116,7 @@ use ICanBoogie\Render\Renderer;
 
 $app->events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
 
-	$event->replace_with(new MyRenderer($event->instance->engines, $event->instance->template_resolver));
+	$event->instance = new MyRenderer($event->instance->engines, $event->instance->template_resolver);
 
 });
 ```

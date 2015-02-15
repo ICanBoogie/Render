@@ -32,30 +32,20 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
+	protected function get_instance()
+	{
+		return $this->instance;
+	}
+
+	protected function set_instance(EngineCollection $engines)
+	{
+		$this->instance = $engines;
+	}
+
 	public function __construct(EngineCollection &$target)
 	{
 		$this->instance = &$target;
 
 		parent::__construct($target, 'alter');
-	}
-
-	public function __get($property)
-	{
-		if ($property == 'instance')
-		{
-			return $this->instance;
-		}
-
-		return parent::__get($property);
-	}
-
-	/**
-	 * Replaces the instance.
-	 *
-	 * @param EngineCollection $engines
-	 */
-	public function replace_with(EngineCollection $engines)
-	{
-		$this->instance = $engines;
 	}
 }
