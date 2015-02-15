@@ -30,7 +30,7 @@ class AlterEvent extends Event
 	 *
 	 * @var Renderer
 	 */
-	public $instance;
+	private $instance;
 
 	protected function get_instance()
 	{

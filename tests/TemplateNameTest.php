@@ -13,6 +13,12 @@ namespace ICanBoogie\Render;
 
 class TemplateNameTest extends \PHPUnit_Framework_TestCase
 {
+	public function test_from_intance()
+	{
+		$name = TemplateName::from('testing' . uniqid());
+		$this->assertEquals($name, TemplateName::from($name));
+	}
+
 	/**
 	 * @dataProvider provide_test_normalize
 	 *

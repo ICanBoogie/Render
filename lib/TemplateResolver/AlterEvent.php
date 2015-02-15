@@ -30,7 +30,7 @@ class AlterEvent extends Event
 	 *
 	 * @var TemplateResolver
 	 */
-	public $instance;
+	private $instance;
 
 	protected function get_instance()
 	{
