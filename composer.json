@@ -26,6 +26,6 @@
 		"psr-4": {
 			"ICanBoogie\\Render\\": "lib/"
 		},
-		"files": [ "helpers.php" ]
+		"files": [ "lib/helpers.php" ]
 	}
 }
