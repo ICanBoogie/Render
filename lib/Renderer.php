@@ -16,7 +16,7 @@ use ICanBoogie\ActiveRecord\Query;
 class Renderer
 {
 	/**
-	 * @var BasicTemplateResolver
+	 * @var TemplateResolver
 	 */
 	private $original_template_resolver;
 
@@ -26,7 +26,7 @@ class Renderer
 	private $engines;
 
 	/**
-	 * @var BasicTemplateResolver
+	 * @var TemplateResolver
 	 */
 	protected $template_resolver;
 
