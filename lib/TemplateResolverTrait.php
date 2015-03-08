@@ -75,7 +75,7 @@ trait TemplateResolverTrait
 	 *
 	 * @return string|null
 	 */
-	protected function resolve_path(array $tries, array &$tried)
+	protected function resolve_path(array $tries, &$tried)
 	{
 		foreach ($tries as $pathname)
 		{
