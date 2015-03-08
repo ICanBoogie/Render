@@ -23,11 +23,11 @@ interface TemplateResolver
 	 *
 	 * @param string $name The base name of the template.
 	 * @param array $extensions The supported extensions.
-	 * @param array $tries Path name tried.
+	 * @param array $tried Tried pathname collection.
 	 *
 	 * @return string|false The pathname to the matching template or `false` if none match.
 	 */
-	public function resolve($name, array $extensions, &$tries = []);
+	public function resolve($name, array $extensions, &$tried = []);
 
 	/**
 	 * Adds a path to search templates in.

@@ -43,25 +43,25 @@ class Renderer
 
 		if (isset($options['partial']))
 		{
-			$tries = [];
+			$tried = [];
 			$template = TemplateName::from($options['partial'])->as_partial;
-			$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tries);
+			$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tried);
 
 			if (!$template_pathname)
 			{
-				throw new TemplateNotFound("There is no partial matching <q>$template</q>.", $tries);
+				throw new TemplateNotFound("There is no partial matching <q>$template</q>.", $tried);
 			}
 
 			return $this->engines->render($template_pathname, null, $options['locals']);
 		}
 
-		$tries = [];
+		$tried = [];
 		$template = $options['template'];
-		$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tries);
+		$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tried);
 
 		if (!$template_pathname)
 		{
-			throw new TemplateNotFound("There is no template matching <q>$template</q>.", $tries);
+			throw new TemplateNotFound("There is no template matching <q>$template</q>.", $tried);
 		}
 
 		return $this->engines->render($template_pathname, $options['content'], $options['locals']);

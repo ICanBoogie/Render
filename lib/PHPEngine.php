@@ -12,7 +12,7 @@
 namespace ICanBoogie\Render;
 
 /**
- * Render PHP templates.
+ * Renders PHP templates.
  *
  * @package ICanBoogie\Render
  */

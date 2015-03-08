@@ -12,59 +12,22 @@
 namespace ICanBoogie\Render;
 
 /**
- * Resolve templates pathname.
+ * Resolves templates pathname.
  *
  * @package ICanBoogie\Render
  */
 class BasicTemplateResolver implements TemplateResolver
 {
+	use TemplateResolverTrait;
+
 	protected $paths = [];
 
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve($name, array $extensions, &$tries = [])
+	public function resolve($name, array $extensions, &$tried = [])
 	{
-		$original_extension = pathinfo($name, PATHINFO_EXTENSION);
-
-		if ($original_extension)
-		{
-			$extensions = array_merge([ '' ],  $extensions);
-			$original_extension = '.' . $original_extension;
-		}
-
-		$dirname = dirname($name);
-		$basename = basename($name);
-
-		foreach ($this->get_paths() as $path)
-		{
-			foreach ($extensions as $extension)
-			{
-				$filename = $name;
-
-				if ($dirname && $dirname == basename(dirname($path)))
-				{
-					$filename = $basename;
-				}
-
-				$filename = $filename . $extension;
-				$pathname = $path . $filename;
-
-				$tries[] = $pathname;
-
-				if (file_exists($pathname))
-				{
-					if (!$extension && $original_extension && !in_array($original_extension, $extensions))
-					{
-						continue;
-					}
-
-					return $pathname;
-				}
-			}
-		}
-
-		return false;
+		return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
 	}
 
 	/**

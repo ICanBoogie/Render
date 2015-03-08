@@ -15,8 +15,8 @@ class TemplateNotFoundTest extends \PHPUnit_Framework_TestCase
 {
     public function test_get_tries()
     {
-        $tries = [ "one", "two", "three" ];
-        $exception = new TemplateNotFound("Not found.", $tries);
-        $this->assertEquals($tries, $exception->tries);
+        $tried = [ "one", "two", "three" ];
+        $exception = new TemplateNotFound("Not found.", $tried);
+        $this->assertEquals($tried, $exception->tried);
     }
 }

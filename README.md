@@ -7,7 +7,7 @@
 [![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/master.svg)](https://coveralls.io/r/ICanBoogie/Render)
 [![Packagist](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
 
-An API to render templates.
+An API to render templates with a variety of template engines.
 
 
 
@@ -15,15 +15,11 @@ An API to render templates.
 
 ## Render engines
 
-Templates can be rendered with a variety of template engines. A shared collection is
-provided by the `get_engines` helper. When it is first created the `EngineCollection::alter` event of
-class [EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines or replace
-the engine collection altogether.
+Templates can be rendered with a variety of template engines. A shared collection is provided by the `get_engines` helper. When it is first created the `EngineCollection::alter` event of class [EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines or replace the engine collection altogether.
 
-**Note:** Currently, the package only provides an engine to render PHP templates, but others may provide more, for
-instance the [Patron engine][].
+**Note:** Currently, the package only provides an engine to render PHP templates, but others may provide more, for instance the [Patron engine][].
 
-The following example demonstrate how a Patron engine can be added to handle `.patron` extensions:
+The following example demonstrate how the **Patron** engine can be added to handle `.patron` extensions:
 
 ```php
 <?php
@@ -32,7 +28,7 @@ use ICanBoogie\Render\EngineCollection;
 
 $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$target['.patron'] = 'Icybee\Patron\ViewEngine';
+	$event->instance['.patron'] = 'Patron\RenderSupport\PatronEngine';
 
 });
 ```
@@ -57,12 +53,9 @@ $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollecti
 
 ## Template resolver
 
-A template resolver tries to match a template name with an actual template file. A set of path
-can be defined for the resolver to search in.
+A template resolver tries to match a template name with an actual template file. A set of path can be defined for the resolver to search in.
 
-The `BasicTemplateResolver::alter` event of class [BasicTemplateResolver\AlterEvent][] is fired on the 
-shared template resolver when it is created. Event hooks may use this event to add templates paths
-or replace the template resolver.
+The `BasicTemplateResolver::alter` event of class [BasicTemplateResolver\AlterEvent][] is fired on the shared template resolver when it is created. Event hooks may use this event to add templates paths or replace the template resolver.
 
 The following example demonstrates how to add template paths:
 
@@ -98,16 +91,13 @@ $app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemp
 
 
 
-### Renderer
+## Renderer
 
-[Renderer][] instances are used to render templates with subjects and options. They use an engine collection and
-a template resolver to find suitable templates and render them.
+[Renderer][] instances are used to render templates with subjects and options. They use an engine collection and a template resolver to find suitable templates and render them.
 
-A shared renderer is provided by the `get_renderer()` helper. When it is first created the
-`Renderer::alter` event of class [Renderer\AlterEvent][] is fired. Event hooks may use this event the alter the
-renderer or replace it.
+A shared renderer is provided by the `get_renderer()` helper. When it is first created the `Renderer::alter` event of class [Renderer\AlterEvent][] is fired. Event hooks may use this event the alter the renderer or replace it.
 
-The following example demonstrate how to replace the a renderer:
+The following example demonstrate how to replace the renderer:
 
 ```php
 <?php
@@ -156,7 +146,7 @@ The minimum requirement is PHP 5.4.
 The recommended way to install this package is through [Composer](http://getcomposer.org/):
 
 ```
-$ composer require icanboogie/render:dev-master
+$ composer require icanboogie/render
 ```
 
 
@@ -165,8 +155,7 @@ $ composer require icanboogie/render:dev-master
 
 ### Cloning the repository
 
-The package is [available on GitHub](https://github.com/ICanBoogie/Render), its repository can be
-cloned with the following command line:
+The package is [available on GitHub](https://github.com/ICanBoogie/Render), its repository can be cloned with the following command line:
 
 	$ git clone https://github.com/ICanBoogie/Render.git
 
@@ -176,11 +165,8 @@ cloned with the following command line:
 
 ## Documentation
 
-The documentation for the package and its dependencies can be generated with the `make doc`
-command. The documentation is generated in the `docs` directory using [ApiGen](http://apigen.org/).
-The package directory can later by cleaned with the `make clean` command.
-
-The documentation for the complete framework is also available online: <http://icanboogie.org/docs/> 
+The package is documented as part of the [ICanBoogie][] framework
+[documentation](http://icanboogie.org/docs/). You can generate the documentation for the package and its dependencies with the `make doc` command. The documentation is generated in the `build/docs` directory. [ApiGen](http://apigen.org/) is required. The directory can later be cleaned with the `make clean` command.
 
 
 
@@ -188,9 +174,7 @@ The documentation for the complete framework is also available online: <http://i
 
 ## Testing
 
-The test suite is ran with the `make test` command. [Composer](http://getcomposer.org/) is
-automatically installed as well as all the dependencies required to run the suite.
-The directory can later be cleaned with the `make clean` command.
+The test suite is ran with the `make test` command. [PHPUnit](https://phpunit.de/) and [Composer](http://getcomposer.org/) need to be globally available to run the suite. The command installs dependencies as required. The `make test-coverage` command runs test suite and also creates an HTML coverage report in "build/coverage". The directory can later be cleaned with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
@@ -203,14 +187,16 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 ## License
 
-This package is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
+**icanboogie/render** is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
 
 
 
 
 
 [EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[ICanBoogie]: https://github.com/ICanBoogie\ICanBoogie
 [Patron engine]: https://github.com/Icybee/PatronViewSupport
 [Renderer\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
 [BasicTemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.BasicTemplateResolver.AlterEvent.html
+[Renderer]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
 [TemplateResolver]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html

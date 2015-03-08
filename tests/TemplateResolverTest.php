@@ -27,25 +27,25 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 
 		$extensions = [ '.patron', '.php'];
 
-		$tries = [];
-		$this->assertFalse($tr->resolve('posts/index', $extensions, $tries));
-		$this->assertEmpty($tries);
+		$tried = [];
+		$this->assertNull($tr->resolve('posts/index', $extensions, $tried));
+		$this->assertEmpty($tried);
 
 		$tr->add_path(__DIR__ . '/templates/default');
-		$tries = [];
-		$this->assertFalse($tr->resolve('posts/index', $extensions, $tries));
-		$this->assertNotEmpty($tries);
+		$tried = [];
+		$this->assertNull($tr->resolve('posts/index', $extensions, $tried));
+		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
 			self::$templates_root . "default{$ds}posts{$ds}index.patron",
 			self::$templates_root . "default{$ds}posts{$ds}index.php"
 
-		], $tries);
+		], $tried);
 
 		$tr->add_path(__DIR__ . '/templates/custom');
-		$tries = [];
-		$this->assertFalse($tr->resolve('posts/index', $extensions, $tries));
-		$this->assertNotEmpty($tries);
+		$tried = [];
+		$this->assertNull($tr->resolve('posts/index', $extensions, $tried));
+		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
 			self::$templates_root . "custom{$ds}posts{$ds}index.patron",
@@ -53,18 +53,18 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 			self::$templates_root . "default{$ds}posts{$ds}index.patron",
 			self::$templates_root . "default{$ds}posts{$ds}index.php"
 
-		], $tries);
+		], $tried);
 
 		$tr->add_path(__DIR__ . '/templates/all');
-		$tries = [];
-		$this->assertEquals(self::$templates_root . "all{$ds}posts{$ds}index.php", $tr->resolve('posts/index', $extensions, $tries));
-		$this->assertNotEmpty($tries);
+		$tried = [];
+		$this->assertEquals(self::$templates_root . "all{$ds}posts{$ds}index.php", $tr->resolve('posts/index', $extensions, $tried));
+		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
 			self::$templates_root . "all{$ds}posts{$ds}index.patron",
 			self::$templates_root . "all{$ds}posts{$ds}index.php",
 
-		], $tries);
+		], $tried);
 	}
 
 	public function test_resolve_with_extension()
@@ -72,7 +72,7 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$tr = new BasicTemplateResolver;
 		$tr->add_path(self::$templates_root . 'all');
 		$pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
-		$this->assertFalse($pathname);
+		$this->assertNull($pathname);
 		$pathname = $tr->resolve('with-extension.html', [ '.html', '.patron' ]);
 		$this->assertStringEndsWith('with-extension.html', $pathname);
 	}
@@ -84,6 +84,6 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
 		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
 		$pathname = $tr->resolve('with-double-extension.html', [ '.html', '.patron' ]);
-		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
+		$this->assertNull($pathname);
 	}
 }

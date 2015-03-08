@@ -18,27 +18,27 @@ use ICanBoogie\Accessor\AccessorTrait;
  *
  * @package ICanBoogie\Render
  *
- * @property-read array $tries The files that were tried.
+ * @property-read array $tried Tried pathname collection.
  */
 class TemplateNotFound extends \LogicException implements Exception
 {
     use AccessorTrait;
 
-    private $tries;
+    private $tried;
 
-    protected function get_tries()
+    protected function get_tried()
     {
-        return $this->tries;
+        return $this->tried;
     }
 
-    public function __construct($message, array $tries, $code = 404, \Exception $exception = null)
+    public function __construct($message, array $tried, $code = 404, \Exception $exception = null)
     {
-        $this->tries = $tries;
+        $this->tried = $tried;
 
-        if ($tries)
+        if ($tried)
         {
-            $tries = implode("\n", array_map(function ($v) { return "- $v"; }, $tries));
-            $message .= " The following files were tried:\n\n" . $tries;
+            $tried = implode("\n", array_map(function ($v) { return "- $v"; }, $tried));
+            $message .= " The following files were tried:\n\n" . $tried;
         }
 
         parent::__construct($message, $code, $exception);
