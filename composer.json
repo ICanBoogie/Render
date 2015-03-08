@@ -1,7 +1,7 @@
 {
 	"name": "icanboogie/render",
 	"type": "library",
-	"description": "An API to render and decorate objects.",
+	"description": "Renders templates with a variety of template engines.",
 	"keywords": [ "render", "decorate" ],
 	"homepage": "http://icanboogie.org/",
 	"license": "BSD-3-Clause",
