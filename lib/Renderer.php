@@ -11,8 +11,6 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\ActiveRecord\Query;
-
 class Renderer
 {
 	/**
@@ -75,13 +73,10 @@ class Renderer
 		{
 			$additional_options['content'] = $target_or_options;
 			$additional_options['locals']['this'] = $target_or_options;
-			$additional_options['partial'] = $this->resolve_template($target_or_options);
 
-			if ($target_or_options instanceof Query)
+			if (empty($additional_options['partial']) && empty($additional_options['template']))
 			{
-				$model_id = $target_or_options->model->id;
-				$module_path = \ICanBoogie\app()->modules[$model_id]->path;
-				$this->template_resolver->add_path($module_path . 'templates');
+				$additional_options['partial'] = $this->resolve_template($target_or_options);
 			}
 		}
 		else if (is_array($target_or_options))
