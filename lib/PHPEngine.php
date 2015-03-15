@@ -45,7 +45,7 @@ class PHPEngine implements Engine
 
 		try
 		{
-			$f($template_pathname, $variables);
+			$f($template_pathname, [ self::VAR_TEMPLATE_PATHNAME => $template_pathname ] + $variables);
 
 			return ob_get_clean();
 		}
