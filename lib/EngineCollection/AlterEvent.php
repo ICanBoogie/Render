@@ -21,7 +21,7 @@ use ICanBoogie\Render\EngineCollection;
  *
  * @package ICanBoogie\Render
  *
- * @property-read EngineCollection $instance
+ * @property EngineCollection $instance
  */
 class AlterEvent extends Event
 {
@@ -32,16 +32,27 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
+	/**
+	 * @return EngineCollection
+	 */
 	protected function get_instance()
 	{
 		return $this->instance;
 	}
 
+	/**
+	 * @param EngineCollection $engines
+	 */
 	protected function set_instance(EngineCollection $engines)
 	{
 		$this->instance = $engines;
 	}
 
+	/**
+	 * Initializes the {@link $instance} property.
+	 *
+	 * @param EngineCollection $target
+	 */
 	public function __construct(EngineCollection &$target)
 	{
 		$this->instance = &$target;

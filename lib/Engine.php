@@ -37,5 +37,5 @@ interface Engine
 	 *
 	 * @return mixed
 	 */
-	public function render($template_pathname, $thisArg, array $variables, array $options=[]);
+	public function render($template_pathname, $thisArg, array $variables, array $options = []);
 }

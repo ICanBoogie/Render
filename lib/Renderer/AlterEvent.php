@@ -21,7 +21,7 @@ use ICanBoogie\Render\Renderer;
  *
  * @package ICanBoogie\Render
  *
- * @property-read Renderer $instance
+ * @property Renderer $instance
  */
 class AlterEvent extends Event
 {
@@ -32,16 +32,27 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
+	/**
+	 * @return Renderer
+	 */
 	protected function get_instance()
 	{
 		return $this->instance;
 	}
 
+	/**
+	 * @param Renderer $renderer
+	 */
 	protected function set_instance(Renderer $renderer)
 	{
 		$this->instance = $renderer;
 	}
 
+	/**
+	 * Initializes the {@link $instance} property.
+	 *
+	 * @param Renderer $target
+	 */
 	public function __construct(Renderer &$target)
 	{
 		$this->instance = &$target;

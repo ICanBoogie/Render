@@ -24,6 +24,9 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 {
 	use AccessorTrait;
 
+	/**
+	 * @var array
+	 */
 	private $engines;
 
 	/**
@@ -34,9 +37,15 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 		return array_keys($this->engines);
 	}
 
+	/**
+	 * @var Engine[]
+	 */
 	private $instances;
 
-	public function __construct(array $engines=[])
+	/**
+	 * @param array $engines
+	 */
+	public function __construct(array $engines = [])
 	{
 		foreach ($engines as $extension => $engine)
 		{
@@ -139,7 +148,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 *
 	 * @throws EngineNotAvailable when there is no engine available to render the template.
 	 */
-	public function render($template_pathname, $thisArg, $variables, array $options=[])
+	public function render($template_pathname, $thisArg, $variables, array $options = [])
 	{
 		$engine = $this->resolve_engine($template_pathname);
 

@@ -24,8 +24,14 @@ class TemplateNotFound extends \LogicException implements Exception
 {
     use AccessorTrait;
 
+    /**
+     * @var array
+     */
     private $tried;
 
+    /**
+     * @return array
+     */
     protected function get_tried()
     {
         return $this->tried;
@@ -39,6 +45,10 @@ class TemplateNotFound extends \LogicException implements Exception
         {
             $tried = implode("\n", array_map(function ($v) { return "- $v"; }, $tried));
             $message .= " The following files were tried:\n\n" . $tried;
+        }
+        else
+        {
+            $message .= " Also, no possible files were specified.";
         }
 
         parent::__construct($message, $code, $exception);

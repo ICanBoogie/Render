@@ -21,7 +21,7 @@ use ICanBoogie\Render\TemplateResolver;
  *
  * @package ICanBoogie\Render
  *
- * @property-read TemplateResolver $instance
+ * @property TemplateResolver $instance
  */
 class AlterEvent extends Event
 {
@@ -32,16 +32,27 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
+	/**
+	 * @return TemplateResolver
+	 */
 	protected function get_instance()
 	{
 		return $this->instance;
 	}
 
+	/**
+	 * @param TemplateResolver $template_resolver
+	 */
 	protected function set_instance(TemplateResolver $template_resolver)
 	{
 		$this->instance = $template_resolver;
 	}
 
+	/**
+	 * Initializes the {@link $instance} property.
+	 *
+	 * @param TemplateResolver $target
+	 */
 	public function __construct(TemplateResolver &$target)
 	{
 		$this->instance = &$target;
