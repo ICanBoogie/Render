@@ -17,8 +17,6 @@ use ICanBoogie\ActiveRecord\Query;
 /**
  * Representation of a template name.
  *
- * @package ICanBoogie\Render
- *
  * @property-read string $as_template Name as template name.
  * @property-read string $as_partial Name as partial name.
  * @property-read string $as_layout Name as layout name.

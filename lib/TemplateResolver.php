@@ -13,8 +13,6 @@ namespace ICanBoogie\Render;
 
 /**
  * An interface for template resolvers.
- *
- * @package ICanBoogie\Render
  */
 interface TemplateResolver
 {

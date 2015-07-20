@@ -13,8 +13,6 @@ namespace ICanBoogie\Render;
 
 /**
  * Support functions for template resolvers.
- *
- * @package ICanBoogie\Render
  */
 trait TemplateResolverTrait
 {

@@ -28,8 +28,6 @@ namespace ICanBoogie\Render;
  *     // another type of exception
  * }
  * </pre>
- *
- * @package ICanBoogie\Render
  */
 interface Exception
 {

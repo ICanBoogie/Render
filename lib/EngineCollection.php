@@ -16,8 +16,6 @@ use ICanBoogie\Accessor\AccessorTrait;
 /**
  * An engine collection.
  *
- * @package ICanBoogie\Render
- *
  * @property-read array $extensions The extensions supported by the engines.
  */
 class EngineCollection implements \ArrayAccess, \IteratorAggregate

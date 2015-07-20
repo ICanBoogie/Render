@@ -19,8 +19,6 @@ use ICanBoogie\Render\EngineCollection;
  *
  * Event hooks may use this event to alter the engine collection, or replace it.
  *
- * @package ICanBoogie\Render
- *
  * @property EngineCollection $instance
  */
 class AlterEvent extends Event

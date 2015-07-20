@@ -15,8 +15,6 @@ use ICanBoogie\OffsetNotDefined;
 
 /**
  * Exception thrown when a required engine is not defined.
- *
- * @package ICanBoogie\Render
  */
 class EngineNotDefined extends OffsetNotDefined implements Exception
 {

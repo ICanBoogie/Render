@@ -16,8 +16,6 @@ use ICanBoogie\Accessor\AccessorTrait;
 /**
  * Exception throw when a template cannot be found.
  *
- * @package ICanBoogie\Render
- *
  * @property-read array $tried Tried pathname collection.
  */
 class TemplateNotFound extends \LogicException implements Exception

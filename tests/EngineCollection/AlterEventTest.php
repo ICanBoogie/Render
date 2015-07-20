@@ -17,12 +17,18 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 {
 	public function test_replace_instance()
 	{
-		$instance = $backup = new EngineCollection;
+		$instance = new EngineCollection;
+		$instance2 = new EngineCollection;
+		$instance3 = new EngineCollection;
 
-		$event = new AlterEvent($instance);
-		$event->instance = new EngineCollection;
+		/* @var AlterEvent $event */
 
+		$event = AlterEvent::from([ 'target' => &$instance ]);
 		$this->assertSame($instance, $event->instance);
-		$this->assertNotSame($backup, $event->instance);
+
+		$event->instance = $instance2;
+		$this->assertSame($instance2, $instance);
+		$event->instance = $instance3;
+		$this->assertSame($instance3, $instance);
 	}
 }

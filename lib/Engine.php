@@ -13,8 +13,6 @@ namespace ICanBoogie\Render;
 
 /**
  * An interface for template engines.
- *
- * @package ICanBoogie\Render
  */
 interface Engine
 {

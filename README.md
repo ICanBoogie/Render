@@ -150,7 +150,7 @@ The following helpers are defined:
 
 ## Requirements
 
-The minimum requirement is PHP 5.4.
+The package requires PHP 5.4 or later.
 
 
 

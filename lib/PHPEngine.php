@@ -13,8 +13,6 @@ namespace ICanBoogie\Render;
 
 /**
  * Renders PHP templates.
- *
- * @package ICanBoogie\Render
  */
 class PHPEngine implements Engine
 {

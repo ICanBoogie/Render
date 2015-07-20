@@ -19,8 +19,6 @@ use ICanBoogie\Render\Renderer;
  *
  * Event hooks may use this event to alter a renderer, or replace it.
  *
- * @package ICanBoogie\Render
- *
  * @property Renderer $instance
  */
 class AlterEvent extends Event

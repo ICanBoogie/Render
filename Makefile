@@ -1,7 +1,7 @@
 # customization
 
-PACKAGE_NAME = "ICanBoogie/Render"
-PACKAGE_VERSION = "v0.4.0"
+PACKAGE_NAME = icanboogie/render
+PACKAGE_VERSION = 0.5.x-dev
 
 # do not edit the following lines
 
@@ -9,10 +9,10 @@ usage:
 	@echo "test:  Runs the test suite.\ndoc:   Creates the documentation.\nclean: Removes the documentation, the dependencies and the Composer files."
 
 vendor:
-	@composer install
+	@COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION) composer install
 
 update:
-	@composer update
+	@COMPOSER_ROOT_VERSION=$(PACKAGE_VERSION) composer update
 
 autoload: vendor
 	@composer dump-autoload
@@ -28,15 +28,11 @@ doc: vendor
 	@mkdir -p build/docs
 	@apigen generate \
 	--source lib \
-	--exclude "*/composer/*" \
-	--exclude "*/autoload.php" \
 	--destination build/docs/ \
-	--title "$(PACKAGE_NAME) $(PACKAGE_VERSION)" \
-	--template-theme "bootstrap" \
-	--debug
+	--title "$(PACKAGE_NAME) v$(PACKAGE_VERSION)" \
+	--template-theme "bootstrap"
 
 clean:
 	@rm -fR build
 	@rm -fR vendor
 	@rm -f composer.lock
-

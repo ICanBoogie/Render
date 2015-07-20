@@ -13,8 +13,6 @@ namespace ICanBoogie\Render;
 
 /**
  * Resolves templates pathname.
- *
- * @package ICanBoogie\Render
  */
 class BasicTemplateResolver implements TemplateResolver
 {
