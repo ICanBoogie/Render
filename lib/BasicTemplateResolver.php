@@ -29,7 +29,14 @@ class BasicTemplateResolver implements TemplateResolver
 	}
 
 	/**
-	 * @inheritdoc
+	 * Adds a path to search templates in.
+	 *
+	 * Note: The path is discarded if it cannot be resolved with `realpath()`.
+	 *
+	 * @param string $path
+	 * @param int $weight
+	 *
+	 * @return string|false The real path, or `false` if the path was not added.
 	 */
 	public function add_path($path, $weight = 0)
 	{
@@ -47,7 +54,9 @@ class BasicTemplateResolver implements TemplateResolver
 	}
 
 	/**
-	 * @inheritdoc
+	 * Returns the paths used to search templates.
+	 *
+	 * @return array
 	 */
 	public function get_paths()
 	{
