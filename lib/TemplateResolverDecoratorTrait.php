@@ -32,6 +32,14 @@ trait TemplateResolverDecoratorTrait
 	}
 
 	/**
+	 * Clones {@link $template_resolver}.
+	 */
+	public function __clone()
+	{
+		$this->template_resolver = clone $this->template_resolver;
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function find_renderer($class)

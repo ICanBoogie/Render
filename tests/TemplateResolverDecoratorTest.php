@@ -30,6 +30,21 @@ class TemplateResolverDecoratorTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull($b->find_renderer(A::class));
 	}
 
+	public function test_clone()
+	{
+		$c = new C;
+		$b = new B($c);
+		$a = new A($b);
+		$d = clone $a;
+
+		$this->assertSame($c, $a->find_renderer(C::class));
+		$this->assertSame($b, $a->find_renderer(B::class));
+		$this->assertSame($a, $a->find_renderer(A::class));
+		$this->assertNotSame($c, $d->find_renderer(C::class));
+		$this->assertNotSame($b, $d->find_renderer(B::class));
+		$this->assertNotSame($a, $d->find_renderer(A::class));
+	}
+
 	public function test_resolve()
 	{
 		$c = new C;

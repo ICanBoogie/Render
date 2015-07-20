@@ -43,11 +43,13 @@ trait TemplateResolverTrait
 
 		foreach ($paths as $path)
 		{
+			$parent_dir = basename(dirname($path));
+
 			foreach ($extensions as $extension)
 			{
 				$filename = $name;
 
-				if ($dirname && $dirname == basename(dirname($path)))
+				if ($dirname && $dirname == $parent_dir)
 				{
 					$filename = $basename;
 				}
