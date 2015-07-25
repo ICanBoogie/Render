@@ -17,10 +17,11 @@
 		"issues": "https://github.com/ICanBoogie/Render/issues",
 		"source": "https://github.com/ICanBoogie/Render"
 	},
+	"minimum-stability": "dev",
 	"require": {
 		"php": ">=5.5.0",
-		"icanboogie/prototype": "2.3.x-dev",
-		"icanboogie/event": "1.4.x-dev"
+		"icanboogie/prototype": "^2.3.0",
+		"icanboogie/event": "^1.4.0"
 	},
 	"autoload": {
 		"psr-4": {
