@@ -86,4 +86,10 @@ class TemplateResolverTest extends \PHPUnit_Framework_TestCase
 		$pathname = $tr->resolve('with-double-extension.html', [ '.html', '.patron' ]);
 		$this->assertNull($pathname);
 	}
+
+	public function test_add_invalid_path()
+	{
+		$tr = new BasicTemplateResolver;
+		$this->assertFalse($tr->add_path('invalid/path/' . uniqid()));
+	}
 }

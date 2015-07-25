@@ -1,0 +1,5 @@
+HERE SOME DATA THAT SHOULD BE DISCARDED
+
+<?php
+
+throw $this;

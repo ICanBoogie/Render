@@ -13,12 +13,54 @@ namespace ICanBoogie\Render;
 
 class PHPEngineTest extends \PHPUnit_Framework_TestCase
 {
+	static private $root;
+
+	static public function setupBeforeClass()
+	{
+		self::$root = __DIR__ . '/templates/custom/';
+	}
+
 	public function test_render()
 	{
 		$engine = new PHPEngine;
-		$pathname = __DIR__ . '/templates/custom/var_template_pathname.php';
+		$pathname = self::$root . 'var_template_pathname.php';
 		$rc = $engine->render($pathname, null, []);
 
 		$this->assertEquals($pathname, $rc);
+	}
+
+	public function test_bind_array()
+	{
+		$engine = new PHPEngine;
+		$rc = $engine->render(self::$root . 'bind_array.php', [ 1, 2, 3 ], []);
+
+		$this->assertEquals('ArrayObject:[1, 2, 3]', $rc);
+	}
+
+	public function test_bind_object()
+	{
+		$engine = new PHPEngine;
+		$rc = $engine->render(self::$root . 'bind_object.php', $this, []);
+
+		$this->assertEquals(__CLASS__, $rc);
+	}
+
+	public function test_should_discard_output_on_exception()
+	{
+		$exception = new \Exception;
+		$level = ob_get_level();
+		$engine = new PHPEngine;
+
+		try
+		{
+			$engine->render(self::$root . 'with_exception.php', $exception, [ ]);
+
+			$this->fail("Expected exception");
+		}
+		catch (\Exception $e)
+		{
+			$this->assertEquals($level, ob_get_level());
+			$this->assertSame($exception, $e);
+		}
 	}
 }

@@ -90,6 +90,7 @@ class EngineCollectionTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('ICanBoogie\Render\PHPEngine', self::$instance->resolve_engine('testing.php'));
 		$this->assertInstanceOf('ICanBoogie\Render\EngineCollectionTest\PHTMLEngine', self::$instance->resolve_engine('testing.phtml'));
 		$this->assertFalse(self::$instance->resolve_engine('testing.madonna'));
+		$this->assertFalse(self::$instance->resolve_engine('no-extension'));
 	}
 
 	/**
