@@ -59,7 +59,7 @@ class Renderer
 		if (isset($options['partial']))
 		{
 			$tried = [];
-			$template = TemplateName::from($options['partial'])->as_partial;
+			$template = $this->resolve_template_name($options['partial'])->as_partial;
 			$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tried);
 
 			if (!$template_pathname)
@@ -101,7 +101,7 @@ class Renderer
 
 			if (empty($additional_options['partial']) && empty($additional_options['template']))
 			{
-				$additional_options['partial'] = $this->resolve_template($target_or_options);
+				$additional_options['partial'] = $this->resolve_template_name($target_or_options);
 			}
 		}
 		else if (is_array($target_or_options))
@@ -113,13 +113,13 @@ class Renderer
 	}
 
 	/**
-	 * Resolves template.
+	 * Resolves template name.
 	 *
 	 * @param mixed $content
 	 *
 	 * @return TemplateName
 	 */
-	protected function resolve_template($content)
+	protected function resolve_template_name($content)
 	{
 		return TemplateName::from($content);
 	}
