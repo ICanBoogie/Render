@@ -15,11 +15,16 @@ An API to render templates with a variety of template engines.
 
 ## Render engines
 
-Templates can be rendered with a variety of template engines. A shared collection is provided by the `get_engines` helper. When it is first created the `EngineCollection::alter` event of class [EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines or replace the engine collection altogether.
+Templates can be rendered with a variety of template engines. A shared collection is provided by
+the `get_engines` helper. When it is first created the `EngineCollection::alter` event of class
+[EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines
+or replace the engine collection altogether.
 
-**Note:** Currently, the package only provides an engine to render PHP templates, but others may provide more, for instance the [Patron engine][].
+**Note:** Currently, the package only provides an engine to render PHP templates, but others may
+provide more, for instance the [Patron engine][].
 
-The following example demonstrate how the **Patron** engine can be added to handle `.patron` extensions:
+The following example demonstrate how the **Patron** engine can be added to handle `.patron`
+extensions:
 
 ```php
 <?php
@@ -52,7 +57,9 @@ $app->events->attach(function(EngineCollection\AlterEvent $event, EngineCollecti
 
 ### The pathname of the template being rendered
 
-Engines should use the `Engine::VAR_TEMPLATE_PATHNAME` variable to define the pathname of the template being rendered, so that it is easy to track which template is being rendered and from which location.
+Engines should use the `Engine::VAR_TEMPLATE_PATHNAME` variable to define the pathname of the
+template being rendered, so that it is easy to track which template is being rendered and from
+which location.
 
 
 
@@ -60,18 +67,22 @@ Engines should use the `Engine::VAR_TEMPLATE_PATHNAME` variable to define the pa
 
 ## Template resolver
 
-A template resolver tries to match a template name with an actual template file. A set of paths can be defined for the resolver to search in.
+A template resolver tries to match a template name with an actual template file. A set of paths
+can be defined for the resolver to search in.
 
-The `BasicTemplateResolver::alter` event of class [BasicTemplateResolver\AlterEvent][] is fired on the shared template resolver when it is created. Event hooks may use this event to add template paths or replace the template resolver.
+The `BasicTemplateResolver::alter` event of class [TemplateResolver\AlterEvent][] is fired on the
+shared template resolver when it is created. Event hooks may use this event to add template paths
+or replace the template resolver.
 
 The following example demonstrates how to add template paths:
 
 ```php
 <?php
 
+use ICanBoogie\Render\TemplateResolver;
 use ICanBoogie\Render\BasicTemplateResolver;
 
-$app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
+$app->events->attach(function(TemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
 	$target->add_paths(__DIR__ . '/my/templates/path);
 
@@ -84,7 +95,10 @@ $app->events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemp
 
 ### Decorating a template resolver
 
-Decorating the basic template resolver allows you to use more complex resolving mechanisms than its simple name/file mapping. The [ModuleTemplateResolver](https://github.com/ICanBoogie/Module/blob/master/lib/ModuleTemplateResolver.php) or the [ApplicationTemplateResolver](https://github.com/ICanBoogie/bind-render/blob/master/lib/ApplicationTemplateResolver.php) decorators are great examples. The [TemplateResolverTrait][] trait may provide support  for implementing such a decorator.
+Decorating the basic template resolver allows you to use more complex resolving mechanisms than
+its simple name/file mapping. The [ModuleTemplateResolver][] or
+the [ApplicationTemplateResolver][] decorators are great examples. The [TemplateResolverTrait][]
+trait may provide support  for implementing such a decorator.
 
 **Note:** The decorator must implement the [TemplateResolver][] interface.
 
@@ -181,7 +195,7 @@ The package is [available on GitHub](https://github.com/ICanBoogie/Render), its 
 ## Documentation
 
 The package is documented as part of the [ICanBoogie][] framework
-[documentation](http://icanboogie.org/docs/). You can generate the documentation for the package and its dependencies with the `make doc` command. The documentation is generated in the `build/docs` directory. [ApiGen](http://apigen.org/) is required. The directory can later be cleaned with the `make clean` command.
+[documentation][]. You can generate the documentation for the package and its dependencies with the `make doc` command. The documentation is generated in the `build/docs` directory. [ApiGen](http://apigen.org/) is required. The directory can later be cleaned with the `make clean` command.
 
 
 
@@ -208,11 +222,14 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 
 
-[EngineCollection\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.EngineCollection.AlterEvent.html
-[ICanBoogie]: https://github.com/ICanBoogie\ICanBoogie
-[Patron engine]: https://github.com/Icybee/PatronViewSupport
-[Renderer\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
-[BasicTemplateResolver\AlterEvent]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.BasicTemplateResolver.AlterEvent.html
-[Renderer]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.Renderer.AlterEvent.html
-[TemplateResolver]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[TemplateResolverTrait]: http://icanboogie.org/docs/namespace-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
+[ApplicationTemplateResolver]:      http://api.icanboogie.org/bind-render/0.4/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
+[ModuleTemplateResolver]:           http://api.icanboogie.org/module/2.3/class-ICanBoogie.Module.ModuleTemplateResolver.html
+[documentation]:                    http://api.icanboogie.org/render/0.5/
+[EngineCollection\AlterEvent]:      http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[BasicTemplateResolver\AlterEvent]: http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.BasicTemplateResolver.AlterEvent.html
+[Renderer]:                         http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[Renderer\AlterEvent]:              http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[TemplateResolver]:                 http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[TemplateResolverTrait]:            http://api.icanboogie.org/render/0.5/class-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
+[ICanBoogie]:                       https://github.com/ICanBoogie\ICanBoogie
+[Patron engine]:                    https://github.com/Icybee/PatronViewSupport
