@@ -40,6 +40,19 @@ trait TemplateResolverDecoratorTrait
 	}
 
 	/**
+	 * Forwards unsupported calls to the decorated template resolver.
+	 *
+	 * @param string $method
+	 * @param array $arguments
+	 *
+	 * @return mixed
+	 */
+	public function __call($method, $arguments)
+	{
+		return call_user_func_array([ $this->template_resolver, $method ], $arguments);
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function find_renderer($class)
