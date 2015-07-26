@@ -21,11 +21,11 @@ class PHPEngine implements Engine
 	 */
 	public function render($template_pathname, $thisArg, array $variables, array $options = [])
 	{
-		$f = function($template_pathname, $variables) {
+		$f = function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 
-			extract($variables);
+			extract($__VARIABLES__);
 
-			require $template_pathname;
+			require $__TEMPLATE_PATHNAME__;
 
 		};
 
