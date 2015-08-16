@@ -19,7 +19,7 @@ class AlterEventTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = $backup = new BasicTemplateResolver;
 
-		/* @var $instance AlterEvent */
+		/* @var $event AlterEvent */
 
 		$event = AlterEvent::from([ 'target' => &$instance ]);
 		$event->instance = new BasicTemplateResolver;
