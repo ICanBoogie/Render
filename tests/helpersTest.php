@@ -11,8 +11,22 @@
 
 namespace ICanBoogie\Render;
 
+use ICanBoogie\EventCollection;
+use ICanBoogie\EventCollectionProvider;
+
 class helpersTest extends \PHPUnit_Framework_TestCase
 {
+	public function setUp()
+	{
+		EventCollectionProvider::using(function() {
+
+			static $collection;
+
+			return $collection ?: $collection = new EventCollection;
+
+		});
+	}
+
 	public function test_get_engines()
 	{
 		$instance = get_engines();
