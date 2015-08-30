@@ -24,7 +24,7 @@ function get_engines()
     {
         $engines = new EngineCollection([
 
-            '.php' => 'ICanBoogie\Render\PHPEngine'
+            '.phtml' => 'ICanBoogie\Render\PHPEngine'
 
         ]);
 
