@@ -21,23 +21,13 @@ class PHPEngine implements Engine
 	 */
 	public function render($template_pathname, $thisArg, array $variables, array $options = [])
 	{
-		$f = function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
+		$f = \Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 
 			extract($__VARIABLES__);
 
 			require $__TEMPLATE_PATHNAME__;
 
-		};
-
-		if (is_array($thisArg))
-		{
-			$thisArg = new \ArrayObject($thisArg);
-		}
-
-		if (is_object($thisArg))
-		{
-			$f = \Closure::bind($f, $thisArg);
-		}
+		}, $this->ensure_is_object($thisArg));
 
 		ob_start();
 
@@ -53,5 +43,31 @@ class PHPEngine implements Engine
 
 			throw $e;
 		}
+	}
+
+	/**
+	 * Ensures that a value is an object.
+	 *
+	 * - `value` is an object, value is returned.
+	 * - `value` is an array, an `ArrayObject` instance is returned.
+	 * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
+	 *
+	 * @param $value
+	 *
+	 * @return \ArrayObject|StringObject
+	 */
+	protected function ensure_is_object($value)
+	{
+		if (is_object($value))
+		{
+			return $value;
+		}
+
+		if (is_array($value))
+		{
+			return new \ArrayObject($value);
+		}
+
+		return new StringObject($value);
 	}
 }

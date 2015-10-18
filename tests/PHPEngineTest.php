@@ -45,6 +45,15 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(__CLASS__, $rc);
 	}
 
+	public function test_bind_string()
+	{
+		$engine = new PHPEngine;
+		$string = "string" . uniqid();
+		$rc = $engine->render(self::$root . 'bind_string.php', $string, []);
+
+		$this->assertEquals($string, $rc);
+	}
+
 	public function test_should_discard_output_on_exception()
 	{
 		$exception = new \Exception;
