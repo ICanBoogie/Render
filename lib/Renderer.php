@@ -79,7 +79,22 @@ class Renderer
 			throw new TemplateNotFound("There is no template matching <q>$template</q>.", $tried);
 		}
 
-		return $this->engines->render($template_pathname, $options['content'], $options['locals']);
+		$rc = $this->engines->render($template_pathname, $options['content'], $options['locals']);
+
+		if (isset($options['layout']))
+		{
+			$template = $this->resolve_template_name($options['layout'])->as_layout;
+			$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tried);
+
+			if (!$template_pathname)
+			{
+				throw new TemplateNotFound("There is no partial matching <q>$template</q>.", $tried);
+			}
+
+			$rc = $this->engines->render($template_pathname, null, [ 'content' => $rc ] + $options['locals']);
+		}
+
+		return $rc;
 	}
 
 	/**
