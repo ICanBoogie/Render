@@ -23,11 +23,6 @@ class Renderer
 	const OPTION_LOCALS = 'locals';
 
 	/**
-	 * @var TemplateResolver
-	 */
-	private $original_template_resolver;
-
-	/**
 	 * @var EngineCollection
 	 */
 	private $engines;
@@ -38,15 +33,34 @@ class Renderer
 	protected $template_resolver;
 
 	/**
-	 * Initializes the {@link $template_resolver} and {@link $engines} properties.
-	 *
 	 * @param TemplateResolver $template_resolver
 	 * @param EngineCollection $engines
 	 */
 	public function __construct(TemplateResolver $template_resolver, EngineCollection $engines)
 	{
-		$this->original_template_resolver = $template_resolver;
+		$this->template_resolver = $template_resolver;
 		$this->engines = $engines;
+	}
+
+	/**
+	 * Resolve a template pathname from its name and type.
+	 *
+	 * @param string $name
+	 *
+	 * @return string Template pathname.
+	 *
+	 * @throws TemplateNotFound if the template pathname cannot be resolved.
+	 */
+	public function resolve_template($name)
+	{
+		$template_pathname = $this->template_resolver->resolve($name, $this->engines->extensions, $tried);
+
+		if (!$template_pathname)
+		{
+			throw new TemplateNotFound("There is no template matching `$name`.", $tried);
+		}
+
+		return $template_pathname;
 	}
 
 	/**
@@ -59,7 +73,7 @@ class Renderer
 	 */
 	public function render($target_or_options, array $additional_options = [])
 	{
-		if (!$target_or_options)
+		if (!$target_or_options && !$additional_options)
 		{
 			return null;
 		}
@@ -67,8 +81,6 @@ class Renderer
 		$options = $this->resolve_options($target_or_options, $additional_options);
 		$content = $options[self::OPTION_CONTENT];
 		$variables = $options[self::OPTION_LOCALS];
-
-		$this->template_resolver = clone $this->original_template_resolver;
 
 		#
 
@@ -83,7 +95,7 @@ class Renderer
 
 		if ($template)
 		{
-			$content = $this->render_template($template, 'template', $content, $variables);
+			$content = $this->render_template($template, $content, $variables);
 		}
 
 		$template = $options[self::OPTION_LAYOUT];
@@ -108,7 +120,7 @@ class Renderer
 	{
 		$template = $this->resolve_template_name($template)->as_partial;
 
-		return $this->render_template($template, 'partial', null, $variables);
+		return $this->render_template($template, null, $variables);
 	}
 
 	/**
@@ -123,24 +135,33 @@ class Renderer
 	{
 		$template = $this->resolve_template_name($template)->as_layout;
 
-		return $this->render_template($template, 'layout', null, $variables);
+		return $this->render_template($template, null, $variables);
 	}
 
 	/**
 	 * Renders template.
 	 *
 	 * @param string $template
-	 * @param string $type
 	 * @param string $content
 	 * @param array $variables
 	 *
 	 * @return string
 	 */
-	protected function render_template($template, $type, $content, $variables)
+	protected function render_template($template, $content, $variables)
 	{
-		$template_pathname = $this->resolve_template_pathname($template, $type);
+		return $this->engines->render($this->resolve_template($template), $content, $variables);
+	}
 
-		return $this->engines->render($template_pathname, $content, $variables);
+	/**
+	 * Resolves template name.
+	 *
+	 * @param mixed $content
+	 *
+	 * @return TemplateName
+	 */
+	protected function resolve_template_name($content)
+	{
+		return TemplateName::from($content);
 	}
 
 	/**
@@ -185,37 +206,5 @@ class Renderer
 			self::OPTION_LOCALS => []
 
 		];
-	}
-
-	/**
-	 * Resolves template name.
-	 *
-	 * @param mixed $content
-	 *
-	 * @return TemplateName
-	 */
-	protected function resolve_template_name($content)
-	{
-		return TemplateName::from($content);
-	}
-
-	/**
-	 * @param string $template
-	 * @param string $type One of "template", "partial", "layout".
-	 *
-	 * @return string Template pathname.
-	 *
-	 * @throws TemplateNotFound if the template pathname cannot be resolved.
-	 */
-	protected function resolve_template_pathname($template, $type)
-	{
-		$template_pathname = $this->template_resolver->resolve($template, $this->engines->extensions, $tried);
-
-		if (!$template_pathname)
-		{
-			throw new TemplateNotFound("There is no $type matching `$template`.", $tried);
-		}
-
-		return $template_pathname;
 	}
 }
