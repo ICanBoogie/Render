@@ -20,7 +20,7 @@ the `get_engines` helper. When it is first created the `EngineCollection::alter`
 [EngineCollection\AlterEvent][] is fired. Event hooks may use this event to add rendering engines
 or replace the engine collection altogether.
 
-**Note:** Currently, the package only provides an engine to render PHP templates with the extension
+> **Note:** Currently, the package only provides an engine to render PHP templates with the extension
 `.phtml`, but third parties, such as the [Patron engine][], can easily provide others.
 
 The following example demonstrates how the **Patron** engine can be added to handle `.patron`
@@ -30,10 +30,11 @@ extensions:
 <?php
 
 use ICanBoogie\Render\EngineCollection;
+use Patron\RenderSupport\PatronEngine;
 
 $events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->instance['.patron'] = 'Patron\RenderSupport\PatronEngine';
+	$event->instance['.patron'] = PatronEngine::class;
 
 });
 ```
@@ -100,7 +101,7 @@ its simple name/file mapping. The [ModuleTemplateResolver][] or
 the [ApplicationTemplateResolver][] decorators are great examples. The [TemplateResolverTrait][]
 trait may provide support  for implementing such a decorator.
 
-**Note:** The decorator must implement the [TemplateResolver][] interface.
+> **Note:** The decorator must implement the [TemplateResolver][] interface.
 
 The following example demonstrates how to replace the template resolver with a decorator:
 
@@ -151,9 +152,10 @@ $events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
 
 The following helpers are defined:
 
-- `get_engines`: Returns a shared engine collection.
-- `get_template_resolver`: Returns a shared template resolver.
-- `get_renderer`: Returns a shared renderer.
+- `get_engines()`: Returns a shared engine collection.
+- `get_template_resolver()`: Returns a shared template resolver.
+- `get_renderer()`: Returns a shared renderer.
+- `render()`: Renders using the default renderer.
 
 
 

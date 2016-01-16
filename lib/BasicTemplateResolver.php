@@ -18,7 +18,23 @@ class BasicTemplateResolver implements TemplateResolver
 {
 	use TemplateResolverTrait;
 
+	/**
+	 * An array of key/value pairs, where _key_ if a pathname and _value_ its weight.
+	 *
+	 * @var array
+	 */
 	protected $paths = [];
+
+	/**
+	 * @param array $paths
+	 */
+	public function __construct(array $paths = [])
+	{
+		foreach ($paths as $path)
+		{
+			$this->add_path($path);
+		}
+	}
 
 	/**
 	 * @inheritdoc

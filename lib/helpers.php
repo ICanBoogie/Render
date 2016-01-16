@@ -75,3 +75,16 @@ function get_renderer()
 
     return $renderer;
 }
+
+/**
+ * Renders a target or options using the default renderer.
+ *
+ * @param mixed $target_or_options The target or options to render.
+ * @param array $additional_options Additional render options.
+ *
+ * @return string
+ */
+function render($target_or_options, array $additional_options = [])
+{
+    return get_renderer()->render($target_or_options, $additional_options);
+}

@@ -57,7 +57,7 @@ class Renderer
 
 		if (!$template_pathname)
 		{
-			throw new TemplateNotFound("There is no template matching `$name`.", $tried);
+			throw new TemplateNotFound("There is no template matching `$name`.", $tried ?: []);
 		}
 
 		return $template_pathname;
@@ -87,8 +87,8 @@ class Renderer
 		$template = $options[self::OPTION_PARTIAL];
 
 		if ($template)
-		{
-			$content = $this->render_partial($template, $variables);
+ 	 	{
+			$content = $this->render_partial($template, $content, $variables);
 		}
 
 		$template = $options[self::OPTION_TEMPLATE];
@@ -112,15 +112,18 @@ class Renderer
 	 * Renders partial.
 	 *
 	 * @param string $template
+	 * @param mixed $content
 	 * @param array $variables
 	 *
 	 * @return string
 	 */
-	protected function render_partial($template, $variables)
+	protected function render_partial($template, $content, $variables)
 	{
-		$template = $this->resolve_template_name($template)->as_partial;
-
-		return $this->render_template($template, null, $variables);
+		return $this->render_template(
+			$this->resolve_template_name($template)->as_partial,
+			$content,
+			$variables
+		);
 	}
 
 	/**
@@ -133,23 +136,29 @@ class Renderer
 	 */
 	protected function render_layout($template, array $variables)
 	{
-		$template = $this->resolve_template_name($template)->as_layout;
-
-		return $this->render_template($template, null, $variables);
+		return $this->render_template(
+			$this->resolve_template_name($template)->as_layout,
+			null,
+			$variables
+		);
 	}
 
 	/**
 	 * Renders template.
 	 *
-	 * @param string $template
+	 * @param string $name
 	 * @param string $content
 	 * @param array $variables
 	 *
 	 * @return string
 	 */
-	protected function render_template($template, $content, $variables)
+	protected function render_template($name, $content, $variables)
 	{
-		return $this->engines->render($this->resolve_template($template), $content, $variables);
+		return $this->engines->render(
+			$this->resolve_template($name),
+			$content,
+			$variables
+		);
 	}
 
 	/**
