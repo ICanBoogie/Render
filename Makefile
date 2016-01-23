@@ -1,7 +1,7 @@
 # customization
 
 PACKAGE_NAME = icanboogie/render
-PACKAGE_VERSION = 0.5.x-dev
+PACKAGE_VERSION = 0.5
 
 # do not edit the following lines
 
