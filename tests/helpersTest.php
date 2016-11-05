@@ -18,7 +18,7 @@ class helpersTest extends \PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		EventCollectionProvider::using(function() {
+		EventCollectionProvider::define(function() {
 
 			static $collection;
 

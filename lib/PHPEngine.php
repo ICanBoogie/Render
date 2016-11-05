@@ -23,6 +23,8 @@ class PHPEngine implements Engine
 	{
 		$f = \Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 
+			unset($__VARIABLES__['this']);
+
 			extract($__VARIABLES__);
 
 			require $__TEMPLATE_PATHNAME__;

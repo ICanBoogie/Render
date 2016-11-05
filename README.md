@@ -1,10 +1,10 @@
 # Render
 
 [![Release](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://github.com/ICanBoogie/Render/releases)
-[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/master.svg)](http://travis-ci.org/ICanBoogie/Render)
+[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/0.6.svg)](http://travis-ci.org/ICanBoogie/Render)
 [![HHVM](https://img.shields.io/hhvm/icanboogie/render.svg)](http://hhvm.h4cc.de/package/icanboogie/render)
-[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render/master.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/master.svg)](https://coveralls.io/r/ICanBoogie/Render)
+[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render/0.6.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/0.6.svg)](https://coveralls.io/r/ICanBoogie/Render)
 [![Packagist](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
 
 An API to render templates with a variety of template engines.
@@ -179,7 +179,7 @@ The following helpers are defined:
 
 ## Requirements
 
-The package requires PHP 5.5 or later.
+The package requires PHP 5.6 or later.
 
 
 
@@ -230,8 +230,8 @@ with the `make clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/master.svg)](https://travis-ci.org/ICanBoogie/Render)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/master.svg)](https://coveralls.io/r/ICanBoogie/Render)
+[![Build Status](https://img.shields.io/travis/ICanBoogie/Render/0.6.svg)](https://travis-ci.org/ICanBoogie/Render)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render/0.6.svg)](https://coveralls.io/r/ICanBoogie/Render)
 
 
 
@@ -245,14 +245,14 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 
 
-[ApplicationTemplateResolver]: https://icanboogie.org/api/bind-render/0.4/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
+[ApplicationTemplateResolver]: https://icanboogie.org/api/bind-render/0.5/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
 [ModuleTemplateResolver]:      https://icanboogie.org/api/module/2.3/class-ICanBoogie.Module.ModuleTemplateResolver.html
-[documentation]:               https://icanboogie.org/api/render/0.5/
-[EngineCollection\AlterEvent]: https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
-[TemplateResolver\AlterEvent]: https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[Renderer]:                    https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.Renderer.AlterEvent.html
-[Renderer\AlterEvent]:         https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.Renderer.AlterEvent.html
-[TemplateResolver]:            https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[TemplateResolverTrait]:       https://icanboogie.org/api/render/0.5/class-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
+[documentation]:               https://icanboogie.org/api/render/0.6/
+[EngineCollection\AlterEvent]: https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[TemplateResolver\AlterEvent]: https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[Renderer]:                    https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[Renderer\AlterEvent]:         https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[TemplateResolver]:            https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[TemplateResolverTrait]:       https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
 [ICanBoogie]:                  https://github.com/ICanBoogie\ICanBoogie
 [Patron engine]:               https://github.com/Icybee/PatronViewSupport
