@@ -32,6 +32,8 @@ extensions:
 use ICanBoogie\Render\EngineCollection;
 use Patron\RenderSupport\PatronEngine;
 
+/* @var $events \ICanBoogie\EventCollection */
+
 $events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
 	$event->instance['.patron'] = PatronEngine::class;
@@ -45,6 +47,8 @@ The following example demonstrates how to replace the engine collection with a d
 <?php
 
 use ICanBoogie\Render\EngineCollection;
+
+/* @var $events \ICanBoogie\EventCollection */
 
 $events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
@@ -83,11 +87,13 @@ The following example demonstrates how to add template paths:
 use ICanBoogie\Render\TemplateResolver;
 use ICanBoogie\Render\BasicTemplateResolver;
 
+/* @var $events \ICanBoogie\EventCollection */
+
 $events->attach(function(TemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
 	$target->add_paths(__DIR__ . '/my/templates/path);
 
-};
+});
 ```
 
 
@@ -110,11 +116,13 @@ The following example demonstrates how to replace the template resolver with a d
 
 use ICanBoogie\Render\BasicTemplateResolver;
 
+/* @var $events \ICanBoogie\EventCollection */
+
 $events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
 	$event->instance = new MyTemplateResolverDecorator($event->instance);
 
-};
+});
 ```
 
 
@@ -136,6 +144,8 @@ The following example demonstrates how to replace the renderer:
 <?php
 
 use ICanBoogie\Render\Renderer;
+
+/* @var $events \ICanBoogie\EventCollection */
 
 $events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
 
