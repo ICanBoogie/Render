@@ -12,7 +12,7 @@
 namespace ICanBoogie\Render;
 
 /**
- * An interface for template engines.
+ * An optional interface for template engines.
  */
 interface Engine
 {
@@ -35,5 +35,5 @@ interface Engine
 	 *
 	 * @return mixed
 	 */
-	public function render($template_pathname, $thisArg, array $variables, array $options = []);
+	public function __invoke($template_pathname, $thisArg, array $variables, array $options = []);
 }

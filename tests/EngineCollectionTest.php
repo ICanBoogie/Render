@@ -114,7 +114,7 @@ class EngineCollectionTest extends \PHPUnit_Framework_TestCase
 			->getMock();
 		$engine_stub
 			->expects($this->once())
-			->method('render')
+			->method('__invoke')
 			->with($template, $thisArg, $variables, $options)
 			->willReturn($expected);
 

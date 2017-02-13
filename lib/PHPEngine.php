@@ -19,7 +19,7 @@ class PHPEngine implements Engine
 	/**
 	 * @inheritdoc
 	 */
-	public function render($template_pathname, $thisArg, array $variables, array $options = [])
+	public function __invoke($template_pathname, $thisArg, array $variables, array $options = [])
 	{
 		$f = \Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 

@@ -24,7 +24,7 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 	{
 		$engine = new PHPEngine;
 		$pathname = self::$root . 'var_template_pathname.php';
-		$rc = $engine->render($pathname, null, []);
+		$rc = $engine($pathname, null, []);
 
 		$this->assertEquals($pathname, $rc);
 	}
@@ -32,7 +32,7 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 	public function test_bind_array()
 	{
 		$engine = new PHPEngine;
-		$rc = $engine->render(self::$root . 'bind_array.php', [ 1, 2, 3 ], []);
+		$rc = $engine(self::$root . 'bind_array.php', [ 1, 2, 3 ], []);
 
 		$this->assertEquals('ArrayObject:[1, 2, 3]', $rc);
 	}
@@ -40,7 +40,7 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 	public function test_bind_object()
 	{
 		$engine = new PHPEngine;
-		$rc = $engine->render(self::$root . 'bind_object.php', $this, []);
+		$rc = $engine(self::$root . 'bind_object.php', $this, []);
 
 		$this->assertEquals(__CLASS__, $rc);
 	}
@@ -49,7 +49,7 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 	{
 		$engine = new PHPEngine;
 		$string = "string" . uniqid();
-		$rc = $engine->render(self::$root . 'bind_string.php', $string, []);
+		$rc = $engine(self::$root . 'bind_string.php', $string, []);
 
 		$this->assertEquals($string, $rc);
 	}
@@ -62,7 +62,7 @@ class PHPEngineTest extends \PHPUnit_Framework_TestCase
 
 		try
 		{
-			$engine->render(self::$root . 'with_exception.php', $exception, [ ]);
+			$engine(self::$root . 'with_exception.php', $exception, [ ]);
 
 			$this->fail("Expected exception");
 		}

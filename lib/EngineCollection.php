@@ -36,7 +36,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	}
 
 	/**
-	 * @var Engine[]
+	 * @var Engine[]|callable[]
 	 */
 	private $instances;
 
@@ -113,7 +113,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 *
 	 * @param $pathname
 	 *
-	 * @return Engine|bool An engine or `false` if none matches the extension.
+	 * @return Engine|callable|bool An engine or `false` if none matches the extension.
 	 */
 	public function resolve_engine($pathname)
 	{
@@ -155,6 +155,6 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 			throw new EngineNotAvailable("There is no engine available to render template $template_pathname.");
 		}
 
-		return $engine->render($template_pathname, $thisArg, $variables, $options);
+		return $engine($template_pathname, $thisArg, $variables, $options);
 	}
 }
