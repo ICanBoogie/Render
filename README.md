@@ -245,8 +245,8 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 
 
-[ApplicationTemplateResolver]: https://icanboogie.org/api/bind-render/0.5/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
-[ModuleTemplateResolver]:      https://icanboogie.org/api/module/2.3/class-ICanBoogie.Module.ModuleTemplateResolver.html
+[ApplicationTemplateResolver]: https://icanboogie.org/api/bind-render/0.6/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
+[ModuleTemplateResolver]:      https://icanboogie.org/api/module/3.0/class-ICanBoogie.Module.ModuleTemplateResolver.html
 [documentation]:               https://icanboogie.org/api/render/0.6/
 [EngineCollection\AlterEvent]: https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
 [TemplateResolver\AlterEvent]: https://icanboogie.org/api/render/0.6/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
