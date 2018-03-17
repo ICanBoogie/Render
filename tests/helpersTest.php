@@ -14,7 +14,7 @@ namespace ICanBoogie\Render;
 use ICanBoogie\EventCollection;
 use ICanBoogie\EventCollectionProvider;
 
-class helpersTest extends \PHPUnit_Framework_TestCase
+class helpersTest extends \PHPUnit\Framework\TestCase
 {
 	public function setUp()
 	{

@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateNotFoundTest extends \PHPUnit_Framework_TestCase
+class TemplateNotFoundTest extends \PHPUnit\Framework\TestCase
 {
     public function test_get_tried()
     {

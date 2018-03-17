@@ -15,7 +15,7 @@ use ICanBoogie\Render\TemplateResolverDecoratorTest\A;
 use ICanBoogie\Render\TemplateResolverDecoratorTest\B;
 use ICanBoogie\Render\TemplateResolverDecoratorTest\C;
 
-class TemplateResolverDecoratorTest extends \PHPUnit_Framework_TestCase
+class TemplateResolverDecoratorTest extends \PHPUnit\Framework\TestCase
 {
 	public function test_find_decorated()
 	{

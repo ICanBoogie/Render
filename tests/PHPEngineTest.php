@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-class PHPEngineTest extends \PHPUnit_Framework_TestCase
+class PHPEngineTest extends \PHPUnit\Framework\TestCase
 {
 	static private $root;
 

@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-class EngineCollectionTest extends \PHPUnit_Framework_TestCase
+class EngineCollectionTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var EngineCollection

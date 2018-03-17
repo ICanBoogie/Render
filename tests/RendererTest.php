@@ -2,7 +2,7 @@
 
 namespace ICanBoogie\Render;
 
-class RendererTest extends \PHPUnit_Framework_TestCase
+class RendererTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var TemplateResolver

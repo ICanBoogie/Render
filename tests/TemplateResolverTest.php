@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateResolverTest extends \PHPUnit_Framework_TestCase
+class TemplateResolverTest extends \PHPUnit\Framework\TestCase
 {
 	static private $templates_root;
 

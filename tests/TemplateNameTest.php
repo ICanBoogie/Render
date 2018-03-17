@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateNameTest extends \PHPUnit_Framework_TestCase
+class TemplateNameTest extends \PHPUnit\Framework\TestCase
 {
 	public function test_from_intance()
 	{
