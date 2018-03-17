@@ -2,7 +2,10 @@
 	"name": "icanboogie/render",
 	"type": "library",
 	"description": "Renders templates with a variety of template engines.",
-	"keywords": [ "render", "decorate" ],
+	"keywords": [
+		"render",
+		"decorate"
+	],
 	"homepage": "https://icanboogie.org/",
 	"license": "BSD-3-Clause",
 	"authors": [
@@ -10,7 +13,7 @@
 			"name": "Olivier Laviale",
 			"email": "olivier.laviale@gmail.com",
 			"homepage": "https://olvlvl.com/",
-			"role" : "Developer"
+			"role": "Developer"
 		}
 	],
 	"support": {
@@ -18,6 +21,8 @@
 		"source": "https://github.com/ICanBoogie/Render"
 	},
 	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"prefer-dist": true,
 	"require": {
 		"php": ">=5.6",
 		"icanboogie/event": "^3.0"
@@ -26,6 +31,8 @@
 		"psr-4": {
 			"ICanBoogie\\Render\\": "lib/"
 		},
-		"files": [ "lib/helpers.php" ]
+		"files": [
+			"lib/helpers.php"
+		]
 	}
 }
