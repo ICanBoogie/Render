@@ -21,7 +21,7 @@ interface TemplateResolverDecorator extends TemplateResolver
 	 *
 	 * @param string $class Class of the decorated resolver to find.
 	 *
-	 * @return TemplateResolver
+	 * @return TemplateResolver|null
 	 */
-	public function find_renderer($class);
+	public function find_renderer(string $class): ?TemplateResolver;
 }

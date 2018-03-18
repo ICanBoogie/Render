@@ -19,29 +19,29 @@ class PHPEngine implements Engine
 	/**
 	 * @inheritdoc
 	 */
-	public function __invoke($template_pathname, $thisArg, array $variables, array $options = [])
+	public function __invoke($template_pathname, $thisArg, array $variables, array $options = []): string
 	{
 		$f = \Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 
 			unset($__VARIABLES__['this']);
 
-			extract($__VARIABLES__);
+			\extract($__VARIABLES__);
 
 			require $__TEMPLATE_PATHNAME__;
 
 		}, $this->ensure_is_object($thisArg));
 
-		ob_start();
+		\ob_start();
 
 		try
 		{
 			$f($template_pathname, [ self::VAR_TEMPLATE_PATHNAME => $template_pathname ] + $variables);
 
-			return ob_get_clean();
+			return \ob_get_clean();
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
-			ob_end_clean();
+			\ob_end_clean();
 
 			throw $e;
 		}
@@ -54,18 +54,18 @@ class PHPEngine implements Engine
 	 * - `value` is an array, an `ArrayObject` instance is returned.
 	 * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
 	 * @return \ArrayObject|StringObject
 	 */
-	protected function ensure_is_object($value)
+	private function ensure_is_object($value)
 	{
-		if (is_object($value))
+		if (\is_object($value))
 		{
 			return $value;
 		}
 
-		if (is_array($value))
+		if (\is_array($value))
 		{
 			return new \ArrayObject($value);
 		}

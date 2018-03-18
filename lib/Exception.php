@@ -23,7 +23,7 @@ namespace ICanBoogie\Render;
  * {
  *     // a render exception
  * }
- * catch (\Exception $e
+ * catch (\Throwable $e
  * {
  *     // another type of exception
  * }

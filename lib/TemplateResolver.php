@@ -25,5 +25,5 @@ interface TemplateResolver
 	 *
 	 * @return string|false The pathname to the matching template or `false` if none match.
 	 */
-	public function resolve($name, array $extensions, &$tried = []);
+	public function resolve(string $name, array $extensions, array &$tried = []);
 }

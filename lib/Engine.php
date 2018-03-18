@@ -33,7 +33,7 @@ interface Engine
 	 * @param array $variables Variable to render the template with.
 	 * @param array $options Miscellaneous options.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
-	public function __invoke($template_pathname, $thisArg, array $variables, array $options = []);
+	public function __invoke(string $template_pathname, $thisArg, array $variables, array $options = []): string;
 }

@@ -27,12 +27,9 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 */
 	private $engines;
 
-	/**
-	 * @return array
-	 */
-	protected function get_extensions()
+	protected function get_extensions(): array
 	{
-		return array_keys($this->engines);
+		return \array_keys($this->engines);
 	}
 
 	/**
@@ -73,7 +70,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 		{
 			$instance = $this->engines[$extension];
 
-			if (is_string($instance))
+			if (\is_string($instance))
 			{
 				$instance = new $instance;
 			}
@@ -111,13 +108,13 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	/**
 	 * Resolves the engine to use from the specified pathname.
 	 *
-	 * @param $pathname
+	 * @param string $pathname
 	 *
 	 * @return Engine|callable|bool An engine or `false` if none matches the extension.
 	 */
-	public function resolve_engine($pathname)
+	public function resolve_engine(string $pathname)
 	{
-		$extension = pathinfo($pathname, PATHINFO_EXTENSION);
+		$extension = \pathinfo($pathname, PATHINFO_EXTENSION);
 
 		if (!$extension)
 		{
@@ -146,7 +143,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 *
 	 * @throws EngineNotAvailable when there is no engine available to render the template.
 	 */
-	public function render($template_pathname, $thisArg, $variables, array $options = [])
+	public function render(string $template_pathname, $thisArg, array $variables = [], array $options = [])
 	{
 		$engine = $this->resolve_engine($template_pathname);
 

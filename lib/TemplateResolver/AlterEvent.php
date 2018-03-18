@@ -30,17 +30,11 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
-	/**
-	 * @return TemplateResolver
-	 */
-	protected function get_instance()
+	protected function get_instance(): TemplateResolver
 	{
 		return $this->instance;
 	}
 
-	/**
-	 * @param TemplateResolver $template_resolver
-	 */
 	protected function set_instance(TemplateResolver $template_resolver)
 	{
 		$this->instance = $template_resolver;

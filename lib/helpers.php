@@ -16,7 +16,7 @@ namespace ICanBoogie\Render;
  *
  * @return EngineCollection
  */
-function get_engines()
+function get_engines(): EngineCollection
 {
     static $engines;
 
@@ -24,7 +24,7 @@ function get_engines()
     {
         $engines = new EngineCollection([
 
-            '.phtml' => 'ICanBoogie\Render\PHPEngine'
+            '.phtml' => PHPEngine::class
 
         ]);
 
@@ -37,9 +37,9 @@ function get_engines()
 /**
  * Returns a shared template resolver.
  *
- * @return BasicTemplateResolver
+ * @return TemplateResolver
  */
-function get_template_resolver()
+function get_template_resolver(): TemplateResolver
 {
     static $template_resolver;
 
@@ -62,7 +62,7 @@ function get_template_resolver()
  *
  * @return Renderer
  */
-function get_renderer()
+function get_renderer(): Renderer
 {
     static $renderer;
 
@@ -84,7 +84,7 @@ function get_renderer()
  *
  * @return string
  */
-function render($target_or_options, array $additional_options = [])
+function render($target_or_options, array $additional_options = []): string
 {
     return get_renderer()->render($target_or_options, $additional_options);
 }

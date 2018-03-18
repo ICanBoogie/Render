@@ -28,22 +28,22 @@ trait TemplateResolverTrait
 	 *
 	 * @return array A collection of candidate template pathnames.
 	 */
-	protected function resolve_tries(array $paths, $name, array $extensions)
+	protected function resolve_tries(array $paths, string $name, array $extensions): array
 	{
-		$extension = pathinfo($name, PATHINFO_EXTENSION);
+		$extension = \pathinfo($name, PATHINFO_EXTENSION);
 
-		if ($extension && in_array('.' . $extension, $extensions))
+		if ($extension && \in_array('.' . $extension, $extensions))
 		{
-			$name = substr($name, 0, -strlen($extension) - 1);
+			$name = \substr($name, 0, -\strlen($extension) - 1);
 		}
 
 		$tries = [];
-		$dirname = dirname($name);
-		$basename = basename($name);
+		$dirname = \dirname($name);
+		$basename = \basename($name);
 
 		foreach ($paths as $path)
 		{
-			$parent_dir = basename(dirname($path));
+			$parent_dir = \basename(\dirname($path));
 
 			foreach ($extensions as $extension)
 			{
@@ -75,13 +75,13 @@ trait TemplateResolverTrait
 	 *
 	 * @return string|null
 	 */
-	protected function resolve_path(array $tries, &$tried)
+	protected function resolve_path(array $tries, array &$tried): ?string
 	{
 		foreach ($tries as $pathname)
 		{
 			$tried[] = $pathname;
 
-			if (file_exists($pathname))
+			if (\file_exists($pathname))
 			{
 				return $pathname;
 			}

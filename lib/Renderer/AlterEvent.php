@@ -30,18 +30,12 @@ class AlterEvent extends Event
 	 */
 	private $instance;
 
-	/**
-	 * @return Renderer
-	 */
-	protected function get_instance()
+	protected function get_instance(): Renderer
 	{
 		return $this->instance;
 	}
 
-	/**
-	 * @param Renderer $renderer
-	 */
-	protected function set_instance(Renderer $renderer)
+	protected function set_instance(Renderer $renderer): void
 	{
 		$this->instance = $renderer;
 	}

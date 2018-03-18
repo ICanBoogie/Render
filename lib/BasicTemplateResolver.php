@@ -39,7 +39,7 @@ class BasicTemplateResolver implements TemplateResolver
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve($name, array $extensions, &$tried = [])
+	public function resolve(string $name, array $extensions, array &$tried = [])
 	{
 		return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
 	}
@@ -54,9 +54,9 @@ class BasicTemplateResolver implements TemplateResolver
 	 *
 	 * @return string|false The real path, or `false` if the path was not added.
 	 */
-	public function add_path($path, $weight = 0)
+	public function add_path(string $path, int $weight = 0)
 	{
-		$path = realpath($path);
+		$path = \realpath($path);
 
 		if (!$path)
 		{
@@ -74,8 +74,8 @@ class BasicTemplateResolver implements TemplateResolver
 	 *
 	 * @return array
 	 */
-	public function get_paths()
+	public function get_paths(): array
 	{
-		return array_keys(array_reverse($this->paths));
+		return \array_keys(\array_reverse($this->paths));
 	}
 }

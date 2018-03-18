@@ -36,7 +36,7 @@ class TemplateName
 	 *
 	 * @return TemplateName
 	 */
-	static public function from($source)
+	static public function from($source): self
 	{
 		if ($source instanceof self)
 		{
@@ -65,14 +65,14 @@ class TemplateName
 	 *
 	 * @return string
 	 */
-	static public function normalize($name)
+	static public function normalize(string $name): string
 	{
-		$basename = basename($name);
-		$dirname = $basename != $name ? dirname($name) : null;
+		$basename = \basename($name);
+		$dirname = $basename != $name ? \dirname($name) : null;
 
-		if (in_array($basename{0}, [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]))
+		if (\in_array($basename{0}, [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]))
 		{
-			$basename = substr($basename, 1);
+			$basename = \substr($basename, 1);
 		}
 
 		if ($dirname)
@@ -83,6 +83,9 @@ class TemplateName
 		return $basename;
 	}
 
+	/**
+	 * @var string
+	 */
 	private $name;
 
 	/**
@@ -90,7 +93,7 @@ class TemplateName
 	 *
 	 * @return string
 	 */
-	protected function get_as_template()
+	protected function get_as_template(): string
 	{
 		return $this->name;
 	}
@@ -100,7 +103,7 @@ class TemplateName
 	 *
 	 * @return string
 	 */
-	protected function get_as_partial()
+	protected function get_as_partial(): string
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
 	}
@@ -110,7 +113,7 @@ class TemplateName
 	 *
 	 * @return string
 	 */
-	protected function get_as_layout()
+	protected function get_as_layout(): string
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
 	}
@@ -122,7 +125,7 @@ class TemplateName
 	 *
 	 * @return string
 	 */
-	public function with_prefix($prefix)
+	public function with_prefix(string $prefix): string
 	{
 		$name = $this->name;
 
@@ -131,8 +134,8 @@ class TemplateName
 			return $name;
 		}
 
-		$basename = basename($name);
-		$dirname = $basename != $name ? dirname($name) : null;
+		$basename = \basename($name);
+		$dirname = $basename != $name ? \dirname($name) : null;
 
 		$name = $prefix . $basename;
 
@@ -149,9 +152,9 @@ class TemplateName
 	 *
 	 * @param string $name
 	 */
-	protected function __construct($name)
+	protected function __construct(string $name)
 	{
-		$this->name = (string) $name;
+		$this->name = $name;
 	}
 
 	/**

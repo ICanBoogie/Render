@@ -27,21 +27,18 @@ class TemplateNotFound extends \LogicException implements Exception
      */
     private $tried;
 
-    /**
-     * @return array
-     */
-    protected function get_tried()
+    protected function get_tried(): array
     {
         return $this->tried;
     }
 
-    public function __construct($message, array $tried, $code = 404, \Exception $exception = null)
+    public function __construct(string $message, array $tried, int $code = 404, \Throwable $exception = null)
     {
         $this->tried = $tried;
 
         if ($tried)
         {
-            $tried = implode("\n", array_map(function ($v) { return "- $v"; }, $tried));
+            $tried = \implode("\n", \array_map(function ($v) { return "- $v"; }, $tried));
             $message .= " The following files were tried:\n\n" . $tried;
         }
         else

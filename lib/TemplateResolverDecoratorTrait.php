@@ -19,13 +19,8 @@ trait TemplateResolverDecoratorTrait
 	/**
 	 * @var TemplateResolver
 	 */
-	protected $template_resolver;
+	private $template_resolver;
 
-	/**
-	 * Initializes the {@link $template_resolver} property.
-	 *
-	 * @param TemplateResolver $template_resolver
-	 */
 	public function __construct(TemplateResolver $template_resolver)
 	{
 		$this->template_resolver = $template_resolver;
@@ -49,13 +44,13 @@ trait TemplateResolverDecoratorTrait
 	 */
 	public function __call($method, $arguments)
 	{
-		return call_user_func_array([ $this->template_resolver, $method ], $arguments);
+		return $this->template_resolver->$method(...$arguments);
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function find_renderer($class)
+	public function find_renderer(string $class): ?TemplateResolver
 	{
 		if ($this instanceof $class)
 		{
