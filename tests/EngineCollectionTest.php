@@ -11,19 +11,22 @@
 
 namespace ICanBoogie\Render;
 
-class EngineCollectionTest extends \PHPUnit\Framework\TestCase
+use ICanBoogie\Render\EngineCollectionTest\PHTMLEngine;
+use PHPUnit\Framework\TestCase;
+
+class EngineCollectionTest extends TestCase
 {
 	/**
 	 * @var EngineCollection
 	 */
 	static private $instance;
 
-	static public function setupBeforeClass()
+	static public function setupBeforeClass(): void
 	{
 		self::$instance = new EngineCollection([
 
-			'.php' => 'ICanBoogie\Render\PHPEngine',
-			'.phtml' => 'ICanBoogie\Render\EngineCollectionTest\PHTMLEngine'
+			'.php' => PHPEngine::class,
+			'.phtml' => PHTMLEngine::class
 
 		]);
 	}
@@ -35,25 +38,24 @@ class EngineCollectionTest extends \PHPUnit\Framework\TestCase
 
 	public function test_offsetGet()
 	{
-		$this->assertInstanceOf('ICanBoogie\Render\PHPEngine', self::$instance['.php']);
+		$this->assertInstanceOf(PHPEngine::class, self::$instance['.php']);
 	}
 
-	/**
-	 * @expectedException \ICanBoogie\Render\EngineNotDefined
-	 */
 	public function test_offsetGet_with_undefined()
 	{
+		$this->expectException(EngineNotDefined::class);
+
 		self::$instance['.undefined'];
 	}
 
 	public function test_offsetSet()
 	{
 		$instance = new EngineCollection;
-		$instance['.php'] = 'ICanBoogie\Render\PHPEngine';
+		$instance['.php'] = PHPEngine::class;
 		$instance['.phtml'] = new PHPEngine;
 
-		$this->assertInstanceOf('ICanBoogie\Render\PHPEngine', $instance['.php']);
-		$this->assertInstanceOf('ICanBoogie\Render\PHPEngine', $instance['.phtml']);
+		$this->assertInstanceOf(PHPEngine::class, $instance['.php']);
+		$this->assertInstanceOf(PHPEngine::class, $instance['.phtml']);
 	}
 
 	public function test_offsetExists()
@@ -74,30 +76,28 @@ class EngineCollectionTest extends \PHPUnit\Framework\TestCase
 	{
 		$instance = new EngineCollection([
 
-			'.php' => 'ICanBoogie\Render\PHPEngine'
+			'.php' => PHPEngine::class
 
 		]);
 
 		foreach ($instance as $extension => $engine)
 		{
 			$this->assertEquals('.php', $extension);
-			$this->assertEquals('ICanBoogie\Render\PHPEngine', $engine);
+			$this->assertEquals(PHPEngine::class, $engine);
 		}
 	}
 
 	public function test_resolve_engine()
 	{
-		$this->assertInstanceOf('ICanBoogie\Render\PHPEngine', self::$instance->resolve_engine('testing.php'));
-		$this->assertInstanceOf('ICanBoogie\Render\EngineCollectionTest\PHTMLEngine', self::$instance->resolve_engine('testing.phtml'));
+		$this->assertInstanceOf(PHPEngine::class, self::$instance->resolve_engine('testing.php'));
+		$this->assertInstanceOf(PHTMLEngine::class, self::$instance->resolve_engine('testing.phtml'));
 		$this->assertFalse(self::$instance->resolve_engine('testing.madonna'));
 		$this->assertFalse(self::$instance->resolve_engine('no-extension'));
 	}
 
-	/**
-	 * @expectedException \ICanBoogie\Render\EngineNotAvailable
-	 */
 	public function test_render_engine_not_available()
 	{
+		$this->expectException(EngineNotAvailable::class);
 		self::$instance->render("template.twig", null, []);
 	}
 
@@ -110,7 +110,7 @@ class EngineCollectionTest extends \PHPUnit\Framework\TestCase
 		$expected = 'RENDERED';
 
 		$engine_stub = $this
-			->getMockBuilder('ICanBoogie\Render\Engine')
+			->getMockBuilder(Engine::class)
 			->getMock();
 		$engine_stub
 			->expects($this->once())

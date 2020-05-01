@@ -21,36 +21,28 @@ use ICanBoogie\Render\Renderer;
  *
  * @property Renderer $instance
  */
-class AlterEvent extends Event
+final class AlterEvent extends Event
 {
 	/**
 	 * Reference to the target instance.
 	 *
 	 * @var Renderer
+     *
+     * @uses get_instance
+     * @uses set_instance
 	 */
 	private $instance;
 
-	/**
-	 * @return Renderer
-	 */
-	protected function get_instance()
+	protected function get_instance(): Renderer
 	{
 		return $this->instance;
 	}
 
-	/**
-	 * @param Renderer $renderer
-	 */
-	protected function set_instance(Renderer $renderer)
+	protected function set_instance(Renderer $renderer): void
 	{
 		$this->instance = $renderer;
 	}
 
-	/**
-	 * Initializes the {@link $instance} property.
-	 *
-	 * @param Renderer $target
-	 */
 	public function __construct(Renderer &$target)
 	{
 		$this->instance = &$target;

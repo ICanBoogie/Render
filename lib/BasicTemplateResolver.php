@@ -11,6 +11,11 @@
 
 namespace ICanBoogie\Render;
 
+use function array_keys;
+use function array_reverse;
+use function realpath;
+use const DIRECTORY_SEPARATOR;
+
 /**
  * Resolves templates pathname.
  */
@@ -21,12 +26,12 @@ class BasicTemplateResolver implements TemplateResolver
 	/**
 	 * An array of key/value pairs, where _key_ if a pathname and _value_ its weight.
 	 *
-	 * @var array
+	 * @var array<string, int>
 	 */
 	protected $paths = [];
 
 	/**
-	 * @param array $paths
+	 * @param string[] $paths
 	 */
 	public function __construct(array $paths = [])
 	{
@@ -39,7 +44,7 @@ class BasicTemplateResolver implements TemplateResolver
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve($name, array $extensions, &$tried = [])
+	public function resolve(string $name, array $extensions, array &$tried = [])
 	{
 		return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
 	}
@@ -49,12 +54,9 @@ class BasicTemplateResolver implements TemplateResolver
 	 *
 	 * Note: The path is discarded if it cannot be resolved with `realpath()`.
 	 *
-	 * @param string $path
-	 * @param int $weight
-	 *
 	 * @return string|false The real path, or `false` if the path was not added.
 	 */
-	public function add_path($path, $weight = 0)
+	public function add_path(string $path, int $weight = 0)
 	{
 		$path = realpath($path);
 
@@ -72,9 +74,9 @@ class BasicTemplateResolver implements TemplateResolver
 	/**
 	 * Returns the paths used to search templates.
 	 *
-	 * @return array
+	 * @return string[]
 	 */
-	public function get_paths()
+	public function get_paths(): array
 	{
 		return array_keys(array_reverse($this->paths));
 	}

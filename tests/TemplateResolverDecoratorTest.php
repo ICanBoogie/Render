@@ -14,8 +14,9 @@ namespace ICanBoogie\Render;
 use ICanBoogie\Render\TemplateResolverDecoratorTest\A;
 use ICanBoogie\Render\TemplateResolverDecoratorTest\B;
 use ICanBoogie\Render\TemplateResolverDecoratorTest\C;
+use PHPUnit\Framework\TestCase;
 
-class TemplateResolverDecoratorTest extends \PHPUnit\Framework\TestCase
+class TemplateResolverDecoratorTest extends TestCase
 {
 	public function test_find_decorated()
 	{

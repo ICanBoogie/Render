@@ -12,8 +12,9 @@
 namespace ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Render\BasicTemplateResolver;
+use PHPUnit\Framework\TestCase;
 
-class AlterEventTest extends \PHPUnit\Framework\TestCase
+class AlterEventTest extends TestCase
 {
 	public function test_replace_instance()
 	{

@@ -11,7 +11,9 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateNotFoundTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class TemplateNotFoundTest extends TestCase
 {
     public function test_get_tried()
     {
@@ -23,7 +25,7 @@ class TemplateNotFoundTest extends \PHPUnit\Framework\TestCase
     public function test_empty_tried()
     {
 	    $exception = new TemplateNotFound("Not found.", []);
-	    $this->assertContains("no possible files", $exception->getMessage());
+	    $this->assertStringContainsString("no possible files", $exception->getMessage());
 	    $this->assertEmpty($exception->tried);
     }
 }

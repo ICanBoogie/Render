@@ -16,7 +16,7 @@ use ICanBoogie\OffsetNotDefined;
 /**
  * Exception thrown when there is no engine available to render a template.
  */
-class EngineNotAvailable extends OffsetNotDefined implements Exception
+final class EngineNotAvailable extends OffsetNotDefined implements Exception
 {
 
 }

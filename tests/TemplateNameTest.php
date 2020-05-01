@@ -11,9 +11,11 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateNameTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class TemplateNameTest extends TestCase
 {
-	public function test_from_intance()
+	public function test_from_instance()
 	{
 		$name = TemplateName::from('testing' . uniqid());
 		$this->assertEquals($name, TemplateName::from($name));
@@ -21,23 +23,16 @@ class TemplateNameTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @dataProvider provide_test_normalize
-	 *
-	 * @param string $expected
-	 * @param string $name
 	 */
-	public function test_normalize($expected, $name)
+	public function test_normalize(string $expected, string $name)
 	{
 		$this->assertEquals($expected, TemplateName::normalize($name));
 	}
 
 	/**
 	 * @dataProvider provide_test_with_prefix
-	 *
-	 * @param string $name
-	 * @param string $prefix
-	 * @param string $expected
 	 */
-	public function test_with_prefix($name, $prefix, $expected)
+	public function test_with_prefix(string $name, string $prefix, string $expected)
 	{
 		$name = TemplateName::from($name);
 		$this->assertEquals($expected, $name->with_prefix($prefix));
@@ -85,11 +80,8 @@ class TemplateNameTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @dataProvider provide_test_get_as_template
-	 *
-	 * @param string $expected
-	 * @param string $name
 	 */
-	public function test_get_as_template($expected, $name)
+	public function test_get_as_template(string $expected, string $name)
 	{
 		$name = TemplateName::from($name);
 		$this->assertEquals($expected, $name->as_template);
@@ -117,11 +109,8 @@ class TemplateNameTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @dataProvider provide_test_get_as_partial
-	 *
-	 * @param string $expected
-	 * @param string $name
 	 */
-	public function test_get_as_partial($expected, $name)
+	public function test_get_as_partial(string $expected, string $name)
 	{
 		$name = TemplateName::from($name);
 		$this->assertEquals($expected, $name->as_partial);
@@ -149,11 +138,8 @@ class TemplateNameTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @dataProvider provide_test_get_as_layout
-	 *
-	 * @param string $expected
-	 * @param string $name
 	 */
-	public function test_get_as_layout($expected, $name)
+	public function test_get_as_layout(string $expected, string $name)
 	{
 		$name = TemplateName::from($name);
 		$this->assertEquals($expected, $name->as_layout);

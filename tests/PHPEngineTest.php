@@ -11,11 +11,13 @@
 
 namespace ICanBoogie\Render;
 
-class PHPEngineTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class PHPEngineTest extends TestCase
 {
 	static private $root;
 
-	static public function setupBeforeClass()
+	static public function setupBeforeClass(): void
 	{
 		self::$root = __DIR__ . '/templates/custom/';
 	}

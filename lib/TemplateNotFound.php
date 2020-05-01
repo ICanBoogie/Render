@@ -12,14 +12,21 @@
 namespace ICanBoogie\Render;
 
 use ICanBoogie\Accessor\AccessorTrait;
+use LogicException;
+use Throwable;
+use function array_map;
+use function implode;
 
 /**
  * Exception throw when a template cannot be found.
  *
  * @property-read array $tried Tried pathname collection.
  */
-class TemplateNotFound extends \LogicException implements Exception
+class TemplateNotFound extends LogicException implements Exception
 {
+	/**
+	 * @uses get_tried
+	 */
     use AccessorTrait;
 
     /**
@@ -27,15 +34,12 @@ class TemplateNotFound extends \LogicException implements Exception
      */
     private $tried;
 
-    /**
-     * @return array
-     */
-    protected function get_tried()
+    private function get_tried(): array
     {
         return $this->tried;
     }
 
-    public function __construct($message, array $tried, $code = 404, \Exception $exception = null)
+    public function __construct(string $message, array $tried, int $code = 404, Throwable $exception = null)
     {
         $this->tried = $tried;
 

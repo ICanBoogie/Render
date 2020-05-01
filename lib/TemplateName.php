@@ -13,6 +13,10 @@ namespace ICanBoogie\Render;
 
 use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\ActiveRecord\Query;
+use function basename;
+use function dirname;
+use function in_array;
+use function substr;
 
 /**
  * Representation of a template name.
@@ -21,13 +25,18 @@ use ICanBoogie\ActiveRecord\Query;
  * @property-read string $as_partial Name as partial name.
  * @property-read string $as_layout Name as layout name.
  */
-class TemplateName
+final class TemplateName
 {
+	/**
+	 * @uses get_as_template
+	 * @uses get_as_partial
+	 * @uses get_as_layout
+	 */
 	use AccessorTrait;
 
-	const TEMPLATE_PREFIX_VIEW = '';
-	const TEMPLATE_PREFIX_LAYOUT = '@';
-	const TEMPLATE_PREFIX_PARTIAL = '_';
+	public const TEMPLATE_PREFIX_VIEW = '';
+	public const TEMPLATE_PREFIX_LAYOUT = '@';
+	public const TEMPLATE_PREFIX_PARTIAL = '_';
 
 	static private $instances = [];
 
@@ -36,7 +45,7 @@ class TemplateName
 	 *
 	 * @return TemplateName
 	 */
-	static public function from($source)
+	static public function from($source): self
 	{
 		if ($source instanceof self)
 		{
@@ -60,17 +69,13 @@ class TemplateName
 
 	/**
 	 * Normalizes a template name by removing any known prefix.
-	 *
-	 * @param string $name
-	 *
-	 * @return string
 	 */
-	static public function normalize($name)
+	static public function normalize(string $name): string
 	{
 		$basename = basename($name);
 		$dirname = $basename != $name ? dirname($name) : null;
 
-		if (in_array($basename{0}, [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]))
+		if (in_array($basename[0], [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]))
 		{
 			$basename = substr($basename, 1);
 		}
@@ -83,46 +88,36 @@ class TemplateName
 		return $basename;
 	}
 
+	/**
+	 * @var string
+	 */
 	private $name;
 
-	/**
-	 * Returns the name as template name.
-	 *
-	 * @return string
-	 */
-	protected function get_as_template()
+	private function get_as_template(): string
 	{
 		return $this->name;
 	}
 
 	/**
 	 * Returns the name as partial name.
-	 *
-	 * @return string
 	 */
-	protected function get_as_partial()
+	private function get_as_partial(): string
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
 	}
 
 	/**
 	 * Returns the name as layout name.
-	 *
-	 * @return string
 	 */
-	protected function get_as_layout()
+	protected function get_as_layout(): string
 	{
 		return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
 	}
 
 	/**
 	 * Returns the template name with the specified prefix.
-	 *
-	 * @param string $prefix
-	 *
-	 * @return string
 	 */
-	public function with_prefix($prefix)
+	public function with_prefix(string $prefix): string
 	{
 		$name = $this->name;
 
@@ -144,21 +139,11 @@ class TemplateName
 		return $name;
 	}
 
-	/**
-	 * Initializes the {@link $name} property.
-	 *
-	 * @param string $name
-	 */
-	protected function __construct($name)
+	private function __construct(string $name)
 	{
-		$this->name = (string) $name;
+		$this->name = $name;
 	}
 
-	/**
-	 * Returns the {@link $name} property.
-	 *
-	 * @return string
-	 */
 	public function __toString()
 	{
 		return $this->name;

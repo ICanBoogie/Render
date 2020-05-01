@@ -21,40 +21,34 @@ use ICanBoogie\Render\EngineCollection;
  *
  * @property EngineCollection $instance
  */
-class AlterEvent extends Event
+final class AlterEvent extends Event
 {
+    public const TYPE = 'alter';
+
 	/**
 	 * Reference to the target instance.
 	 *
 	 * @var EngineCollection
+     *
+     * @uses get_instance
+     * @uses set_instance
 	 */
 	private $instance;
 
-	/**
-	 * @return EngineCollection
-	 */
-	protected function get_instance()
+	protected function get_instance(): EngineCollection
 	{
 		return $this->instance;
 	}
 
-	/**
-	 * @param EngineCollection $engines
-	 */
-	protected function set_instance(EngineCollection $engines)
+	protected function set_instance(EngineCollection $engines): void
 	{
 		$this->instance = $engines;
 	}
 
-	/**
-	 * Initializes the {@link $instance} property.
-	 *
-	 * @param EngineCollection $target
-	 */
 	public function __construct(EngineCollection &$target)
 	{
 		$this->instance = &$target;
 
-		parent::__construct($target, 'alter');
+		parent::__construct($target, self::TYPE);
 	}
 }
