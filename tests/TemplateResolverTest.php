@@ -11,11 +11,13 @@
 
 namespace ICanBoogie\Render;
 
-class TemplateResolverTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class TemplateResolverTest extends TestCase
 {
 	static private $templates_root;
 
-	static public function setupBeforeClass()
+	static public function setupBeforeClass(): void
 	{
 		self::$templates_root = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 	}

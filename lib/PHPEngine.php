@@ -11,6 +11,16 @@
 
 namespace ICanBoogie\Render;
 
+use ArrayObject;
+use Closure;
+use Throwable;
+use function extract;
+use function is_array;
+use function is_object;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_start;
+
 /**
  * Renders PHP templates.
  */
@@ -18,10 +28,11 @@ class PHPEngine implements Engine
 {
 	/**
 	 * @inheritdoc
+	 * @throws Throwable
 	 */
-	public function __invoke($template_pathname, $thisArg, array $variables, array $options = [])
+	public function __invoke($template_pathname, $thisArg, array $variables, array $options = []): string
 	{
-		$f = \Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
+		$f = Closure::bind(function($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
 
 			unset($__VARIABLES__['this']);
 
@@ -39,7 +50,7 @@ class PHPEngine implements Engine
 
 			return ob_get_clean();
 		}
-		catch (\Exception $e)
+		catch (Throwable $e)
 		{
 			ob_end_clean();
 
@@ -54,11 +65,11 @@ class PHPEngine implements Engine
 	 * - `value` is an array, an `ArrayObject` instance is returned.
 	 * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
 	 *
-	 * @param $value
+	 * @param mixed $value
 	 *
-	 * @return \ArrayObject|StringObject
+	 * @return ArrayObject|StringObject
 	 */
-	protected function ensure_is_object($value)
+	private function ensure_is_object($value)
 	{
 		if (is_object($value))
 		{
@@ -67,7 +78,7 @@ class PHPEngine implements Engine
 
 		if (is_array($value))
 		{
-			return new \ArrayObject($value);
+			return new ArrayObject($value);
 		}
 
 		return new StringObject($value);

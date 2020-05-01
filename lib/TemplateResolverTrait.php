@@ -11,6 +11,15 @@
 
 namespace ICanBoogie\Render;
 
+use function basename;
+use function dirname;
+use function file_exists;
+use function in_array;
+use function pathinfo;
+use function strlen;
+use function substr;
+use const PATHINFO_EXTENSION;
+
 /**
  * Support functions for template resolvers.
  */
@@ -28,7 +37,7 @@ trait TemplateResolverTrait
 	 *
 	 * @return array A collection of candidate template pathnames.
 	 */
-	protected function resolve_tries(array $paths, $name, array $extensions)
+	protected function resolve_tries(array $paths, string $name, array $extensions): array
 	{
 		$extension = pathinfo($name, PATHINFO_EXTENSION);
 
@@ -72,10 +81,8 @@ trait TemplateResolverTrait
 	 *
 	 * @param array $tries Pathname collection, as returned by {@link resolve_tries()}.
 	 * @param array $tried Tried pathname collection.
-	 *
-	 * @return string|null
 	 */
-	protected function resolve_path(array $tries, &$tried)
+	protected function resolve_path(array $tries, array &$tried): ?string
 	{
 		foreach ($tries as $pathname)
 		{

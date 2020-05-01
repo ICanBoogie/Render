@@ -11,16 +11,19 @@
 
 namespace ICanBoogie\Render;
 
+use function is_array;
+use function is_object;
+
 /**
  * Renders a target or an array of options.
  */
 class Renderer
 {
-	const OPTION_LAYOUT = 'layout';
-	const OPTION_PARTIAL = 'partial';
-	const OPTION_TEMPLATE = 'template';
-	const OPTION_CONTENT = 'content';
-	const OPTION_LOCALS = 'locals';
+	public const OPTION_LAYOUT = 'layout';
+	public const OPTION_PARTIAL = 'partial';
+	public const OPTION_TEMPLATE = 'template';
+	public const OPTION_CONTENT = 'content';
+	public const OPTION_LOCALS = 'locals';
 
 	/**
 	 * @var EngineCollection
@@ -32,10 +35,6 @@ class Renderer
 	 */
 	protected $template_resolver;
 
-	/**
-	 * @param TemplateResolver $template_resolver
-	 * @param EngineCollection $engines
-	 */
 	public function __construct(TemplateResolver $template_resolver, EngineCollection $engines)
 	{
 		$this->template_resolver = $template_resolver;
@@ -45,19 +44,18 @@ class Renderer
 	/**
 	 * Resolve a template pathname from its name and type.
 	 *
-	 * @param string $name
-	 *
 	 * @return string Template pathname.
 	 *
 	 * @throws TemplateNotFound if the template pathname cannot be resolved.
 	 */
-	public function resolve_template($name)
+	public function resolve_template(string $name): string
 	{
+		$tried = [];
 		$template_pathname = $this->template_resolver->resolve($name, $this->engines->extensions, $tried);
 
 		if (!$template_pathname)
 		{
-			throw new TemplateNotFound("There is no template matching `$name`.", $tried ?: []);
+			throw new TemplateNotFound("There is no template matching `$name`.", $tried);
 		}
 
 		return $template_pathname;
@@ -68,10 +66,8 @@ class Renderer
 	 *
 	 * @param mixed $target_or_options The target or options to render.
 	 * @param array $additional_options Additional render options.
-	 *
-	 * @return string
 	 */
-	public function render($target_or_options, array $additional_options = [])
+	public function render($target_or_options, array $additional_options = []): ?string
 	{
 		if (!$target_or_options && !$additional_options)
 		{
@@ -87,7 +83,7 @@ class Renderer
 		$template = $options[self::OPTION_PARTIAL];
 
 		if ($template)
- 	 	{
+		{
 			$content = $this->render_partial($template, $content, $variables);
 		}
 
@@ -109,15 +105,9 @@ class Renderer
 	}
 
 	/**
-	 * Renders partial.
-	 *
-	 * @param string $template
 	 * @param mixed $content
-	 * @param array $variables
-	 *
-	 * @return string
 	 */
-	protected function render_partial($template, $content, $variables)
+	private function render_partial(string $template, $content, array $variables): string
 	{
 		return $this->render_template(
 			$this->resolve_template_name($template)->as_partial,
@@ -126,15 +116,7 @@ class Renderer
 		);
 	}
 
-	/**
-	 * Renders layout.
-	 *
-	 * @param string $template
-	 * @param array $variables
-	 *
-	 * @return string
-	 */
-	protected function render_layout($template, array $variables)
+	private function render_layout(string $template, array $variables): string
 	{
 		return $this->render_template(
 			$this->resolve_template_name($template)->as_layout,
@@ -144,15 +126,9 @@ class Renderer
 	}
 
 	/**
-	 * Renders template.
-	 *
-	 * @param string $name
-	 * @param string $content
-	 * @param array $variables
-	 *
-	 * @return string
+	 * @param mixed $content
 	 */
-	protected function render_template($name, $content, $variables)
+	private function render_template(string $name, $content, array $variables): string
 	{
 		return $this->engines->render(
 			$this->resolve_template($name),
@@ -162,28 +138,19 @@ class Renderer
 	}
 
 	/**
-	 * Resolves template name.
-	 *
 	 * @param mixed $content
-	 *
-	 * @return TemplateName
 	 */
-	protected function resolve_template_name($content)
+	protected function resolve_template_name($content): TemplateName
 	{
 		return TemplateName::from($content);
 	}
 
 	/**
-	 * Resolves rendering options.
-	 *
 	 * @param mixed $target_or_options
-	 * @param array $additional_options
-	 *
-	 * @return array
 	 *
 	 * @throws InvalidRenderTarget if rendering target is invalid.
 	 */
-	protected function resolve_options($target_or_options, array $additional_options = [])
+	private function resolve_options($target_or_options, array $additional_options = []): array
 	{
 		$options = [];
 

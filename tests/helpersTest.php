@@ -16,7 +16,7 @@ use ICanBoogie\EventCollectionProvider;
 
 class helpersTest extends \PHPUnit\Framework\TestCase
 {
-	public function setUp()
+	protected function setUp(): void
 	{
 		EventCollectionProvider::define(function() {
 

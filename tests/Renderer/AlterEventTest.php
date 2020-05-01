@@ -11,25 +11,29 @@
 
 namespace ICanBoogie\Render\Renderer;
 
+use ICanBoogie\Render\BasicTemplateResolver;
+use ICanBoogie\Render\EngineCollection;
 use ICanBoogie\Render\Renderer;
+use ICanBoogie\Render\TemplateResolver;
+use PHPUnit\Framework\TestCase;
 
-class AlterEventTest extends \PHPUnit\Framework\TestCase
+class AlterEventTest extends TestCase
 {
 	public function test_replace_instance()
 	{
-		/* @var $engines_stub \ICanBoogie\Render\EngineCollection */
+		/* @var $engines_stub EngineCollection */
 		$engines_stub = $this
-			->getMockBuilder('ICanBoogie\Render\EngineCollection')
+			->getMockBuilder(EngineCollection::class)
 			->getMock();
 
-		/* @var $template_resolver_stub \ICanBoogie\Render\BasicTemplateResolver */
+		/* @var $template_resolver_stub BasicTemplateResolver */
 		$template_resolver_stub = $this
-			->getMockBuilder('ICanBoogie\Render\TemplateResolver')
+			->getMockBuilder(TemplateResolver::class)
 			->getMock();
 
-		/* @var $renderer_stub \ICanBoogie\Render\Renderer */
+		/* @var $renderer_stub Renderer */
 		$renderer_stub = $this
-			->getMockBuilder('ICanBoogie\Render\Renderer')
+			->getMockBuilder(Renderer::class)
 			->disableOriginalConstructor()
 			->getMock();
 

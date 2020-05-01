@@ -2,7 +2,9 @@
 
 namespace ICanBoogie\Render;
 
-class RendererTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class RendererTest extends TestCase
 {
 	/**
 	 * @var TemplateResolver
@@ -14,7 +16,7 @@ class RendererTest extends \PHPUnit\Framework\TestCase
 	 */
 	private $engines;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		$this->template_resolver = new BasicTemplateResolver([ __DIR__ . '/templates' ]);
 		$this->engines = new EngineCollection([ '.phtml' => PHPEngine::class ]);
@@ -48,12 +50,13 @@ class RendererTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @dataProvider provide_test_render_invalid
-	 * @expectedException \ICanBoogie\Render\InvalidRenderTarget
+	 *
 	 *
 	 * @param mixed $target
 	 */
 	public function test_render_invalid($target)
 	{
+		$this->expectException(InvalidRenderTarget::class);
 		(new Renderer($this->template_resolver, $this->engines))
 			->render($target);
 	}

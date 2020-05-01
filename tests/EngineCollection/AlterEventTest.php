@@ -12,8 +12,9 @@
 namespace ICanBoogie\Render\EngineCollection;
 
 use ICanBoogie\Render\EngineCollection;
+use PHPUnit\Framework\TestCase;
 
-class AlterEventTest extends \PHPUnit\Framework\TestCase
+class AlterEventTest extends TestCase
 {
 	public function test_replace_instance()
 	{

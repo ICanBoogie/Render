@@ -11,15 +11,25 @@
 
 namespace ICanBoogie\Render;
 
+use ArrayAccess;
+use ArrayIterator;
 use ICanBoogie\Accessor\AccessorTrait;
+use IteratorAggregate;
+use function array_keys;
+use function is_string;
+use function pathinfo;
+use const PATHINFO_EXTENSION;
 
 /**
  * An engine collection.
  *
  * @property-read array $extensions The extensions supported by the engines.
  */
-class EngineCollection implements \ArrayAccess, \IteratorAggregate
+class EngineCollection implements ArrayAccess, IteratorAggregate
 {
+	/**
+	 * @uses get_extensions
+	 */
 	use AccessorTrait;
 
 	/**
@@ -27,10 +37,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 */
 	private $engines;
 
-	/**
-	 * @return array
-	 */
-	protected function get_extensions()
+	protected function get_extensions(): array
 	{
 		return array_keys($this->engines);
 	}
@@ -41,7 +48,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	private $instances;
 
 	/**
-	 * @param array $engines
+	 * @param array<string, Engine> $engines
 	 */
 	public function __construct(array $engines = [])
 	{
@@ -105,17 +112,17 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 */
 	public function getIterator()
 	{
-		return new \ArrayIterator($this->engines);
+		return new ArrayIterator($this->engines);
 	}
 
 	/**
 	 * Resolves the engine to use from the specified pathname.
 	 *
-	 * @param $pathname
+	 * @param string $pathname
 	 *
 	 * @return Engine|callable|bool An engine or `false` if none matches the extension.
 	 */
-	public function resolve_engine($pathname)
+	public function resolve_engine(string $pathname)
 	{
 		$extension = pathinfo($pathname, PATHINFO_EXTENSION);
 
@@ -146,7 +153,7 @@ class EngineCollection implements \ArrayAccess, \IteratorAggregate
 	 *
 	 * @throws EngineNotAvailable when there is no engine available to render the template.
 	 */
-	public function render($template_pathname, $thisArg, $variables, array $options = [])
+	public function render(string $template_pathname, $thisArg, array $variables = [], array $options = [])
 	{
 		$engine = $this->resolve_engine($template_pathname);
 

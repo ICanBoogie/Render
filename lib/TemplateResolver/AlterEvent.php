@@ -21,36 +21,28 @@ use ICanBoogie\Render\TemplateResolver;
  *
  * @property TemplateResolver $instance
  */
-class AlterEvent extends Event
+final class AlterEvent extends Event
 {
 	/**
 	 * Reference to the target instance.
 	 *
 	 * @var TemplateResolver
+     *
+     * @uses get_instance
+     * @uses set_instance
 	 */
 	private $instance;
 
-	/**
-	 * @return TemplateResolver
-	 */
-	protected function get_instance()
+	protected function get_instance(): TemplateResolver
 	{
 		return $this->instance;
 	}
 
-	/**
-	 * @param TemplateResolver $template_resolver
-	 */
 	protected function set_instance(TemplateResolver $template_resolver)
 	{
 		$this->instance = $template_resolver;
 	}
 
-	/**
-	 * Initializes the {@link $instance} property.
-	 *
-	 * @param TemplateResolver $target
-	 */
 	public function __construct(TemplateResolver &$target)
 	{
 		$this->instance = &$target;
