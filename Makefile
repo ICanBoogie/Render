@@ -16,6 +16,7 @@ vendor:
 update:
 	@composer update
 
+.PHONY: test-dependencies
 test-dependencies: vendor
 
 .PHONY: test
@@ -31,6 +32,11 @@ test-coverage: test-dependencies
 test-coveralls: test-dependencies
 	@mkdir -p build/logs
 	@$(PHPUNIT) --coverage-clover build/logs/clover.xml
+
+.PHONY: test-container
+test-container:
+	@-docker-compose run --rm app bash
+	@docker-compose down -v
 
 .PHONY: doc
 doc: vendor

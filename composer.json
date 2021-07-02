@@ -25,6 +25,7 @@
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
+	"prefer-dist": true,
 	"require": {
 		"php": ">=7.2",
 		"icanboogie/event": "^4.0"
