@@ -1,7 +1,7 @@
 # Render
 
 [![Release](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://github.com/ICanBoogie/Render/releases)
-[![Build Status](https://img.shields.io/travis/ICanBoogie/Render.svg)](http://travis-ci.org/ICanBoogie/Render)
+[![Build Status](https://img.shields.io/github/workflow/status/ICanBoogie/Render/test)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Atest)
 [![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
 [![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render.svg)](https://coveralls.io/r/ICanBoogie/Render)
 [![Packagist](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
@@ -35,7 +35,7 @@ use Patron\RenderSupport\PatronEngine;
 
 $events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->instance['.patron'] = PatronEngine::class;
+    $event->instance['.patron'] = PatronEngine::class;
 
 });
 ```
@@ -51,7 +51,7 @@ use ICanBoogie\Render\EngineCollection;
 
 $events->attach(function(EngineCollection\AlterEvent $event, EngineCollection $target) {
 
-	$event->instance = new MyEngineCollection($event->instance);
+    $event->instance = new MyEngineCollection($event->instance);
 
 });
 ```
@@ -90,7 +90,7 @@ use ICanBoogie\Render\BasicTemplateResolver;
 
 $events->attach(function(TemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
-	$target->add_paths(__DIR__ . '/my/templates/path);
+    $target->add_paths(__DIR__ . '/my/templates/path);
 
 });
 ```
@@ -119,7 +119,7 @@ use ICanBoogie\Render\BasicTemplateResolver;
 
 $events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
 
-	$event->instance = new MyTemplateResolverDecorator($event->instance);
+    $event->instance = new MyTemplateResolverDecorator($event->instance);
 
 });
 ```
@@ -148,7 +148,7 @@ use ICanBoogie\Render\Renderer;
 
 $events->attach(function(Renderer\AlterEvent $event, Renderer $target) {
 
-	$event->instance = new MyRenderer($event->instance->engines, $event->instance->template_resolver);
+    $event->instance = new MyRenderer($event->instance->engines, $event->instance->template_resolver);
 
 });
 ```
@@ -176,32 +176,11 @@ The following helpers are defined:
 
 
 
-## Requirements
-
-The package requires PHP 7.2 or later.
-
-
-
-
-
 ## Installation
 
-The recommended way to install this package is through [Composer](http://getcomposer.org/):
-
-```
+```bash
 $ composer require icanboogie/render
 ```
-
-
-
-
-
-### Cloning the repository
-
-The package is [available on GitHub](https://github.com/ICanBoogie/Render), its repository can
-be cloned with the following command line:
-
-	$ git clone https://github.com/ICanBoogie/Render.git
 
 
 
@@ -227,18 +206,13 @@ The command installs dependencies as required. The `make test-coverage` command 
 and also creates an HTML coverage report in "build/coverage". The directory can later be cleaned
 with the `make clean` command.
 
-The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
-
-[![Build Status](https://img.shields.io/travis/ICanBoogie/Render.svg)](https://travis-ci.org/ICanBoogie/Render)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render.svg)](https://coveralls.io/r/ICanBoogie/Render)
-
 
 
 
 
 ## License
 
-**icanboogie/render** is licensed under the New BSD License - See the [LICENSE](LICENSE) file for details.
+**icanboogie/render** is released under the [New BSD License](LICENSE).
 
 
 
@@ -246,12 +220,12 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 [ApplicationTemplateResolver]: https://icanboogie.org/api/bind-render/5.0/class-ICanBoogie.Binding.Render.ApplicationTemplateResolver.html
 [ModuleTemplateResolver]:      https://icanboogie.org/api/module/4.0/class-ICanBoogie.Module.ModuleTemplateResolver.html
-[documentation]:               https://icanboogie.org/api/render/0.7/
-[EngineCollection\AlterEvent]: https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
-[TemplateResolver\AlterEvent]: https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[Renderer]:                    https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.Renderer.AlterEvent.html
-[Renderer\AlterEvent]:         https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.Renderer.AlterEvent.html
-[TemplateResolver]:            https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
-[TemplateResolverTrait]:       https://icanboogie.org/api/render/0.7/class-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
+[documentation]:               https://icanboogie.org/api/render/0.8/
+[EngineCollection\AlterEvent]: https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.EngineCollection.AlterEvent.html
+[TemplateResolver\AlterEvent]: https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[Renderer]:                    https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[Renderer\AlterEvent]:         https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.Renderer.AlterEvent.html
+[TemplateResolver]:            https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.TemplateResolver.AlterEvent.html
+[TemplateResolverTrait]:       https://icanboogie.org/api/render/0.8/class-ICanBoogie.Render.TemplateResolverTrait.AlterEvent.html
 [ICanBoogie]:                  https://github.com/ICanBoogie\ICanBoogie
 [Patron engine]:               https://github.com/Icybee/PatronViewSupport
