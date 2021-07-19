@@ -19,7 +19,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Resolves templates pathname.
  */
-class BasicTemplateResolver implements TemplateResolver
+final class BasicTemplateResolver implements TemplateResolver
 {
 	use TemplateResolverTrait;
 
@@ -28,7 +28,7 @@ class BasicTemplateResolver implements TemplateResolver
 	 *
 	 * @var array<string, int>
 	 */
-	protected $paths = [];
+	private array $paths = [];
 
 	/**
 	 * @param string[] $paths
@@ -44,7 +44,7 @@ class BasicTemplateResolver implements TemplateResolver
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve(string $name, array $extensions, array &$tried = [])
+	public function resolve(string $name, array $extensions, array &$tried = []): ?string
 	{
 		return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
 	}
@@ -56,7 +56,7 @@ class BasicTemplateResolver implements TemplateResolver
 	 *
 	 * @return string|false The real path, or `false` if the path was not added.
 	 */
-	public function add_path(string $path, int $weight = 0)
+	public function add_path(string $path, int $weight = 0): string|false
 	{
 		$path = realpath($path);
 

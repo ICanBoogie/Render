@@ -26,12 +26,10 @@ final class AlterEvent extends Event
 	/**
 	 * Reference to the target instance.
 	 *
-	 * @var Renderer
-     *
      * @uses get_instance
      * @uses set_instance
 	 */
-	private $instance;
+	private Renderer $instance;
 
 	protected function get_instance(): Renderer
 	{

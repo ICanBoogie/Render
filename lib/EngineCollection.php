@@ -14,6 +14,7 @@ namespace ICanBoogie\Render;
 use ArrayAccess;
 use ArrayIterator;
 use ICanBoogie\Accessor\AccessorTrait;
+use InvalidArgumentException;
 use IteratorAggregate;
 use function array_keys;
 use function is_string;
@@ -33,9 +34,9 @@ class EngineCollection implements ArrayAccess, IteratorAggregate
 	use AccessorTrait;
 
 	/**
-	 * @var array
+	 * @var Engine[]
 	 */
-	private $engines;
+	private array $engines;
 
 	protected function get_extensions(): array
 	{
@@ -43,9 +44,9 @@ class EngineCollection implements ArrayAccess, IteratorAggregate
 	}
 
 	/**
-	 * @var Engine[]|callable[]
+	 * @var Engine[]
 	 */
-	private $instances;
+	private array $instances;
 
 	/**
 	 * @param array<string, Engine> $engines
@@ -96,6 +97,15 @@ class EngineCollection implements ArrayAccess, IteratorAggregate
 	 */
 	public function offsetSet($extension, $engine)
 	{
+		if (!$engine instanceof Engine)
+		{
+			throw new InvalidArgumentException(
+				sprintf("Expected instance of %s got %s.",
+					Engine::class,
+					is_object($engine) ? $engine::class : gettype($engine))
+			);
+		}
+
 		$this->engines[$extension] = $engine;
 	}
 
@@ -117,25 +127,21 @@ class EngineCollection implements ArrayAccess, IteratorAggregate
 
 	/**
 	 * Resolves the engine to use from the specified pathname.
-	 *
-	 * @param string $pathname
-	 *
-	 * @return Engine|callable|bool An engine or `false` if none matches the extension.
 	 */
-	public function resolve_engine(string $pathname)
+	public function resolve_engine(string $pathname): ?Engine
 	{
 		$extension = pathinfo($pathname, PATHINFO_EXTENSION);
 
 		if (!$extension)
 		{
-			return false;
+			return null;
 		}
 
 		$extension = "." . $extension;
 
 		if (!isset($this[$extension]))
 		{
-			return false;
+			return null;
 		}
 
 		return $this[$extension];

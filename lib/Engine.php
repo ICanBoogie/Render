@@ -35,5 +35,5 @@ interface Engine
 	 *
 	 * @return string
 	 */
-	public function __invoke(string $template_pathname, $thisArg, array $variables, array $options = []): string;
+	public function __invoke(string $template_pathname, mixed $thisArg, array $variables, array $options = []): string;
 }

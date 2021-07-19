@@ -26,12 +26,10 @@ final class AlterEvent extends Event
 	/**
 	 * Reference to the target instance.
 	 *
-	 * @var TemplateResolver
-     *
      * @uses get_instance
      * @uses set_instance
 	 */
-	private $instance;
+	private TemplateResolver $instance;
 
 	protected function get_instance(): TemplateResolver
 	{

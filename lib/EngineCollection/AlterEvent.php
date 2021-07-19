@@ -28,12 +28,10 @@ final class AlterEvent extends Event
 	/**
 	 * Reference to the target instance.
 	 *
-	 * @var EngineCollection
-     *
      * @uses get_instance
      * @uses set_instance
 	 */
-	private $instance;
+	private EngineCollection $instance;
 
 	protected function get_instance(): EngineCollection
 	{

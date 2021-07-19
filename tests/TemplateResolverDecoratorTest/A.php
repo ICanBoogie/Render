@@ -21,8 +21,8 @@ class A implements TemplateResolverDecorator
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve($name, array $extensions, &$tried = [ ])
-	{
+	public function resolve($name, array $extensions, &$tried = [ ]): ?string
+    {
 		return $this->template_resolver->resolve($name, $extensions, $tried);
 	}
 }

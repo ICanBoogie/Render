@@ -21,8 +21,8 @@ class C implements TemplateResolver
 	/**
 	 * @inheritdoc
 	 */
-	public function resolve($name, array $extensions, &$tried = [ ])
-	{
+	public function resolve($name, array $extensions, &$tried = [ ]): ?string
+    {
 		return "$name.html";
 	}
 }
