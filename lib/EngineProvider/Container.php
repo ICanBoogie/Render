@@ -58,14 +58,12 @@ final class Container implements EngineProvider, IteratorAggregate
 			public function render(
 				string $template_pathname,
 				mixed $content,
-				array $variables,
-				array $options = []
+				array $variables
 			): string {
 				return $this->container->get($this->id)->render(
 					$template_pathname,
 					$content,
-					$variables,
-					$options
+					$variables
 				);
 			}
 		};

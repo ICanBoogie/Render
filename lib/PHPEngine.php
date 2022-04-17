@@ -12,12 +12,12 @@
 namespace ICanBoogie\Render;
 
 use ArrayObject;
-use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Throwable;
 
 use function extract;
+use function get_debug_type;
 use function is_array;
 use function is_object;
 use function is_string;
@@ -33,7 +33,7 @@ final class PHPEngine implements Engine
 	/**
 	 * @throws Throwable
 	 */
-	public function render(string $template_pathname, mixed $content, array $variables, array $options = []): string
+	public function render(string $template_pathname, mixed $content, array $variables): string
 	{
 		if ($variables['this'] ?? null) {
 			throw new InvalidArgumentException("The usage of 'this' is forbidden in variables.");
@@ -45,9 +45,7 @@ final class PHPEngine implements Engine
 			require $__TEMPLATE_PATHNAME__;
 		};
 
-		if ($content) {
-			$f = Closure::bind($f, $this->ensure_is_object($content));
-		}
+		$f = $f->bindTo($this->ensure_is_object($content));
 
 		ob_start();
 
@@ -93,6 +91,6 @@ final class PHPEngine implements Engine
 			};
 		}
 
-		throw new InvalidArgumentException("Don't know what to do with: $value.");
+		throw new InvalidArgumentException("Don't know what to do with: " . get_debug_type($value) . ".");
 	}
 }

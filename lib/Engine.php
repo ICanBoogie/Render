@@ -31,7 +31,6 @@ interface Engine
 	 * @param string $template_pathname Pathname to the template to render.
 	 * @param mixed $content The content to render.
 	 * @param array<string, mixed> $variables Variable to render the template with.
-	 * @param array $options<string, mixed> Miscellaneous options.
 	 */
-	public function render(string $template_pathname, mixed $content, array $variables, array $options = []): string;
+	public function render(string $template_pathname, mixed $content, array $variables): string;
 }

@@ -25,8 +25,7 @@ class MutableTest extends TestCase
 			public function render(
 				string $template_pathname,
 				mixed $content,
-				array $variables,
-				array $options = []
+				array $variables
 			): string {
 				throw new LogicException();
 			}

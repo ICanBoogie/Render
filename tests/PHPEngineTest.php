@@ -33,7 +33,7 @@ class PHPEngineTest extends TestCase
 	public function test_render(): void
 	{
 		$pathname = self::ROOT . 'var_template_pathname.php';
-		$rc = $this->render($pathname, null, []);
+		$rc = $this->render($pathname, new class (){}, []);
 
 		$this->assertEquals($pathname, $rc);
 	}
@@ -89,14 +89,13 @@ class PHPEngineTest extends TestCase
 
 	/**
 	 * @param string $template_pathname Pathname to the template to render.
-	 * @param mixed $thisArg _thisArg_, if supported by the engine.
+	 * @param mixed $content _thisArg_, if supported by the engine.
 	 * @param array<string, mixed> $variables Variable to render the template with.
-	 * @param array $options <string, mixed> Miscellaneous options.
 	 *
 	 * @throws Throwable
 	 */
-	private function render(string $template_pathname, mixed $thisArg, array $variables, array $options = []): string
+	private function render(string $template_pathname, mixed $content, array $variables): string
 	{
-		return $this->stu->render($template_pathname, $thisArg, $variables, $options);
+		return $this->stu->render($template_pathname, $content, $variables);
 	}
 }
