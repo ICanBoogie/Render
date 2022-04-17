@@ -11,19 +11,12 @@
 
 namespace ICanBoogie\Render;
 
-use function is_array;
-use function is_object;
-
 /**
  * Renders a target or an array of options.
  */
 class Renderer
 {
-	public const OPTION_LAYOUT = 'layout';
-	public const OPTION_PARTIAL = 'partial';
-	public const OPTION_TEMPLATE = 'template';
-	public const OPTION_CONTENT = 'content';
-	public const OPTION_LOCALS = 'locals';
+	public const VARIABLE_CONTENT = 'content';
 
 	private readonly array $extensions;
 
@@ -60,39 +53,26 @@ class Renderer
 	}
 
 	/**
-	 * Renders a target or options.
-	 *
-	 * @param mixed $target_or_options The target or options to render.
-	 * @param array $additional_options Additional render options.
+	 * Renders a content.
 	 */
-	public function render(mixed $target_or_options, array $additional_options = []): ?string
+	public function render(mixed $content, RenderOptions $options = new RenderOptions()): string
 	{
-		if (!$target_or_options && !$additional_options) {
-			return null;
+		if (!$content) {
+			return '';
 		}
 
-		$options = $this->resolve_options($target_or_options, $additional_options);
-		$content = $options[self::OPTION_CONTENT];
-		$variables = $options[self::OPTION_LOCALS];
+		$variables = $options->locals;
 
-		#
-
-		$template = $options[self::OPTION_PARTIAL];
-
-		if ($template) {
-			$content = $this->render_partial($template, $content, $variables);
+		if ($options->partial) {
+			$content = $this->render_partial($options->partial, $content, $variables);
 		}
 
-		$template = $options[self::OPTION_TEMPLATE];
-
-		if ($template) {
-			$content = $this->render_template($template, $content, $variables);
+		if ($options->template) {
+			$content = $this->render_template($options->template, $content, $variables);
 		}
 
-		$template = $options[self::OPTION_LAYOUT];
-
-		if ($template) {
-			$content = $this->render_layout($template, [ self::OPTION_CONTENT => $content ] + $variables);
+		if ($options->layout) {
+			$content = $this->render_layout($options->layout, [ self::VARIABLE_CONTENT => $content ] + $variables);
 		}
 
 		return $content;
@@ -130,39 +110,5 @@ class Renderer
 	protected function resolve_template_name(mixed $content): TemplateName
 	{
 		return TemplateName::from($content);
-	}
-
-	/**
-	 * @param mixed $target_or_options
-	 *
-	 * @throws InvalidRenderTarget if rendering target is invalid.
-	 */
-	private function resolve_options(mixed $target_or_options, array $additional_options = []): array
-	{
-		$options = [];
-
-		if (is_object($target_or_options)) {
-			$additional_options[self::OPTION_CONTENT] = $target_or_options;
-
-			if (empty($additional_options[self::OPTION_PARTIAL]) && empty($additional_options[self::OPTION_TEMPLATE])) {
-				$additional_options[self::OPTION_PARTIAL] = $this->resolve_template_name($target_or_options);
-			}
-		} else {
-			if (is_array($target_or_options)) {
-				$options = $target_or_options;
-			} else {
-				throw new InvalidRenderTarget($target_or_options);
-			}
-		}
-
-		return $additional_options + $options + [
-
-				self::OPTION_CONTENT => null,
-				self::OPTION_PARTIAL => null,
-				self::OPTION_TEMPLATE => null,
-				self::OPTION_LAYOUT => null,
-				self::OPTION_LOCALS => []
-
-			];
 	}
 }

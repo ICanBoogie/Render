@@ -30,12 +30,14 @@ use function ob_start;
  */
 final class PHPEngine implements Engine
 {
+	private const FORBIDDEN_VAR_THIS = 'this';
+
 	/**
 	 * @throws Throwable
 	 */
 	public function render(string $template_pathname, mixed $content, array $variables): string
 	{
-		if ($variables['this'] ?? null) {
+		if (isset($variables[self::FORBIDDEN_VAR_THIS])) {
 			throw new InvalidArgumentException("The usage of 'this' is forbidden in variables.");
 		}
 
@@ -45,7 +47,9 @@ final class PHPEngine implements Engine
 			require $__TEMPLATE_PATHNAME__;
 		};
 
-		$f = $f->bindTo($this->ensure_is_object($content));
+		if ($content) {
+			$f = $f->bindTo($this->ensure_is_object($content));
+		}
 
 		ob_start();
 

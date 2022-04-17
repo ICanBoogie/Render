@@ -27,9 +27,36 @@ $engines = new EngineProvider\Mutable();
 $engines->add_engine('.php', new PHPEngine());
 ```
 
+Simplified `Renderer:render()` signature and introduces [RenderOptions][].
+
+```php
+<?php
+
+use ICanBoogie\Render\Renderer;
+
+/* @var Renderer $renderer */
+/* @var mixed $content */
+
+$renderer->render($content, [ Renderer::OPTION_PARTIAL => 'articles/list' ]);
+$renderer->render([ Renderer::VARIABLE_CONTENT => $content, Renderer::OPTION_PARTIAL => 'articles/list' ]);
+```
+
+```php
+<?php
+
+use ICanBoogie\Render\Renderer;
+use ICanBoogie\Render\RenderOptions;
+
+/* @var Renderer $renderer */
+/* @var mixed $content */
+
+$renderer->render($content, new RenderOptions(partial: 'articles/list' ));
+```
+
 Helper functions and events have been removed. Better rely on a dependency injection container to
 build the services. The dependency to `icanboogie/event` has been removed.
 
 
 [EngineProvider\Immutable]: lib/EngineProvider/Immutable.php
 [EngineProvider\Container]: lib/EngineProvider/Container.php
+[RenderOptions]: lib/RenderOptions.php

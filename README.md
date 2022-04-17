@@ -94,35 +94,6 @@ can be defined for the resolver to search in.
 
 
 
-### Decorating a template resolver
-
-Decorating the basic template resolver allows you to use more complex resolving mechanisms than
-its simple name/file mapping. The [ModuleTemplateResolver][] or
-the [ApplicationTemplateResolver][] decorators are great examples. The [TemplateResolverTrait][]
-trait may provide support  for implementing such a decorator.
-
-> **Note:** The decorator must implement the [TemplateResolver][] interface.
-
-The following example demonstrates how to replace the template resolver with a decorator:
-
-```php
-<?php
-
-use ICanBoogie\Render\BasicTemplateResolver;
-
-/* @var $events \ICanBoogie\EventCollection */
-
-$events->attach(function(BasicTemplateResolver\AlterEvent $event, BasicTemplateResolver $target) {
-
-    $event->instance = new MyTemplateResolverDecorator($event->instance);
-
-});
-```
-
-
-
-
-
 ## Renderer
 
 A [Renderer][] instance is used to render a template with a subject and options. An engine
