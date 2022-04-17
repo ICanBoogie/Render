@@ -29,11 +29,9 @@ interface Engine
 	 * tracked easily.
 	 *
 	 * @param string $template_pathname Pathname to the template to render.
-	 * @param mixed $thisArg _thisArg_, if supported by the engine.
-	 * @param array $variables Variable to render the template with.
-	 * @param array $options Miscellaneous options.
-	 *
-	 * @return string
+	 * @param mixed $content The content to render.
+	 * @param array<string, mixed> $variables Variable to render the template with.
+	 * @param array $options<string, mixed> Miscellaneous options.
 	 */
-	public function __invoke(string $template_pathname, mixed $thisArg, array $variables, array $options = []): string;
+	public function render(string $template_pathname, mixed $content, array $variables, array $options = []): string;
 }

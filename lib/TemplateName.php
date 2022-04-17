@@ -13,6 +13,7 @@ namespace ICanBoogie\Render;
 
 use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\ActiveRecord\Query;
+
 use function basename;
 use function dirname;
 use function in_array;
@@ -47,20 +48,17 @@ final class TemplateName
 	 */
 	static public function from($source): self
 	{
-		if ($source instanceof self)
-		{
+		if ($source instanceof self) {
 			return $source;
 		}
 
-		if ($source instanceof Query)
-		{
+		if ($source instanceof Query) {
 			$source = $source->model->id . '/list';
 		}
 
 		$source = static::normalize($source);
 
-		if (isset(self::$instances[$source]))
-		{
+		if (isset(self::$instances[$source])) {
 			return self::$instances[$source];
 		}
 
@@ -75,14 +73,15 @@ final class TemplateName
 		$basename = basename($name);
 		$dirname = $basename != $name ? dirname($name) : null;
 
-		if (in_array($basename[0], [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]))
-		{
+		if (in_array(
+			$basename[0],
+			[ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]
+		)) {
 			$basename = substr($basename, 1);
 		}
 
-		if ($dirname)
-		{
-			$basename = $dirname . "/". $basename;
+		if ($dirname) {
+			$basename = $dirname . "/" . $basename;
 		}
 
 		return $basename;
@@ -121,8 +120,7 @@ final class TemplateName
 	{
 		$name = $this->name;
 
-		if (!$prefix)
-		{
+		if (!$prefix) {
 			return $name;
 		}
 
@@ -131,8 +129,7 @@ final class TemplateName
 
 		$name = $prefix . $basename;
 
-		if ($dirname)
-		{
+		if ($dirname) {
 			$name = $dirname . "/" . $name;
 		}
 

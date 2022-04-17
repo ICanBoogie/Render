@@ -9,25 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Render;
+namespace Test\ICanBoogie\Render;
 
+use ICanBoogie\Render\BasicTemplateResolver;
 use PHPUnit\Framework\TestCase;
+
+use const DIRECTORY_SEPARATOR;
 
 class TemplateResolverTest extends TestCase
 {
-	static private $templates_root;
-
-	static public function setupBeforeClass(): void
-	{
-		self::$templates_root = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
-	}
+	private const TEMPLATES_ROOT = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
 	public function test_resolve()
 	{
-		$tr = new BasicTemplateResolver;
+		$tr = new BasicTemplateResolver();
 		$ds = DIRECTORY_SEPARATOR;
 
-		$extensions = [ '.patron', '.php'];
+		$extensions = [ '.patron', '.php' ];
 
 		$tried = [];
 		$this->assertNull($tr->resolve('posts/index', $extensions, $tried));
@@ -39,8 +37,8 @@ class TemplateResolverTest extends TestCase
 		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
-			self::$templates_root . "default{$ds}posts{$ds}index.patron",
-			self::$templates_root . "default{$ds}posts{$ds}index.php"
+			self::TEMPLATES_ROOT . "default{$ds}posts{$ds}index.patron",
+			self::TEMPLATES_ROOT . "default{$ds}posts{$ds}index.php"
 
 		], $tried);
 
@@ -50,29 +48,32 @@ class TemplateResolverTest extends TestCase
 		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
-			self::$templates_root . "custom{$ds}posts{$ds}index.patron",
-			self::$templates_root . "custom{$ds}posts{$ds}index.php",
-			self::$templates_root . "default{$ds}posts{$ds}index.patron",
-			self::$templates_root . "default{$ds}posts{$ds}index.php"
+			self::TEMPLATES_ROOT . "custom{$ds}posts{$ds}index.patron",
+			self::TEMPLATES_ROOT . "custom{$ds}posts{$ds}index.php",
+			self::TEMPLATES_ROOT . "default{$ds}posts{$ds}index.patron",
+			self::TEMPLATES_ROOT . "default{$ds}posts{$ds}index.php"
 
 		], $tried);
 
 		$tr->add_path(__DIR__ . '/templates/all');
 		$tried = [];
-		$this->assertEquals(self::$templates_root . "all{$ds}posts{$ds}index.php", $tr->resolve('posts/index', $extensions, $tried));
+		$this->assertEquals(
+			self::TEMPLATES_ROOT . "all{$ds}posts{$ds}index.php",
+			$tr->resolve('posts/index', $extensions, $tried)
+		);
 		$this->assertNotEmpty($tried);
 		$this->assertEquals([
 
-			self::$templates_root . "all{$ds}posts{$ds}index.patron",
-			self::$templates_root . "all{$ds}posts{$ds}index.php",
+			self::TEMPLATES_ROOT . "all{$ds}posts{$ds}index.patron",
+			self::TEMPLATES_ROOT . "all{$ds}posts{$ds}index.php",
 
 		], $tried);
 	}
 
 	public function test_resolve_with_extension()
 	{
-		$tr = new BasicTemplateResolver;
-		$tr->add_path(self::$templates_root . 'all');
+		$tr = new BasicTemplateResolver();
+		$tr->add_path(self::TEMPLATES_ROOT . 'all');
 		$pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
 		$this->assertNull($pathname);
 		$pathname = $tr->resolve('with-extension.html', [ '.html', '.patron' ]);
@@ -81,8 +82,8 @@ class TemplateResolverTest extends TestCase
 
 	public function test_resolve_with_double_extension()
 	{
-		$tr = new BasicTemplateResolver;
-		$tr->add_path(self::$templates_root . 'all');
+		$tr = new BasicTemplateResolver();
+		$tr->add_path(self::TEMPLATES_ROOT . 'all');
 		$pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
 		$this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
 		$pathname = $tr->resolve('with-double-extension.html', [ '.html', '.patron' ]);
@@ -91,7 +92,7 @@ class TemplateResolverTest extends TestCase
 
 	public function test_add_invalid_path()
 	{
-		$tr = new BasicTemplateResolver;
+		$tr = new BasicTemplateResolver();
 		$this->assertFalse($tr->add_path('invalid/path/' . uniqid()));
 	}
 }

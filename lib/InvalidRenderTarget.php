@@ -11,45 +11,27 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\Accessor\AccessorTrait;
+use InvalidArgumentException;
+use Throwable;
+
+use function get_debug_type;
 
 /**
  * Exception thrown when the target to render is invalid.
- *
- * @property-read mixed $target
  */
-class InvalidRenderTarget extends \InvalidArgumentException implements Exception
+class InvalidRenderTarget extends InvalidArgumentException implements Exception
 {
-	use AccessorTrait;
-
-	/**
-	 * @var mixed
-	 */
-	private $target;
-
-	protected function get_target()
-	{
-		return $this->target;
-	}
-
-	/**
-	 * InvalidRenderTarget constructor.
-	 *
-	 * @param mixed $target
-	 * @param string $message
-	 * @param int $code
-	 * @param \Throwable|null $previous
-	 */
-	public function __construct($target, string $message = null, int $code = 500, \Throwable $previous = null)
-	{
-		$this->target = $target;
-
-		parent::__construct($message ?: $this->format_message($target), $code, $previous);
+	public function __construct(
+		public readonly mixed $target,
+		string $message = null,
+		Throwable $previous = null
+	) {
+		parent::__construct($message ?? $this->format_message($target), 0, $previous);
 	}
 
 	private function format_message($target): string
 	{
-		$type = \gettype($target);
+		$type = get_debug_type($target);
 
 		return "Invalid render target. Expected object or array, got: $type (`$target`)";
 	}

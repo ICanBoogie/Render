@@ -15,10 +15,8 @@ use function basename;
 use function dirname;
 use function file_exists;
 use function in_array;
-use function pathinfo;
 use function strlen;
 use function substr;
-use const PATHINFO_EXTENSION;
 
 /**
  * Support functions for template resolvers.
@@ -39,27 +37,23 @@ trait TemplateResolverTrait
 	 */
 	protected function resolve_tries(array $paths, string $name, array $extensions): array
 	{
-		$extension = pathinfo($name, PATHINFO_EXTENSION);
+		$extension = ExtensionResolver::resolve($name);
 
-		if ($extension && in_array('.' . $extension, $extensions))
-		{
-			$name = substr($name, 0, -strlen($extension) - 1);
+		if ($extension && in_array($extension, $extensions)) {
+			$name = substr($name, 0, -strlen($extension));
 		}
 
 		$tries = [];
 		$dirname = dirname($name);
 		$basename = basename($name);
 
-		foreach ($paths as $path)
-		{
+		foreach ($paths as $path) {
 			$parent_dir = basename(dirname($path));
 
-			foreach ($extensions as $extension)
-			{
+			foreach ($extensions as $extension) {
 				$filename = $name;
 
-				if ($dirname && $dirname == $parent_dir)
-				{
+				if ($dirname && $dirname == $parent_dir) {
 					$filename = $basename;
 				}
 
@@ -84,12 +78,10 @@ trait TemplateResolverTrait
 	 */
 	protected function resolve_path(array $tries, array &$tried): ?string
 	{
-		foreach ($tries as $pathname)
-		{
+		foreach ($tries as $pathname) {
 			$tried[] = $pathname;
 
-			if (file_exists($pathname))
-			{
+			if (file_exists($pathname)) {
 				return $pathname;
 			}
 		}

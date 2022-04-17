@@ -12,19 +12,12 @@
 namespace ICanBoogie\Render;
 
 /**
- * Wraps a string inside an instance.
+ * A mutable engine provider.
  */
-class StringObject
+interface MutableEngineProvider extends EngineProvider
 {
-	private $value;
-
-	public function __construct($value)
-	{
-		$this->value = (string) $value;
-	}
-
-	public function __toString()
-	{
-		return $this->value;
-	}
+	/**
+	 * Adds an engine for an extension.
+	 */
+	public function add_engine(string $extension, Engine $engine): void;
 }

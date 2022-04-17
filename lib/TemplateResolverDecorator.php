@@ -13,6 +13,8 @@ namespace ICanBoogie\Render;
 
 /**
  * An interface for template resolver decorators.
+ *
+ * @deprecated
  */
 interface TemplateResolverDecorator extends TemplateResolver
 {

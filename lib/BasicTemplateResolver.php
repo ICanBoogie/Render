@@ -14,6 +14,7 @@ namespace ICanBoogie\Render;
 use function array_keys;
 use function array_reverse;
 use function realpath;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -35,8 +36,7 @@ final class BasicTemplateResolver implements TemplateResolver
 	 */
 	public function __construct(array $paths = [])
 	{
-		foreach ($paths as $path)
-		{
+		foreach ($paths as $path) {
 			$this->add_path($path);
 		}
 	}
@@ -60,8 +60,7 @@ final class BasicTemplateResolver implements TemplateResolver
 	{
 		$path = realpath($path);
 
-		if (!$path)
-		{
+		if (!$path) {
 			return false;
 		}
 

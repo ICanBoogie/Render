@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Render\TemplateResolverDecoratorTest;
+namespace Test\ICanBoogie\Render\TemplateResolverDecoratorTest;
 
 use ICanBoogie\Render\TemplateResolverDecorator;
 use ICanBoogie\Render\TemplateResolverDecoratorTrait;

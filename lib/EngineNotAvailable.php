@@ -11,12 +11,12 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\OffsetNotDefined;
+use LogicException;
 
 /**
  * Exception thrown when there is no engine available to render a template.
  */
-final class EngineNotAvailable extends OffsetNotDefined implements Exception
+final class EngineNotAvailable extends LogicException implements Exception
 {
 
 }

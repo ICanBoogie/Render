@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Render;
+namespace Test\ICanBoogie\Render;
 
-use ICanBoogie\Render\TemplateResolverDecoratorTest\A;
-use ICanBoogie\Render\TemplateResolverDecoratorTest\B;
-use ICanBoogie\Render\TemplateResolverDecoratorTest\C;
+use Test\ICanBoogie\Render\TemplateResolverDecoratorTest\A;
+use Test\ICanBoogie\Render\TemplateResolverDecoratorTest\B;
+use Test\ICanBoogie\Render\TemplateResolverDecoratorTest\C;
 use PHPUnit\Framework\TestCase;
 
 class TemplateResolverDecoratorTest extends TestCase

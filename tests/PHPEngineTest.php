@@ -9,69 +9,94 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Render;
+namespace Test\ICanBoogie\Render;
 
+use Exception;
+use ICanBoogie\Render\PHPEngine;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 class PHPEngineTest extends TestCase
 {
-	static private $root;
+	private const ROOT = __DIR__ . '/templates/custom/';
 
-	static public function setupBeforeClass(): void
+	protected function setUp(): void
 	{
-		self::$root = __DIR__ . '/templates/custom/';
+		parent::setUp();
+
+		$this->stu = new PHPEngine();
 	}
 
-	public function test_render()
+	/**
+	 * @throws Throwable
+	 */
+	public function test_render(): void
 	{
-		$engine = new PHPEngine;
-		$pathname = self::$root . 'var_template_pathname.php';
-		$rc = $engine($pathname, null, []);
+		$pathname = self::ROOT . 'var_template_pathname.php';
+		$rc = $this->render($pathname, null, []);
 
 		$this->assertEquals($pathname, $rc);
 	}
 
-	public function test_bind_array()
+	/**
+	 * @throws Throwable
+	 */
+	public function test_bind_array(): void
 	{
-		$engine = new PHPEngine;
-		$rc = $engine(self::$root . 'bind_array.php', [ 1, 2, 3 ], []);
+		$rc = $this->render(self::ROOT . 'bind_array.php', [ 1, 2, 3 ], []);
 
 		$this->assertEquals('ArrayObject:[1, 2, 3]', $rc);
 	}
 
-	public function test_bind_object()
+	/**
+	 * @throws Throwable
+	 */
+	public function test_bind_object(): void
 	{
-		$engine = new PHPEngine;
-		$rc = $engine(self::$root . 'bind_object.php', $this, []);
+		$rc = $this->render(self::ROOT . 'bind_object.php', $this, []);
 
 		$this->assertEquals(__CLASS__, $rc);
 	}
 
-	public function test_bind_string()
+	/**
+	 * @throws Throwable
+	 */
+	public function test_bind_string(): void
 	{
-		$engine = new PHPEngine;
 		$string = "string" . uniqid();
-		$rc = $engine(self::$root . 'bind_string.php', $string, []);
+		$rc = $this->render(self::ROOT . 'bind_string.php', $string, []);
 
 		$this->assertEquals($string, $rc);
 	}
 
-	public function test_should_discard_output_on_exception()
+	public function test_should_discard_output_on_exception(): void
 	{
-		$exception = new \Exception;
+		$exception = new Exception;
 		$level = ob_get_level();
-		$engine = new PHPEngine;
 
 		try
 		{
-			$engine(self::$root . 'with_exception.php', $exception, [ ]);
+			$this->render(self::ROOT . 'with_exception.php', $exception, [ ]);
 
 			$this->fail("Expected exception");
 		}
-		catch (\Exception $e)
+		catch (Throwable $e)
 		{
 			$this->assertEquals($level, ob_get_level());
 			$this->assertSame($exception, $e);
 		}
+	}
+
+	/**
+	 * @param string $template_pathname Pathname to the template to render.
+	 * @param mixed $thisArg _thisArg_, if supported by the engine.
+	 * @param array<string, mixed> $variables Variable to render the template with.
+	 * @param array $options <string, mixed> Miscellaneous options.
+	 *
+	 * @throws Throwable
+	 */
+	private function render(string $template_pathname, mixed $thisArg, array $variables, array $options = []): string
+	{
+		return $this->stu->render($template_pathname, $thisArg, $variables, $options);
 	}
 }

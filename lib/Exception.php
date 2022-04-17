@@ -11,6 +11,8 @@
 
 namespace ICanBoogie\Render;
 
+use Throwable;
+
 /**
  * Render exceptions implement this interface so that they can be easily recognized.
  *
@@ -29,7 +31,7 @@ namespace ICanBoogie\Render;
  * }
  * </pre>
  */
-interface Exception
+interface Exception extends Throwable
 {
 
 }

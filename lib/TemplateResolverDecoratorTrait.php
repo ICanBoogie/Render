@@ -13,17 +13,14 @@ namespace ICanBoogie\Render;
 
 /**
  * An interface for template resolver decorators.
+ *
+ * @deprecated
  */
 trait TemplateResolverDecoratorTrait
 {
-	/**
-	 * @var TemplateResolver
-	 */
-	private $template_resolver;
-
-	public function __construct(TemplateResolver $template_resolver)
-	{
-		$this->template_resolver = $template_resolver;
+	public function __construct(
+		private TemplateResolver $template_resolver
+	) {
 	}
 
 	/**
@@ -52,18 +49,15 @@ trait TemplateResolverDecoratorTrait
 	 */
 	public function find_renderer(string $class): ?TemplateResolver
 	{
-		if ($this instanceof $class)
-		{
+		if ($this instanceof $class) {
 			return $this;
 		}
 
-		if ($this->template_resolver instanceof $class)
-		{
+		if ($this->template_resolver instanceof $class) {
 			return $this->template_resolver;
 		}
 
-		if ($this->template_resolver instanceof TemplateResolverDecorator)
-		{
+		if ($this->template_resolver instanceof TemplateResolverDecorator) {
 			return $this->template_resolver->find_renderer($class);
 		}
 
