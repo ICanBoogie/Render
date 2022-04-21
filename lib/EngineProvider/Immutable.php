@@ -22,7 +22,7 @@ final class Immutable implements EngineProvider, IteratorAggregate
 
 	/**
 	 * @param array<string, Engine> $engines
-	 *     Where _key_ is an extension e.g. "php" and _value_ is an Engine.
+	 *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
 	 */
 	public function __construct(array $engines = [])
 	{
@@ -40,8 +40,6 @@ final class Immutable implements EngineProvider, IteratorAggregate
 
 	public function getIterator(): Traversable
 	{
-		foreach ($this->mutable as $extension => $engine) {
-			yield $extension => $engine;
-		}
+		return $this->mutable->getIterator();
 	}
 }
