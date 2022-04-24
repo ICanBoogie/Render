@@ -17,6 +17,7 @@ use ICanBoogie\ActiveRecord\Query;
 use function basename;
 use function dirname;
 use function in_array;
+use function is_string;
 use function substr;
 
 /**
@@ -28,121 +29,118 @@ use function substr;
  */
 final class TemplateName
 {
-	/**
-	 * @uses get_as_template
-	 * @uses get_as_partial
-	 * @uses get_as_layout
-	 */
-	use AccessorTrait;
+    /**
+     * @uses get_as_template
+     * @uses get_as_partial
+     * @uses get_as_layout
+     */
+    use AccessorTrait;
 
-	public const TEMPLATE_PREFIX_VIEW = '';
-	public const TEMPLATE_PREFIX_LAYOUT = '@';
-	public const TEMPLATE_PREFIX_PARTIAL = '_';
+    public const TEMPLATE_PREFIX_VIEW = '';
+    public const TEMPLATE_PREFIX_LAYOUT = '@';
+    public const TEMPLATE_PREFIX_PARTIAL = '_';
 
-	static private $instances = [];
+    /**
+     * @var array<string, self>
+     */
+    private static array $instances = [];
 
-	/**
-	 * @param string|TemplateName $source
-	 *
-	 * @return TemplateName
-	 */
-	static public function from($source): self
-	{
-		if ($source instanceof self) {
-			return $source;
-		}
+    public static function from(mixed $source): self
+    {
+        if ($source instanceof self) {
+            return $source;
+        }
 
-		if ($source instanceof Query) {
-			$source = $source->model->id . '/list';
-		}
+        if ($source instanceof Query) { // @phpstan-ignore-line
+            $source = $source->model->id . '/list'; // @phpstan-ignore-line
+        }
 
-		$source = static::normalize($source);
+        assert(is_string($source));
 
-		if (isset(self::$instances[$source])) {
-			return self::$instances[$source];
-		}
+        $source = self::normalize($source);
 
-		return self::$instances[$source] = new static($source);
-	}
+        if (isset(self::$instances[$source])) {
+            return self::$instances[$source];
+        }
 
-	/**
-	 * Normalizes a template name by removing any known prefix.
-	 */
-	static public function normalize(string $name): string
-	{
-		$basename = basename($name);
-		$dirname = $basename != $name ? dirname($name) : null;
+        return self::$instances[$source] = new self($source);
+    }
 
-		if (in_array(
-			$basename[0],
-			[ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]
-		)) {
-			$basename = substr($basename, 1);
-		}
+    /**
+     * Normalizes a template name by removing any known prefix.
+     */
+    public static function normalize(string $name): string
+    {
+        $basename = basename($name);
+        $dirname = $basename != $name ? dirname($name) : null;
 
-		if ($dirname) {
-			$basename = $dirname . "/" . $basename;
-		}
+        if (
+            in_array(
+                $basename[0],
+                [ self::TEMPLATE_PREFIX_VIEW, self::TEMPLATE_PREFIX_LAYOUT, self::TEMPLATE_PREFIX_PARTIAL ]
+            )
+        ) {
+            $basename = substr($basename, 1);
+        }
 
-		return $basename;
-	}
+        if ($dirname) {
+            $basename = $dirname . "/" . $basename;
+        }
 
-	/**
-	 * @var string
-	 */
-	private $name;
+        return $basename;
+    }
 
-	private function get_as_template(): string
-	{
-		return $this->name;
-	}
+    private function get_as_template(): string
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Returns the name as partial name.
-	 */
-	private function get_as_partial(): string
-	{
-		return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
-	}
+    /**
+     * Returns the name as partial name.
+     */
+    private function get_as_partial(): string
+    {
+        return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
+    }
 
-	/**
-	 * Returns the name as layout name.
-	 */
-	protected function get_as_layout(): string
-	{
-		return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
-	}
+    /**
+     * Returns the name as layout name.
+     */
+    protected function get_as_layout(): string
+    {
+        return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
+    }
 
-	/**
-	 * Returns the template name with the specified prefix.
-	 */
-	public function with_prefix(string $prefix): string
-	{
-		$name = $this->name;
+    /**
+     * Returns the template name with the specified prefix.
+     */
+    public function with_prefix(string $prefix): string
+    {
+        $name = $this->name;
 
-		if (!$prefix) {
-			return $name;
-		}
+        if (!$prefix) {
+            return $name;
+        }
 
-		$basename = basename($name);
-		$dirname = $basename != $name ? dirname($name) : null;
+        $basename = basename($name);
+        $dirname = $basename != $name ? dirname($name) : null;
 
-		$name = $prefix . $basename;
+        $name = $prefix . $basename;
 
-		if ($dirname) {
-			$name = $dirname . "/" . $name;
-		}
+        if ($dirname) {
+            $name = $dirname . "/" . $name;
+        }
 
-		return $name;
-	}
+        return $name;
+    }
 
-	private function __construct(string $name)
-	{
-		$this->name = $name;
-	}
+    private function __construct(
+        private readonly string $name
+    ) {
+    }
 
-	public function __toString()
-	{
-		return $this->name;
-	}
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

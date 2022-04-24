@@ -18,5 +18,4 @@ use LogicException;
  */
 final class EngineNotAvailable extends LogicException implements Exception
 {
-
 }

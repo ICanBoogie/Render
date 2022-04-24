@@ -24,18 +24,21 @@ use function implode;
  */
 class TemplateNotFound extends LogicException implements Exception
 {
-	public function __construct(
-		string $message,
-		public readonly array $tried,
-		Throwable $exception = null
-	) {
-		if ($tried) {
-			$tried = implode("\n", array_map(fn($v) => "- $v", $tried));
-			$message .= " The following files were tried:\n\n" . $tried;
-		} else {
-			$message .= " Also, no possible files were specified.";
-		}
+    /**
+     * @param string[] $tried
+     */
+    public function __construct(
+        string $message,
+        public readonly array $tried,
+        Throwable $exception = null
+    ) {
+        if ($tried) {
+            $tried = implode("\n", array_map(fn($v) => "- $v", $tried));
+            $message .= " The following files were tried:\n\n" . $tried;
+        } else {
+            $message .= " Also, no possible files were specified.";
+        }
 
-		parent::__construct($message, 0, $exception);
-	}
+        parent::__construct($message, 0, $exception);
+    }
 }

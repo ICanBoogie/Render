@@ -30,71 +30,71 @@ use function ob_start;
  */
 final class PHPEngine implements Engine
 {
-	private const FORBIDDEN_VAR_THIS = 'this';
+    private const FORBIDDEN_VAR_THIS = 'this';
 
-	/**
-	 * @throws Throwable
-	 */
-	public function render(string $template_pathname, mixed $content, array $variables): string
-	{
-		if (isset($variables[self::FORBIDDEN_VAR_THIS])) {
-			throw new InvalidArgumentException("The usage of 'this' is forbidden in variables.");
-		}
+    /**
+     * @throws Throwable
+     */
+    public function render(string $template_pathname, mixed $content, array $variables): string
+    {
+        if (isset($variables[self::FORBIDDEN_VAR_THIS])) {
+            throw new InvalidArgumentException("The usage of 'this' is forbidden in variables.");
+        }
 
-		$f = function ($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
-			extract($__VARIABLES__);
+        $f = function ($__TEMPLATE_PATHNAME__, $__VARIABLES__) {
+            extract($__VARIABLES__);
 
-			require $__TEMPLATE_PATHNAME__;
-		};
+            require $__TEMPLATE_PATHNAME__;
+        };
 
-		if ($content) {
-			$f = $f->bindTo($this->ensure_is_object($content));
-		}
+        if ($content) {
+            $f = $f->bindTo($this->ensure_is_object($content));
+        }
 
-		ob_start();
+        ob_start();
 
-		try {
-			$f($template_pathname, [ self::VAR_TEMPLATE_PATHNAME => $template_pathname ] + $variables);
+        try {
+            $f($template_pathname, [ self::VAR_TEMPLATE_PATHNAME => $template_pathname ] + $variables);
 
-			return ob_get_clean();
-		} catch (Throwable $e) {
-			ob_end_clean();
+            return ob_get_clean() ?: "";
+        } catch (Throwable $e) {
+            ob_end_clean();
 
-			throw $e;
-		}
-	}
+            throw $e;
+        }
+    }
 
-	/**
-	 * Ensures that a value is an object.
-	 *
-	 * - `value` is an object, value is returned.
-	 * - `value` is an array, an `ArrayObject` instance is returned.
-	 * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
-	 */
-	private function ensure_is_object(mixed $value): object
-	{
-		if (is_object($value)) {
-			return $value;
-		}
+    /**
+     * Ensures that a value is an object.
+     *
+     * - `value` is an object, value is returned.
+     * - `value` is an array, an `ArrayObject` instance is returned.
+     * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
+     */
+    private function ensure_is_object(mixed $value): object
+    {
+        if (is_object($value)) {
+            return $value;
+        }
 
-		if (is_array($value)) {
-			return new ArrayObject($value);
-		}
+        if (is_array($value)) {
+            return new ArrayObject($value);
+        }
 
-		if (is_string($value)) {
-			return new class($value) implements Stringable {
-				public function __construct(
-					private readonly string $value
-				) {
-				}
+        if (is_string($value)) {
+            return new class ($value) implements Stringable {
+                public function __construct(
+                    private readonly string $value
+                ) {
+                }
 
-				public function __toString(): string
-				{
-					return $this->value;
-				}
-			};
-		}
+                public function __toString(): string
+                {
+                    return $this->value;
+                }
+            };
+        }
 
-		throw new InvalidArgumentException("Don't know what to do with: " . get_debug_type($value) . ".");
-	}
+        throw new InvalidArgumentException("Don't know what to do with: " . get_debug_type($value) . ".");
+    }
 }

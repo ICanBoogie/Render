@@ -11,8 +11,6 @@
 
 namespace ICanBoogie\Render;
 
-use InvalidArgumentException;
-
 use LogicException;
 
 use function pathinfo;
@@ -21,20 +19,23 @@ use const PATHINFO_EXTENSION;
 
 final class ExtensionResolver
 {
-	public const EXTENSION_DOT = '.';
+    public const EXTENSION_DOT = '.';
 
-	static public function resolve(string $pathname): string
-	{
-		$extension = pathinfo($pathname, PATHINFO_EXTENSION);
+    public static function resolve(string $pathname): ?string
+    {
+        $extension = pathinfo($pathname, PATHINFO_EXTENSION);
 
-		return self::EXTENSION_DOT . $extension
-			?: throw new InvalidArgumentException("Unable to resolve extension from: $pathname.");
-	}
+        if (!$extension) {
+            return null;
+        }
 
-	static public function assert_extension(string $extension): void
-	{
-		if ($extension[0] !== self::EXTENSION_DOT) {
-			throw new LogicException("Extension must start with a dot: $extension.");
-		}
-	}
+        return self::EXTENSION_DOT . $extension;
+    }
+
+    public static function assert_extension(string $extension): void
+    {
+        if ($extension[0] !== self::EXTENSION_DOT) {
+            throw new LogicException("Extension must start with a dot: $extension.");
+        }
+    }
 }

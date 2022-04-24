@@ -16,30 +16,36 @@ use ICanBoogie\Render\EngineProvider;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * An immutable engine provider.
+ *
+ * @implements IteratorAggregate<string, Engine>
+ *     Where _key_ is a file extension.
+ */
 final class Immutable implements EngineProvider, IteratorAggregate
 {
-	private readonly Mutable $mutable;
+    private readonly Mutable $mutable;
 
-	/**
-	 * @param array<string, Engine> $engines
-	 *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
-	 */
-	public function __construct(array $engines = [])
-	{
-		$this->mutable = new Mutable();
+    /**
+     * @param array<string, Engine> $engines
+     *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
+     */
+    public function __construct(array $engines = [])
+    {
+        $this->mutable = new Mutable();
 
-		foreach ($engines as $extension => $engine) {
-			$this->mutable->add_engine($extension, $engine);
-		}
-	}
+        foreach ($engines as $extension => $engine) {
+            $this->mutable->add_engine($extension, $engine);
+        }
+    }
 
-	public function engine_for_extension(string $extension): ?Engine
-	{
-		return $this->mutable->engine_for_extension($extension);
-	}
+    public function engine_for_extension(string $extension): ?Engine
+    {
+        return $this->mutable->engine_for_extension($extension);
+    }
 
-	public function getIterator(): Traversable
-	{
-		return $this->mutable->getIterator();
-	}
+    public function getIterator(): Traversable
+    {
+        return $this->mutable->getIterator();
+    }
 }

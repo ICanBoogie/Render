@@ -24,8 +24,8 @@ class TemplateNotFoundTest extends TestCase
 
     public function test_empty_tried()
     {
-	    $exception = new TemplateNotFound("Not found.", []);
-	    $this->assertStringContainsString("no possible files", $exception->getMessage());
-	    $this->assertEmpty($exception->tried);
+        $exception = new TemplateNotFound("Not found.", []);
+        $this->assertStringContainsString("no possible files", $exception->getMessage());
+        $this->assertEmpty($exception->tried);
     }
 }

@@ -21,18 +21,18 @@ use function get_debug_type;
  */
 class InvalidRenderTarget extends InvalidArgumentException implements Exception
 {
-	public function __construct(
-		public readonly mixed $target,
-		string $message = null,
-		Throwable $previous = null
-	) {
-		parent::__construct($message ?? $this->format_message($target), 0, $previous);
-	}
+    public function __construct(
+        public readonly mixed $target,
+        string $message = null,
+        Throwable $previous = null
+    ) {
+        parent::__construct($message ?? $this->format_message($target), 0, $previous);
+    }
 
-	private function format_message($target): string
-	{
-		$type = get_debug_type($target);
+    private function format_message(mixed $target): string
+    {
+        $type = get_debug_type($target);
 
-		return "Invalid render target. Expected object or array, got: $type (`$target`)";
-	}
+        return "Invalid render target. Expected object or array, got: $type";
+    }
 }

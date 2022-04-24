@@ -23,69 +23,69 @@ use function substr;
  */
 trait TemplateResolverTrait
 {
-	/**
-	 * Resolves path tries.
-	 *
-	 * The method resolves a try path collection from a collection of roots, template name, and
-	 * extension collection.
-	 *
-	 * @param array $paths Template directories paths.
-	 * @param string $name Template name.
-	 * @param array $extensions Supported extensions.
-	 *
-	 * @return array A collection of candidate template pathnames.
-	 */
-	protected function resolve_tries(array $paths, string $name, array $extensions): array
-	{
-		$extension = ExtensionResolver::resolve($name);
+    /**
+     * Resolves path tries.
+     *
+     * The method resolves a try path collection from a collection of roots, template name, and
+     * extension collection.
+     *
+     * @param string[] $paths Template directories paths.
+     * @param string $name Template name.
+     * @param string[] $extensions Supported extensions.
+     *
+     * @return string[] A collection of candidate template pathnames.
+     */
+    protected function resolve_tries(array $paths, string $name, array $extensions): array
+    {
+        $extension = ExtensionResolver::resolve($name);
 
-		if ($extension && in_array($extension, $extensions)) {
-			$name = substr($name, 0, -strlen($extension));
-		}
+        if ($extension && in_array($extension, $extensions)) {
+            $name = substr($name, 0, -strlen($extension));
+        }
 
-		$tries = [];
-		$dirname = dirname($name);
-		$basename = basename($name);
+        $tries = [];
+        $dirname = dirname($name);
+        $basename = basename($name);
 
-		foreach ($paths as $path) {
-			$parent_dir = basename(dirname($path));
+        foreach ($paths as $path) {
+            $parent_dir = basename(dirname($path));
 
-			foreach ($extensions as $extension) {
-				$filename = $name;
+            foreach ($extensions as $extension) {
+                $filename = $name;
 
-				if ($dirname && $dirname == $parent_dir) {
-					$filename = $basename;
-				}
+                if ($dirname && $dirname == $parent_dir) {
+                    $filename = $basename;
+                }
 
-				$filename = $filename . $extension;
-				$pathname = $path . $filename;
+                $filename = $filename . $extension;
+                $pathname = $path . $filename;
 
-				$tries[] = $pathname;
-			}
-		}
+                $tries[] = $pathname;
+            }
+        }
 
-		return $tries;
-	}
+        return $tries;
+    }
 
-	/**
-	 * Resolves a template path.
-	 *
-	 * The method returns the pathname of the first file matching the path collection. The tried
-	 * paths are collected in `$tried`.
-	 *
-	 * @param array $tries Pathname collection, as returned by {@link resolve_tries()}.
-	 * @param array $tried Tried pathname collection.
-	 */
-	protected function resolve_path(array $tries, array &$tried): ?string
-	{
-		foreach ($tries as $pathname) {
-			$tried[] = $pathname;
+    /**
+     * Resolves a template path.
+     *
+     * The method returns the pathname of the first file matching the path collection. The tried
+     * paths are collected in `$tried`.
+     *
+     * @param string[] $tries Pathname collection, as returned by {@link resolve_tries()}.
+     * @param string[] $tried Tried pathname collection.
+     */
+    protected function resolve_path(array $tries, array &$tried): ?string
+    {
+        foreach ($tries as $pathname) {
+            $tried[] = $pathname;
 
-			if (file_exists($pathname)) {
-				return $pathname;
-			}
-		}
+            if (file_exists($pathname)) {
+                return $pathname;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

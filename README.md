@@ -1,14 +1,19 @@
 # Render
 
-[![Release](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://github.com/ICanBoogie/Render/releases)
-[![Build Status](https://img.shields.io/github/workflow/status/ICanBoogie/Render/test)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Atest)
+[![Packagist](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
 [![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
 [![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render.svg)](https://coveralls.io/r/ICanBoogie/Render)
-[![Packagist](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
+[![Downloads](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
 
 An API to render templates with a variety of template engines.
 
 
+
+#### Installation
+
+```bash
+composer require icanboogie/render
+```
 
 
 
@@ -44,7 +49,7 @@ Render engines are obtained through engine providers. The following providers ar
 - [EngineProvider\Immutable][]: Provides engines from an immutable collection.
 - [EngineProvider\Mutable][]: Provides engines from a mutable collection.
 
-The following examples demonstrates how to obtain an engine for a '.php' extension from an immutable
+The following examples demonstrates how to obtain an engine for a `.php` extension from an immutable
 provider.
 
 ```php
@@ -64,11 +69,7 @@ All engine providers are traversable, this feature can be used to collect the su
 
 /* @var EngineProvider $engines */
 
-$extensions = [];
-
-foreach ($engines as $extension => $engine) {
-    $extensions[] = $extension;
-}
+$extensions = array_keys(iterator_to_array($engines));
 
 echo implode(', ', $extensions); // .php
 ```
@@ -105,31 +106,32 @@ collection and a template resolver are used to find suitable templates for the r
 
 
 
+## Continuous Integration
 
+The project is continuously tested by [GitHub actions](https://github.com/ICanBoogie/Inflector/actions).
 
-## Installation
-
-```bash
-$ composer require icanboogie/render
-```
-
-
+[![Tests](https://github.com/ICanBoogie/Render/workflows/test/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Atest)
+[![Static Analysis](https://github.com/ICanBoogie/Render/workflows/static-analysis/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Astatic-analysis)
+[![Code Style](https://github.com/ICanBoogie/Render/workflows/code-style/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Acode-style)
 
 
 
-## Testing
+## Code of Conduct
 
-Run `make test-container` to create and log into the test container, then run `make test` to run the
-test suite. Alternatively, run `make test-coverage` to run the test suite with test coverage. Open
-`build/coverage/index.html` to see the breakdown of the code coverage.
+This project adheres to a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in
+this project and its community, you are expected to uphold this code.
 
 
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 
 
 ## License
 
-**icanboogie/render** is released under the [New BSD License](LICENSE).
+**icanboogie/render** is released under the [BSD-3-Clause](LICENSE).
 
 
 
@@ -148,3 +150,7 @@ test suite. Alternatively, run `make test-coverage` to run the test suite with t
 [ICanBoogie]:                  https://github.com/ICanBoogie\ICanBoogie
 [render-engine-patron]:        https://github.com/Icybee/PatronViewSupport
 [render-engine-markdown]:      https://github.com/ICanBoogie/render-engine-markdown
+
+[EngineProvider\Container]:    lib/EngineProvider/Container.php
+[EngineProvider\Immutable]:    lib/EngineProvider/Immutable.php
+[EngineProvider\Mutable]:      lib/EngineProvider/Mutable.php

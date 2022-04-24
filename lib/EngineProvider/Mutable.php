@@ -20,31 +20,34 @@ use Traversable;
 
 /**
  * A mutable engine provider.
+ *
+ * @implements IteratorAggregate<string, Engine>
+ *     Where _key_ is a file extension.
  */
 final class Mutable implements MutableEngineProvider, IteratorAggregate
 {
-	/**
-	 * @var array<string, Engine>
-	 *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
-	 */
-	private array $engines = [];
+    /**
+     * @var array<string, Engine>
+     *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
+     */
+    private array $engines = [];
 
-	public function engine_for_extension(string $extension): ?Engine
-	{
-		ExtensionResolver::assert_extension($extension);
+    public function engine_for_extension(string $extension): ?Engine
+    {
+        ExtensionResolver::assert_extension($extension);
 
-		return $this->engines[$extension] ?? null;
-	}
+        return $this->engines[$extension] ?? null;
+    }
 
-	public function add_engine(string $extension, Engine $engine): void
-	{
-		ExtensionResolver::assert_extension($extension);
+    public function add_engine(string $extension, Engine $engine): void
+    {
+        ExtensionResolver::assert_extension($extension);
 
-		$this->engines[$extension] = $engine;
-	}
+        $this->engines[$extension] = $engine;
+    }
 
-	public function getIterator(): Traversable
-	{
-		return new ArrayIterator($this->engines);
-	}
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->engines);
+    }
 }

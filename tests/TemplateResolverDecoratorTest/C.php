@@ -16,13 +16,13 @@ use ICanBoogie\Render\TemplateResolverTrait;
 
 class C implements TemplateResolver
 {
-	use TemplateResolverTrait;
+    use TemplateResolverTrait;
 
-	/**
-	 * @inheritdoc
-	 */
-	public function resolve($name, array $extensions, &$tried = [ ]): ?string
+    /**
+     * @inheritdoc
+     */
+    public function resolve($name, array $extensions, &$tried = [ ]): ?string
     {
-		return "$name.html";
-	}
+        return "$name.html";
+    }
 }

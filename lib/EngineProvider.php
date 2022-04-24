@@ -19,10 +19,10 @@ use Traversable;
  */
 interface EngineProvider extends Traversable
 {
-	/**
-	 * Provides an engine for a given file extension.
-	 *
-	 * @param string $extension A file extension e.g. "php".
-	 */
-	public function engine_for_extension(string $extension): ?Engine;
+    /**
+     * Provides an engine for a given file extension.
+     *
+     * @param string $extension A file extension e.g. "php".
+     */
+    public function engine_for_extension(string $extension): ?Engine;
 }

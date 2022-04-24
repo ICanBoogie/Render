@@ -16,14 +16,14 @@ namespace ICanBoogie\Render;
  */
 interface TemplateResolver
 {
-	/**
-	 * Returns the pathname to the matching template.
-	 *
-	 * @param string $name The base name of the template.
-	 * @param array $extensions The supported extensions.
-	 * @param array $tried Tried pathname collection.
-	 *
-	 * @return string|null The pathname to the matching template or `null` if none match.
-	 */
-	public function resolve(string $name, array $extensions, array &$tried = []): ?string;
+    /**
+     * Returns the pathname to the matching template.
+     *
+     * @param string $name The base name of the template.
+     * @param string[] $extensions The supported extensions.
+     * @param string[] $tried Tried pathname collection.
+     *
+     * @return string|null The pathname to the matching template or `null` if none match.
+     */
+    public function resolve(string $name, array $extensions, array &$tried = []): ?string;
 }

@@ -22,61 +22,61 @@ use const DIRECTORY_SEPARATOR;
  */
 final class BasicTemplateResolver implements TemplateResolver
 {
-	use TemplateResolverTrait;
+    use TemplateResolverTrait;
 
-	/**
-	 * An array of key/value pairs, where _key_ if a pathname and _value_ its weight.
-	 *
-	 * @var array<string, int>
-	 */
-	private array $paths = [];
+    /**
+     * An array of key/value pairs, where _key_ if a pathname and _value_ its weight.
+     *
+     * @var array<string, int>
+     */
+    private array $paths = [];
 
-	/**
-	 * @param string[] $paths
-	 */
-	public function __construct(array $paths = [])
-	{
-		foreach ($paths as $path) {
-			$this->add_path($path);
-		}
-	}
+    /**
+     * @param string[] $paths
+     */
+    public function __construct(array $paths = [])
+    {
+        foreach ($paths as $path) {
+            $this->add_path($path);
+        }
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function resolve(string $name, array $extensions, array &$tried = []): ?string
-	{
-		return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
-	}
+    /**
+     * @inheritdoc
+     */
+    public function resolve(string $name, array $extensions, array &$tried = []): ?string
+    {
+        return $this->resolve_path($this->resolve_tries($this->get_paths(), $name, $extensions), $tried);
+    }
 
-	/**
-	 * Adds a path to search templates in.
-	 *
-	 * Note: The path is discarded if it cannot be resolved with `realpath()`.
-	 *
-	 * @return string|false The real path, or `false` if the path was not added.
-	 */
-	public function add_path(string $path, int $weight = 0): string|false
-	{
-		$path = realpath($path);
+    /**
+     * Adds a path to search templates in.
+     *
+     * Note: The path is discarded if it cannot be resolved with `realpath()`.
+     *
+     * @return string|false The real path, or `false` if the path was not added.
+     */
+    public function add_path(string $path, int $weight = 0): string|false
+    {
+        $path = realpath($path);
 
-		if (!$path) {
-			return false;
-		}
+        if (!$path) {
+            return false;
+        }
 
-		$path = $path . DIRECTORY_SEPARATOR;
-		$this->paths[$path] = $weight;
+        $path = $path . DIRECTORY_SEPARATOR;
+        $this->paths[$path] = $weight;
 
-		return $path;
-	}
+        return $path;
+    }
 
-	/**
-	 * Returns the paths used to search templates.
-	 *
-	 * @return string[]
-	 */
-	public function get_paths(): array
-	{
-		return array_keys(array_reverse($this->paths));
-	}
+    /**
+     * Returns the paths used to search templates.
+     *
+     * @return string[]
+     */
+    public function get_paths(): array
+    {
+        return array_keys(array_reverse($this->paths));
+    }
 }

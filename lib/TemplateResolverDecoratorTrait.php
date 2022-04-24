@@ -18,49 +18,44 @@ namespace ICanBoogie\Render;
  */
 trait TemplateResolverDecoratorTrait
 {
-	public function __construct(
-		private TemplateResolver $template_resolver
-	) {
-	}
+    public function __construct(
+        private TemplateResolver $template_resolver
+    ) {
+    }
 
-	/**
-	 * Clones {@link $template_resolver}.
-	 */
-	public function __clone()
-	{
-		$this->template_resolver = clone $this->template_resolver;
-	}
+    /**
+     * Clones {@link $template_resolver}.
+     */
+    public function __clone()
+    {
+        $this->template_resolver = clone $this->template_resolver;
+    }
 
-	/**
-	 * Forwards unsupported calls to the decorated template resolver.
-	 *
-	 * @param string $method
-	 * @param array $arguments
-	 *
-	 * @return mixed
-	 */
-	public function __call($method, $arguments)
-	{
-		return $this->template_resolver->$method(...$arguments);
-	}
+    /**
+     * Forwards unsupported calls to the decorated template resolver.
+     */
+    public function __call(string $method, array $arguments)
+    {
+        return $this->template_resolver->$method(...$arguments);
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function find_renderer(string $class): ?TemplateResolver
-	{
-		if ($this instanceof $class) {
-			return $this;
-		}
+    /**
+     * @inheritdoc
+     */
+    public function find_renderer(string $class): ?TemplateResolver
+    {
+        if ($this instanceof $class) {
+            return $this;
+        }
 
-		if ($this->template_resolver instanceof $class) {
-			return $this->template_resolver;
-		}
+        if ($this->template_resolver instanceof $class) {
+            return $this->template_resolver;
+        }
 
-		if ($this->template_resolver instanceof TemplateResolverDecorator) {
-			return $this->template_resolver->find_renderer($class);
-		}
+        if ($this->template_resolver instanceof TemplateResolverDecorator) {
+            return $this->template_resolver->find_renderer($class);
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

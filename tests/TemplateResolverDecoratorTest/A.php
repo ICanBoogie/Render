@@ -16,13 +16,13 @@ use ICanBoogie\Render\TemplateResolverDecoratorTrait;
 
 class A implements TemplateResolverDecorator
 {
-	use TemplateResolverDecoratorTrait;
+    use TemplateResolverDecoratorTrait;
 
-	/**
-	 * @inheritdoc
-	 */
-	public function resolve($name, array $extensions, &$tried = [ ]): ?string
+    /**
+     * @inheritdoc
+     */
+    public function resolve($name, array $extensions, &$tried = [ ]): ?string
     {
-		return $this->template_resolver->resolve($name, $extensions, $tried);
-	}
+        return $this->template_resolver->resolve($name, $extensions, $tried);
+    }
 }

@@ -12,9 +12,7 @@ usage:
 vendor:
 	@composer install
 
-.PHONY: update
-update:
-	@composer update
+# testing
 
 .PHONY: test-dependencies
 test-dependencies: vendor
@@ -26,7 +24,7 @@ test: test-dependencies
 .PHONY: test-coverage
 test-coverage: test-dependencies
 	@mkdir -p build/coverage
-	@$(PHPUNIT) --coverage-html build/coverage --coverage-text
+	@XDEBUG_MODE=coverage $(PHPUNIT) --coverage-html build/coverage
 
 .PHONY: test-coveralls
 test-coveralls: test-dependencies
@@ -37,3 +35,8 @@ test-coveralls: test-dependencies
 test-container:
 	@-docker-compose run --rm app bash
 	@docker-compose down -v
+
+.PHONY: lint
+lint:
+	@XDEBUG_MODE=off phpcs -s
+	@XDEBUG_MODE=off vendor/bin/phpstan

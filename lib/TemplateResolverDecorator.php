@@ -18,10 +18,10 @@ namespace ICanBoogie\Render;
  */
 interface TemplateResolverDecorator extends TemplateResolver
 {
-	/**
-	 * Finds decorated template resolver.
-	 *
-	 * @param string $class Class of the decorated resolver to find.
-	 */
-	public function find_renderer(string $class): ?TemplateResolver;
+    /**
+     * Finds decorated template resolver.
+     *
+     * @param string $class Class of the decorated resolver to find.
+     */
+    public function find_renderer(string $class): ?TemplateResolver;
 }

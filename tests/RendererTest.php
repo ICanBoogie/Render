@@ -21,64 +21,64 @@ use PHPUnit\Framework\TestCase;
 
 class RendererTest extends TestCase
 {
-	private readonly TemplateResolver $template_resolver;
-	private readonly Immutable $engines;
+    private readonly TemplateResolver $template_resolver;
+    private readonly Immutable $engines;
 
-	protected function setUp(): void
-	{
-		$this->template_resolver = new BasicTemplateResolver([ __DIR__ . '/templates' ]);
-		$this->engines = new Immutable([ '.phtml' => new PHPEngine() ]);
-	}
+    protected function setUp(): void
+    {
+        $this->template_resolver = new BasicTemplateResolver([ __DIR__ . '/templates' ]);
+        $this->engines = new Immutable([ '.phtml' => new PHPEngine() ]);
+    }
 
-	/**
-	 * @dataProvider provide_test_render
-	 */
-	public function test_render(mixed $content, RenderOptions $options, mixed $expected_rendered): void
-	{
-		$rendered = (new Renderer($this->template_resolver, $this->engines))
-			->render($content, $options);
+    /**
+     * @dataProvider provide_test_render
+     */
+    public function test_render(mixed $content, RenderOptions $options, mixed $expected_rendered): void
+    {
+        $rendered = (new Renderer($this->template_resolver, $this->engines))
+            ->render($content, $options);
 
-		$this->assertEquals($expected_rendered, trim($rendered));
-	}
+        $this->assertEquals($expected_rendered, trim($rendered));
+    }
 
-	public function provide_test_render(): array
-	{
-		return [
+    public function provide_test_render(): array
+    {
+        return [
 
-			[
-				null,
-				new RenderOptions(),
-				''
-			],
-			[
-				[ 'a', 'b', 'c' ],
-				new RenderOptions(
-					partial: 'list',
-					layout: 'alphabet'
-				),
-				<<<TXT
+            [
+                null,
+                new RenderOptions(),
+                ''
+            ],
+            [
+                [ 'a', 'b', 'c' ],
+                new RenderOptions(
+                    partial: 'list',
+                    layout: 'alphabet'
+                ),
+                <<<TXT
 				alphabet:
 				- letter: a
 				- letter: b
 				- letter: c
 				TXT
-			],
-			[
-				new \Exception(),
-				new RenderOptions(
-					partial: 'renderer/exception'
-				),
-				'PARTIAL: Exception'
-			],
-			[
-				new \Exception(),
-				new RenderOptions(
-					partial: 'renderer/exception',
-					layout: 'default'
-				),
-				'<LAYOUT>PARTIAL: Exception</LAYOUT>'
-			],
+            ],
+            [
+                new \Exception(),
+                new RenderOptions(
+                    partial: 'renderer/exception'
+                ),
+                'PARTIAL: Exception'
+            ],
+            [
+                new \Exception(),
+                new RenderOptions(
+                    partial: 'renderer/exception',
+                    layout: 'default'
+                ),
+                '<LAYOUT>PARTIAL: Exception</LAYOUT>'
+            ],
 
-		];
-	}
+        ];
+    }
 }

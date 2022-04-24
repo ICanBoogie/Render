@@ -16,8 +16,8 @@ namespace ICanBoogie\Render;
  */
 interface MutableEngineProvider extends EngineProvider
 {
-	/**
-	 * Adds an engine for an extension.
-	 */
-	public function add_engine(string $extension, Engine $engine): void;
+    /**
+     * Adds an engine for an extension.
+     */
+    public function add_engine(string $extension, Engine $engine): void;
 }

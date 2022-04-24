@@ -11,104 +11,115 @@
 
 namespace ICanBoogie\Render;
 
+use function is_string;
+use function iterator_to_array;
+
 /**
  * Renders a target or an array of options.
  */
 class Renderer
 {
-	public const VARIABLE_CONTENT = 'content';
+    public const VARIABLE_CONTENT = 'content';
 
-	private readonly array $extensions;
+    /**
+     * @var string[]
+     */
+    private readonly array $extensions;
 
-	public function __construct(
-		public readonly TemplateResolver $template_resolver,
-		private readonly EngineProvider $engines
-	) {
-		$extensions = [];
+    public function __construct(
+        public readonly TemplateResolver $template_resolver,
+        private readonly EngineProvider $engines
+    ) {
+        $this->extensions = array_keys(iterator_to_array($this->engines));
+    }
 
-		foreach ($this->engines as $extension => $engine) {
-			$extensions[] = $extension;
-		}
+    /**
+     * Resolve a template pathname from its name and type.
+     *
+     * @return string Template pathname.
+     *
+     * @throws TemplateNotFound if the template pathname cannot be resolved.
+     */
+    public function resolve_template(string $name): string
+    {
+        $tried = [];
+        $template_pathname = $this->template_resolver->resolve($name, $this->extensions, $tried);
 
-		$this->extensions = $extensions;
-	}
+        if (!$template_pathname) {
+            throw new TemplateNotFound("There is no template matching `$name`.", $tried);
+        }
 
-	/**
-	 * Resolve a template pathname from its name and type.
-	 *
-	 * @return string Template pathname.
-	 *
-	 * @throws TemplateNotFound if the template pathname cannot be resolved.
-	 */
-	public function resolve_template(string $name): string
-	{
-		$tried = [];
-		$template_pathname = $this->template_resolver->resolve($name, $this->extensions, $tried);
+        return $template_pathname;
+    }
 
-		if (!$template_pathname) {
-			throw new TemplateNotFound("There is no template matching `$name`.", $tried);
-		}
+    /**
+     * Renders a content.
+     */
+    public function render(mixed $content, RenderOptions $options = new RenderOptions()): string
+    {
+        if (!$content) {
+            return '';
+        }
 
-		return $template_pathname;
-	}
+        $variables = $options->locals;
 
-	/**
-	 * Renders a content.
-	 */
-	public function render(mixed $content, RenderOptions $options = new RenderOptions()): string
-	{
-		if (!$content) {
-			return '';
-		}
+        if ($options->partial) {
+            $content = $this->render_partial($options->partial, $content, $variables);
+        }
 
-		$variables = $options->locals;
+        if ($options->template) {
+            $content = $this->render_template($options->template, $content, $variables);
+        }
 
-		if ($options->partial) {
-			$content = $this->render_partial($options->partial, $content, $variables);
-		}
+        if ($options->layout) {
+            $content = $this->render_layout($options->layout, [ self::VARIABLE_CONTENT => $content ] + $variables);
+        }
 
-		if ($options->template) {
-			$content = $this->render_template($options->template, $content, $variables);
-		}
+        assert(is_string($content));
 
-		if ($options->layout) {
-			$content = $this->render_layout($options->layout, [ self::VARIABLE_CONTENT => $content ] + $variables);
-		}
+        return $content;
+    }
 
-		return $content;
-	}
+    /**
+     * @param array<string, mixed> $variables
+     */
+    private function render_partial(string $template, mixed $content, array $variables): string
+    {
+        return $this->render_template(
+            $this->resolve_template_name($template)->as_partial,
+            $content,
+            $variables
+        );
+    }
 
-	private function render_partial(string $template, mixed $content, array $variables): string
-	{
-		return $this->render_template(
-			$this->resolve_template_name($template)->as_partial,
-			$content,
-			$variables
-		);
-	}
+    /**
+     * @param array<string, mixed> $variables
+     */
+    private function render_layout(string $template, array $variables): string
+    {
+        return $this->render_template(
+            $this->resolve_template_name($template)->as_layout,
+            null,
+            $variables
+        );
+    }
 
-	private function render_layout(string $template, array $variables): string
-	{
-		return $this->render_template(
-			$this->resolve_template_name($template)->as_layout,
-			null,
-			$variables
-		);
-	}
+    /**
+     * @param array<string, mixed> $variables
+     */
+    private function render_template(string $name, mixed $content, array $variables): string
+    {
+        $template_pathname = $this->resolve_template($name);
+        $extension = ExtensionResolver::resolve($template_pathname);
 
-	private function render_template(string $name, mixed $content, array $variables): string
-	{
-		$template_pathname = $this->resolve_template($name);
-		$extension = ExtensionResolver::resolve($template_pathname);
+        $engine = $this->engines->engine_for_extension($extension)
+            ?? throw new EngineNotAvailable("There is no engine available to render template `$template_pathname`.");
 
-		$engine = $this->engines->engine_for_extension($extension)
-			?? throw new EngineNotAvailable("There is no engine available to render template `$template_pathname`.");
+        return $engine->render($template_pathname, $content, $variables);
+    }
 
-		return $engine->render($template_pathname, $content, $variables);
-	}
-
-	protected function resolve_template_name(mixed $content): TemplateName
-	{
-		return TemplateName::from($content);
-	}
+    protected function resolve_template_name(mixed $content): TemplateName
+    {
+        return TemplateName::from($content);
+    }
 }
