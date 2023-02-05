@@ -2,6 +2,8 @@
 
 ## v0.6 to v6.0
 
+### Breaking changes
+
 `EngineCollection` has been removed in favor of the new concept of engine providers. The new engine
 provider `Mutable` has similar features, in the sense that it can be modified to add more engines.
 Other engine providers are available as well such as [EngineProvider\Immutable][] and
@@ -60,3 +62,7 @@ build the services. The dependency to `icanboogie/event` has been removed.
 [EngineProvider\Immutable]: lib/EngineProvider/Immutable.php
 [EngineProvider\Container]: lib/EngineProvider/Container.php
 [RenderOptions]: lib/RenderOptions.php
+
+### Other changes
+
+- Drop Prophecy.

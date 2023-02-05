@@ -32,7 +32,6 @@
 		"psr/container": "^2.0"
 	},
 	"require-dev": {
-		"phpspec/prophecy-phpunit": "^2.0",
 		"phpstan/phpstan": "^1.5",
 		"phpunit/phpunit": "^9.5"
 	},

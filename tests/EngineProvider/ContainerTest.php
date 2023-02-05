@@ -1,26 +1,27 @@
 <?php
 
+/*
+ * This file is part of the ICanBoogie package.
+ *
+ * (c) Olivier Laviale <olivier.laviale@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Test\ICanBoogie\Render\EngineProvider;
 
 use ICanBoogie\Render\Engine;
 use ICanBoogie\Render\EngineProvider\Container;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 
-class ContainerTest extends TestCase
+final class ContainerTest extends TestCase
 {
-    use ProphecyTrait;
-
     private MockObject|Engine $engine_php;
     private MockObject|Engine $engine_markdown;
-
-    /**
-     * @var ObjectProphecy<ContainerInterface>
-     */
-    private ObjectProphecy $container;
+    private MockObject&ContainerInterface $container;
 
     protected function setUp(): void
     {
@@ -31,11 +32,14 @@ class ContainerTest extends TestCase
         $this->engine_markdown = $this->createMock(Engine::class);
         $this->engine_markdown->method('render')->willReturn("ENGINE_MARKDOWN");
 
-        $this->container = $this->prophesize(ContainerInterface::class);
-        $this->container->get('engine_php')
-            ->willReturn($this->engine_php);
-        $this->container->get('engine_markdown')
-            ->willReturn($this->engine_markdown);
+        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container
+            ->method('get')
+            // @phpstan-ignore-next-line
+            ->willReturnCallback(fn(string $id) => match ($id) {
+                'engine_php' => $this->engine_php,
+                'engine_markdown' => $this->engine_markdown
+            });
     }
 
     public function test_engine_for_extension(): void
@@ -69,7 +73,7 @@ class ContainerTest extends TestCase
 
     private function makeSTU(): Container
     {
-        return new Container($this->container->reveal(), [
+        return new Container($this->container, [
             '.php' => 'engine_php',
             '.phtml' => 'engine_php',
             '.md' => 'engine_markdown',
