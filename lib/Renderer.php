@@ -11,6 +11,7 @@
 
 namespace ICanBoogie\Render;
 
+use function assert;
 use function is_string;
 use function iterator_to_array;
 
@@ -57,10 +58,6 @@ class Renderer
      */
     public function render(mixed $content, RenderOptions $options = new RenderOptions()): string
     {
-        if (!$content) {
-            return '';
-        }
-
         $variables = $options->locals;
 
         if ($options->partial) {
@@ -111,6 +108,8 @@ class Renderer
     {
         $template_pathname = $this->resolve_template($name);
         $extension = ExtensionResolver::resolve($template_pathname);
+
+        assert(is_string($extension));
 
         $engine = $this->engines->engine_for_extension($extension)
             ?? throw new EngineNotAvailable("There is no engine available to render template `$template_pathname`.");
