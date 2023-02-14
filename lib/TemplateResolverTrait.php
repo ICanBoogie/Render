@@ -13,7 +13,6 @@ namespace ICanBoogie\Render;
 
 use function basename;
 use function dirname;
-use function file_exists;
 use function in_array;
 use function strlen;
 use function substr;
@@ -23,6 +22,8 @@ use function substr;
  */
 trait TemplateResolverTrait
 {
+    use ResolvePathTrait;
+
     /**
      * Resolves path tries.
      *
@@ -65,27 +66,5 @@ trait TemplateResolverTrait
         }
 
         return $tries;
-    }
-
-    /**
-     * Resolves a template path.
-     *
-     * The method returns the pathname of the first file matching the path collection. The tried
-     * paths are collected in `$tried`.
-     *
-     * @param string[] $tries Pathname collection, as returned by {@link resolve_tries()}.
-     * @param string[] $tried Tried pathname collection.
-     */
-    protected function resolve_path(array $tries, array &$tried): ?string
-    {
-        foreach ($tries as $pathname) {
-            $tried[] = $pathname;
-
-            if (file_exists($pathname)) {
-                return $pathname;
-            }
-        }
-
-        return null;
     }
 }

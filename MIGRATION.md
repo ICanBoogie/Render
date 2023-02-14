@@ -65,4 +65,4 @@ build the services. The dependency to `icanboogie/event` has been removed.
 
 ### Other changes
 
-- Drop Prophecy.
+- Dropped Prophecy.

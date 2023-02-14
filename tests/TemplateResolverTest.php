@@ -11,7 +11,7 @@
 
 namespace Test\ICanBoogie\Render;
 
-use ICanBoogie\Render\BasicTemplateResolver;
+use ICanBoogie\Render\TemplateResolver\Basic;
 use PHPUnit\Framework\TestCase;
 
 use const DIRECTORY_SEPARATOR;
@@ -22,7 +22,7 @@ class TemplateResolverTest extends TestCase
 
     public function test_resolve()
     {
-        $tr = new BasicTemplateResolver();
+        $tr = new Basic();
         $ds = DIRECTORY_SEPARATOR;
 
         $extensions = [ '.patron', '.php' ];
@@ -72,7 +72,7 @@ class TemplateResolverTest extends TestCase
 
     public function test_resolve_with_extension()
     {
-        $tr = new BasicTemplateResolver();
+        $tr = new Basic();
         $tr->add_path(self::TEMPLATES_ROOT . 'all');
         $pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
         $this->assertNull($pathname);
@@ -82,7 +82,7 @@ class TemplateResolverTest extends TestCase
 
     public function test_resolve_with_double_extension()
     {
-        $tr = new BasicTemplateResolver();
+        $tr = new Basic();
         $tr->add_path(self::TEMPLATES_ROOT . 'all');
         $pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
         $this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
@@ -92,7 +92,7 @@ class TemplateResolverTest extends TestCase
 
     public function test_add_invalid_path()
     {
-        $tr = new BasicTemplateResolver();
+        $tr = new Basic();
         $this->assertFalse($tr->add_path('invalid/path/' . uniqid()));
     }
 }

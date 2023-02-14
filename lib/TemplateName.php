@@ -39,6 +39,7 @@ final class TemplateName
     public const TEMPLATE_PREFIX_VIEW = '';
     public const TEMPLATE_PREFIX_LAYOUT = '@';
     public const TEMPLATE_PREFIX_PARTIAL = '_';
+    public const TEMPLATE_NAMESPACE_SEPARATOR = '/';
 
     /**
      * @var array<string, self>
@@ -52,7 +53,7 @@ final class TemplateName
         }
 
         if ($source instanceof Query) { // @phpstan-ignore-line
-            $source = $source->model->id . '/list'; // @phpstan-ignore-line
+            $source = $source->model->id . self::TEMPLATE_NAMESPACE_SEPARATOR . 'list'; // @phpstan-ignore-line
         }
 
         assert(is_string($source));
@@ -84,7 +85,7 @@ final class TemplateName
         }
 
         if ($dirname) {
-            $basename = $dirname . "/" . $basename;
+            $basename = $dirname . self::TEMPLATE_NAMESPACE_SEPARATOR . $basename;
         }
 
         return $basename;
@@ -128,7 +129,7 @@ final class TemplateName
         $name = $prefix . $basename;
 
         if ($dirname) {
-            $name = $dirname . "/" . $name;
+            $name = $dirname . self::TEMPLATE_NAMESPACE_SEPARATOR . $name;
         }
 
         return $name;

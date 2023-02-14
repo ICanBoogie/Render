@@ -11,22 +11,22 @@
 
 namespace Test\ICanBoogie\Render;
 
-use ICanBoogie\Render\BasicTemplateResolver;
 use ICanBoogie\Render\EngineProvider\Immutable;
 use ICanBoogie\Render\PHPEngine;
 use ICanBoogie\Render\Renderer;
 use ICanBoogie\Render\RenderOptions;
 use ICanBoogie\Render\TemplateResolver;
+use ICanBoogie\Render\TemplateResolver\Basic;
 use PHPUnit\Framework\TestCase;
 
-class RendererTest extends TestCase
+final class RendererTest extends TestCase
 {
-    private readonly TemplateResolver $template_resolver;
-    private readonly Immutable $engines;
+    private TemplateResolver $template_resolver;
+    private Immutable $engines;
 
     protected function setUp(): void
     {
-        $this->template_resolver = new BasicTemplateResolver([ __DIR__ . '/templates' ]);
+        $this->template_resolver = new Basic([ __DIR__ . '/templates' ]);
         $this->engines = new Immutable([ '.phtml' => new PHPEngine() ]);
     }
 
@@ -41,6 +41,9 @@ class RendererTest extends TestCase
         $this->assertEquals($expected_rendered, trim($rendered));
     }
 
+    /**
+     * @return array<array{ mixed, RenderOptions, string }>
+     */
     public function provide_test_render(): array
     {
         return [

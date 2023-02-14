@@ -72,7 +72,9 @@ class Renderer
             $content = $this->render_layout($options->layout, [ self::VARIABLE_CONTENT => $content ] + $variables);
         }
 
-        assert(is_string($content));
+        if ($content === null) {
+            return '';
+        }
 
         return $content;
     }

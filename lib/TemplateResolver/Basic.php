@@ -9,7 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Render;
+namespace ICanBoogie\Render\TemplateResolver;
+
+use ICanBoogie\Render\TemplateResolver;
+use ICanBoogie\Render\TemplateResolverTrait;
 
 use function array_keys;
 use function array_reverse;
@@ -20,7 +23,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Resolves templates pathname.
  */
-final class BasicTemplateResolver implements TemplateResolver
+final class Basic implements TemplateResolver
 {
     use TemplateResolverTrait;
 
