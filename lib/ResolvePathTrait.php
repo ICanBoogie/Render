@@ -6,7 +6,6 @@ use function file_exists;
 
 trait ResolvePathTrait
 {
-
     /**
      * Resolves a template path.
      *

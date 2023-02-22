@@ -76,6 +76,8 @@ class Renderer
             return '';
         }
 
+        assert(is_string($content));
+
         return $content;
     }
 

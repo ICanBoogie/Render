@@ -19,9 +19,9 @@ use Psr\Container\ContainerInterface;
 
 final class ContainerTest extends TestCase
 {
-    private MockObject|Engine $engine_php;
-    private MockObject|Engine $engine_markdown;
-    private MockObject&ContainerInterface $container;
+    private MockObject & Engine $engine_php;
+    private MockObject & Engine $engine_markdown;
+    private MockObject & ContainerInterface $container;
 
     protected function setUp(): void
     {
