@@ -44,7 +44,7 @@ final class RendererTest extends TestCase
     /**
      * @return array<array{ mixed, RenderOptions, string }>
      */
-    public function provide_test_render(): array
+    public static function provide_test_render(): array
     {
         return [
 

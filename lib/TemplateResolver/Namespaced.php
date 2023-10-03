@@ -47,8 +47,6 @@ final class Namespaced implements TemplateResolver
 
         $tries = $this->resolve_tries($base, $name, $extensions);
 
-        var_dump($tries);
-
         return $this->resolve_path($tries, $tried);
     }
 

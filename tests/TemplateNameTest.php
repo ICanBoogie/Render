@@ -38,7 +38,7 @@ class TemplateNameTest extends TestCase
         $this->assertEquals($expected, $name->with_prefix($prefix));
     }
 
-    public function provide_test_with_prefix()
+    public static function provide_test_with_prefix()
     {
         return [
 
@@ -58,7 +58,7 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    public function provide_test_normalize()
+    public static function provide_test_normalize()
     {
         return [
 
@@ -87,7 +87,7 @@ class TemplateNameTest extends TestCase
         $this->assertEquals($expected, $name->as_template);
     }
 
-    public function provide_test_get_as_template()
+    public static function provide_test_get_as_template()
     {
         return [
 
@@ -116,7 +116,7 @@ class TemplateNameTest extends TestCase
         $this->assertEquals($expected, $name->as_partial);
     }
 
-    public function provide_test_get_as_partial()
+    public static function provide_test_get_as_partial()
     {
         return [
 
@@ -145,7 +145,7 @@ class TemplateNameTest extends TestCase
         $this->assertEquals($expected, $name->as_layout);
     }
 
-    public function provide_test_get_as_layout()
+    public static function provide_test_get_as_layout()
     {
         return [
 
