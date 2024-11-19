@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Test\ICanBoogie\Render;
 
 use ICanBoogie\Render\EngineProvider\Immutable;
@@ -17,6 +8,7 @@ use ICanBoogie\Render\Renderer;
 use ICanBoogie\Render\RenderOptions;
 use ICanBoogie\Render\TemplateResolver;
 use ICanBoogie\Render\TemplateResolver\Basic;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class RendererTest extends TestCase
@@ -30,9 +22,7 @@ final class RendererTest extends TestCase
         $this->engines = new Immutable([ '.phtml' => new PHPEngine() ]);
     }
 
-    /**
-     * @dataProvider provide_test_render
-     */
+    #[DataProvider('provide_test_render')]
     public function test_render(mixed $content, RenderOptions $options, mixed $expected_rendered): void
     {
         $rendered = (new Renderer($this->template_resolver, $this->engines))
@@ -51,35 +41,35 @@ final class RendererTest extends TestCase
             [
                 null,
                 new RenderOptions(),
-                ''
+                '',
             ],
             [
                 [ 'a', 'b', 'c' ],
                 new RenderOptions(
                     partial: 'list',
-                    layout: 'alphabet'
+                    layout: 'alphabet',
                 ),
                 <<<TXT
-				alphabet:
-				- letter: a
-				- letter: b
-				- letter: c
-				TXT
-            ],
-            [
-                new \Exception(),
-                new RenderOptions(
-                    partial: 'renderer/exception'
-                ),
-                'PARTIAL: Exception'
+                alphabet:
+                - letter: a
+                - letter: b
+                - letter: c
+                TXT,
             ],
             [
                 new \Exception(),
                 new RenderOptions(
                     partial: 'renderer/exception',
-                    layout: 'default'
                 ),
-                '<LAYOUT>PARTIAL: Exception</LAYOUT>'
+                'PARTIAL: Exception',
+            ],
+            [
+                new \Exception(),
+                new RenderOptions(
+                    partial: 'renderer/exception',
+                    layout: 'default',
+                ),
+                '<LAYOUT>PARTIAL: Exception</LAYOUT>',
             ],
 
         ];

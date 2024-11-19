@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render\EngineProvider;
 
 use ICanBoogie\Render\Engine;
@@ -22,13 +13,13 @@ use Traversable;
  * @implements IteratorAggregate<string, Engine>
  *     Where _key_ is a file extension.
  */
-final class Immutable implements EngineProvider, IteratorAggregate
+final readonly class Immutable implements EngineProvider, IteratorAggregate
 {
-    private readonly Mutable $mutable;
+    private Mutable $mutable;
 
     /**
      * @param array<string, Engine> $engines
-     *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
+     *     Where _key_ is an extension; for example, ".php" and _value_ is an Engine.
      */
     public function __construct(array $engines = [])
     {

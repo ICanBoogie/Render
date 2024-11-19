@@ -9,7 +9,6 @@ use ICanBoogie\Render\TemplateResolver;
 use function array_map;
 use function explode;
 use function rtrim;
-use function var_dump;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -19,18 +18,18 @@ final class Namespaced implements TemplateResolver
 
     /**
      * @var array<string, string> $namespaces
-     *     Where _key_ is a namespace e.g. 'articles' and _value_ a directory.
+     *     Where _key_ is a namespace; for example, 'articles' and _value_ a directory.
      */
     private readonly array $namespaces;
 
     /**
      * @param array<string, string> $namespaces
-     *     Where _key_ is a namespace e.g. 'articles' and _value_ a directory.
+     *     Where _key_ is a namespace; for example, 'articles' and _value_ a directory.
      */
     public function __construct(array $namespaces)
     {
         $this->namespaces = array_map(
-            fn(string $path) => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            static fn(string $path): string => rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
             $namespaces
         );
     }

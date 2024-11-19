@@ -1,6 +1,10 @@
-# Migration
+# CHANGELOG
 
 ## v0.6 to v6.0
+
+### New Requirements
+
+PHP 8.2+
 
 ### Breaking changes
 

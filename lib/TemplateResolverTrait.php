@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render;
 
 use function basename;
@@ -25,7 +16,7 @@ trait TemplateResolverTrait
     use ResolvePathTrait;
 
     /**
-     * Resolves path tries.
+     * Resolves the path tries.
      *
      * The method resolves a try path collection from a collection of roots, template name, and
      * extension collection.
@@ -34,7 +25,7 @@ trait TemplateResolverTrait
      * @param string $name Template name.
      * @param string[] $extensions Supported extensions.
      *
-     * @return string[] A collection of candidate template pathnames.
+     * @return string[] A collection of candidate template path names.
      */
     protected function resolve_tries(array $paths, string $name, array $extensions): array
     {

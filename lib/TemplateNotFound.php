@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render;
 
 use LogicException;
@@ -18,19 +9,17 @@ use function array_map;
 use function implode;
 
 /**
- * Exception throw when a template cannot be found.
- *
- * @property-read array $tried Tried pathname collection.
+ * Exception throw when a template can't be found.
  */
 class TemplateNotFound extends LogicException implements Exception
 {
     /**
-     * @param string[] $tried
+     * @param string[] $tried Tried path names.
      */
     public function __construct(
         string $message,
         public readonly array $tried,
-        Throwable $exception = null
+        ?Throwable $exception = null
     ) {
         if ($tried) {
             $tried = implode("\n", array_map(fn($v) => "- $v", $tried));

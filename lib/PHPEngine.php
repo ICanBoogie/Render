@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render;
 
 use ArrayObject;
@@ -69,7 +60,7 @@ final class PHPEngine implements Engine
      *
      * - `value` is an object, value is returned.
      * - `value` is an array, an `ArrayObject` instance is returned.
-     * - Otherwise `value` is cast into a string and a {@link String} instance is returned.
+     * - Otherwise `value` is cast into a string and a {@see String} instance is returned.
      */
     private function ensure_is_object(mixed $value): object
     {

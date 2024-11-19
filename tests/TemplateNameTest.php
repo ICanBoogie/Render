@@ -1,44 +1,33 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace Test\ICanBoogie\Render;
 
-namespace ICanBoogie\Render;
-
+use ICanBoogie\Render\TemplateName;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TemplateNameTest extends TestCase
 {
-    public function test_from_instance()
+    public function test_from_instance(): void
     {
         $name = TemplateName::from('testing' . uniqid());
         $this->assertEquals($name, TemplateName::from($name));
     }
 
-    /**
-     * @dataProvider provide_test_normalize
-     */
-    public function test_normalize(string $expected, string $name)
+    #[DataProvider('provide_test_normalize')]
+    public function test_normalize(string $expected, string $name): void
     {
         $this->assertEquals($expected, TemplateName::normalize($name));
     }
 
-    /**
-     * @dataProvider provide_test_with_prefix
-     */
-    public function test_with_prefix(string $name, string $prefix, string $expected)
+    #[DataProvider('provide_test_with_prefix')]
+    public function test_with_prefix(string $name, string $prefix, string $expected): void
     {
         $name = TemplateName::from($name);
         $this->assertEquals($expected, $name->with_prefix($prefix));
     }
 
-    public static function provide_test_with_prefix()
+    public static function provide_test_with_prefix(): array
     {
         return [
 
@@ -58,7 +47,7 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    public static function provide_test_normalize()
+    public static function provide_test_normalize(): array
     {
         return [
 
@@ -78,16 +67,14 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provide_test_get_as_template
-     */
-    public function test_get_as_template(string $expected, string $name)
+    #[DataProvider('provide_test_get_as_template')]
+    public function test_get_as_template(string $expected, string $name): void
     {
         $name = TemplateName::from($name);
         $this->assertEquals($expected, $name->as_template);
     }
 
-    public static function provide_test_get_as_template()
+    public static function provide_test_get_as_template(): array
     {
         return [
 
@@ -107,16 +94,14 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provide_test_get_as_partial
-     */
-    public function test_get_as_partial(string $expected, string $name)
+    #[DataProvider('provide_test_get_as_partial')]
+    public function test_get_as_partial(string $expected, string $name): void
     {
         $name = TemplateName::from($name);
         $this->assertEquals($expected, $name->as_partial);
     }
 
-    public static function provide_test_get_as_partial()
+    public static function provide_test_get_as_partial(): array
     {
         return [
 
@@ -136,16 +121,14 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provide_test_get_as_layout
-     */
-    public function test_get_as_layout(string $expected, string $name)
+    #[DataProvider('provide_test_get_as_layout')]
+    public function test_get_as_layout(string $expected, string $name): void
     {
         $name = TemplateName::from($name);
         $this->assertEquals($expected, $name->as_layout);
     }
 
-    public static function provide_test_get_as_layout()
+    public static function provide_test_get_as_layout(): array
     {
         return [
 
@@ -165,7 +148,7 @@ class TemplateNameTest extends TestCase
         ];
     }
 
-    public function test_toString()
+    public function test_toString(): void
     {
         $name = '//page';
 

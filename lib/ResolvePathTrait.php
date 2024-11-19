@@ -12,8 +12,8 @@ trait ResolvePathTrait
      * The method returns the pathname of the first file matching the path collection. The tried
      * paths are collected in `$tried`.
      *
-     * @param string[] $tries Pathname collection, as returned by {@link resolve_tries()}.
-     * @param string[] $tried Tried pathname collection.
+     * @param string[] $tries Pathname collection, as returned by {@see resolve_tries()}.
+     * @param string[] $tried Tried path names.
      */
     private function resolve_path(array $tries, array &$tried): ?string
     {

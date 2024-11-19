@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Test\ICanBoogie\Render;
 
 use ICanBoogie\Render\TemplateResolver\Basic;
@@ -20,7 +11,7 @@ class TemplateResolverTest extends TestCase
 {
     private const TEMPLATES_ROOT = __DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
 
-    public function test_resolve()
+    public function test_resolve(): void
     {
         $tr = new Basic();
         $ds = DIRECTORY_SEPARATOR;
@@ -70,27 +61,29 @@ class TemplateResolverTest extends TestCase
         ], $tried);
     }
 
-    public function test_resolve_with_extension()
+    public function test_resolve_with_extension(): void
     {
         $tr = new Basic();
         $tr->add_path(self::TEMPLATES_ROOT . 'all');
         $pathname = $tr->resolve('with-extension.html', [ '.patron' ]);
         $this->assertNull($pathname);
         $pathname = $tr->resolve('with-extension.html', [ '.html', '.patron' ]);
+        $this->assertNotNull($pathname);
         $this->assertStringEndsWith('with-extension.html', $pathname);
     }
 
-    public function test_resolve_with_double_extension()
+    public function test_resolve_with_double_extension(): void
     {
         $tr = new Basic();
         $tr->add_path(self::TEMPLATES_ROOT . 'all');
         $pathname = $tr->resolve('with-double-extension.html', [ '.patron' ]);
+        $this->assertNotNull($pathname);
         $this->assertStringEndsWith('with-double-extension.html.patron', $pathname);
         $pathname = $tr->resolve('with-double-extension.html', [ '.html', '.patron' ]);
         $this->assertNull($pathname);
     }
 
-    public function test_add_invalid_path()
+    public function test_add_invalid_path(): void
     {
         $tr = new Basic();
         $this->assertFalse($tr->add_path('invalid/path/' . uniqid()));

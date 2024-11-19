@@ -1,9 +1,8 @@
 # Render
 
-[![Packagist](https://img.shields.io/packagist/v/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
-[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/Render.svg)](https://scrutinizer-ci.com/g/ICanBoogie/Render)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/Render.svg)](https://coveralls.io/r/ICanBoogie/Render)
-[![Downloads](https://img.shields.io/packagist/dt/icanboogie/render.svg)](https://packagist.org/packages/icanboogie/render)
+[![Release](https://img.shields.io/packagist/v/icanboogie/<name>.svg)](https://packagist.org/packages/icanboogie/<name>)
+[![Code Coverage](https://coveralls.io/repos/github/ICanBoogie/<Name>/badge.svg?branch=6.0)](https://coveralls.io/r/ICanBoogie/<Name>?branch=6.0)
+[![Downloads](https://img.shields.io/packagist/dt/icanboogie/<name>.svg)](https://packagist.org/packages/icanboogie/<name>)
 
 An API to render templates with a variety of template engines.
 
@@ -11,7 +10,7 @@ An API to render templates with a variety of template engines.
 
 #### Installation
 
-```bash
+```shell
 composer require icanboogie/render
 ```
 
@@ -108,32 +107,24 @@ collection and a template resolver are used to find suitable templates for the r
 
 ## Continuous Integration
 
-The project is continuously tested by [GitHub actions](https://github.com/ICanBoogie/Inflector/actions).
+The project is continuously tested by [GitHub actions](https://github.com/ICanBoogie/<Name>/actions).
 
-[![Tests](https://github.com/ICanBoogie/Render/workflows/test/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Atest)
-[![Static Analysis](https://github.com/ICanBoogie/Render/workflows/static-analysis/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Astatic-analysis)
-[![Code Style](https://github.com/ICanBoogie/Render/workflows/code-style/badge.svg?branch=master)](https://github.com/ICanBoogie/Render/actions?query=workflow%3Acode-style)
+[![Tests](https://github.com/ICanBoogie/<Name>/actions/workflows/test.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/test.yml)
+[![Static Analysis](https://github.com/ICanBoogie/<Name>/actions/workflows/static-analysis.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/static-analysis.yml)
+[![Code Style](https://github.com/ICanBoogie/<Name>/actions/workflows/code-style.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/code-style.yml)
 
 
 
 ## Code of Conduct
 
 This project adheres to a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in
-this project and its community, you are expected to uphold this code.
+this project and its community, you're expected to uphold this code.
 
 
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-
-
-## License
-
-**icanboogie/render** is released under the [BSD-3-Clause](LICENSE).
-
-
+See [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 
 

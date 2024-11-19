@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render\EngineProvider;
 
 use ArrayIterator;
@@ -28,7 +19,7 @@ final class Mutable implements MutableEngineProvider, IteratorAggregate
 {
     /**
      * @var array<string, Engine>
-     *     Where _key_ is an extension e.g. ".php" and _value_ is an Engine.
+     *     Where _key_ is an extension; for example, ".php" and _value_ is an Engine.
      */
     private array $engines = [];
 

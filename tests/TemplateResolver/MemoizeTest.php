@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Test\ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Render\TemplateResolver;
@@ -22,7 +13,7 @@ final class MemoizeTest extends TestCase
     public function test_memoize(): void
     {
         $inner = new class implements TemplateResolver {
-            public function resolve(string $name, array $extensions, array &$tried = []): ?string
+            public function resolve(string $name, array $extensions, array &$tried = []): string
             {
                 return uniqid();
             }

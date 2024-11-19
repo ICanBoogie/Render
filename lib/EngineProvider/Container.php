@@ -1,16 +1,8 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render\EngineProvider;
 
+use Closure;
 use ICanBoogie\Render\Engine;
 use ICanBoogie\Render\EngineProvider;
 use ICanBoogie\Render\ExtensionResolver;
@@ -24,15 +16,15 @@ use Traversable;
  * @implements IteratorAggregate<string, Engine>
  *     Where _key_ is a file extension.
  */
-final class Container implements EngineProvider, IteratorAggregate
+final readonly class Container implements EngineProvider, IteratorAggregate
 {
     /**
      * @param array<string, string> $mapping
      *     Where _key_ is a file extension and _value_ a service identifier.
      */
     public function __construct(
-        private readonly ContainerInterface $container,
-        private readonly array $mapping
+        private ContainerInterface $container,
+        private array $mapping
     ) {
     }
 
@@ -46,7 +38,8 @@ final class Container implements EngineProvider, IteratorAggregate
             return null;
         }
 
-        return $this->container->get($id); // @phpstan-ignore-line
+        /** @var Engine */
+        return $this->container->get($id);
     }
 
     public function getIterator(): Traversable
@@ -58,10 +51,10 @@ final class Container implements EngineProvider, IteratorAggregate
 
     public function makeProxy(string $id): Engine
     {
-        return new class ($id, $this->container) implements Engine {
+        return new class ($id, $this->container->get(...)) implements Engine {
             public function __construct(
                 private readonly string $id,
-                private readonly ContainerInterface $container
+                private readonly Closure $get,
             ) {
             }
 
@@ -70,7 +63,7 @@ final class Container implements EngineProvider, IteratorAggregate
                 mixed $content,
                 array $variables
             ): string {
-                return $this->container->get($this->id)->render( // @phpstan-ignore-line
+                return ($this->get)($this->id)->render(
                     $template_pathname,
                     $content,
                     $variables

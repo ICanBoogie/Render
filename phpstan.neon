@@ -1,6 +1,12 @@
+# $schema: https://phpstan.olvlvl.com/schema.json
 parameters:
-  level: max
+  level: 9
   paths:
     - lib
+    - tests
   ignoreErrors:
-  - '#.+get_.+is unused.#'
+    - '#.+get_.+is unused.#'
+    - message: "/::provide_.+ in iterable type array/"
+      path: tests/
+  excludePaths:
+    - tests/templates/*

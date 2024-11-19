@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render;
 
 /**
@@ -21,7 +12,7 @@ interface TemplateResolver
      *
      * @param string $name The base name of the template.
      * @param string[] $extensions The supported extensions.
-     * @param string[] $tried Tried pathname collection.
+     * @param string[] $tried Tried path names.
      *
      * @return string|null The pathname to the matching template or `null` if none match.
      */

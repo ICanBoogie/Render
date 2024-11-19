@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Render\TemplateResolver;
@@ -55,9 +46,9 @@ final class Basic implements TemplateResolver
     /**
      * Adds a path to search templates in.
      *
-     * Note: The path is discarded if it cannot be resolved with `realpath()`.
+     * Note: The path is discarded if it can't be resolved with `realpath()`.
      *
-     * @return string|false The real path, or `false` if the path was not added.
+     * @return string|false The real path, or `false` if the path wasn't added.
      */
     public function add_path(string $path, int $weight = 0): string|false
     {

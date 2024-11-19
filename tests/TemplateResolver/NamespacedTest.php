@@ -3,6 +3,7 @@
 namespace Test\ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Render\TemplateResolver\Namespaced;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class NamespacedTest extends TestCase
@@ -22,8 +23,9 @@ final class NamespacedTest extends TestCase
     }
 
     /**
-     * @dataProvider provide_resolve
+     * @param non-empty-string $expected
      */
+    #[DataProvider('provide_resolve')]
     public function test_resolve(string $name, string $expected): void
     {
         $tried = [];

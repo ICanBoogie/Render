@@ -4,13 +4,13 @@ namespace ICanBoogie\Render\TemplateResolver;
 
 use ICanBoogie\Render\TemplateResolver;
 
-final class Chain implements TemplateResolver
+final readonly class Chain implements TemplateResolver
 {
     /**
      * @param iterable<TemplateResolver> $chain
      */
     public function __construct(
-        private readonly iterable $chain
+        private iterable $chain
     ) {
     }
 
