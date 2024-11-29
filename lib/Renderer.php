@@ -11,7 +11,7 @@ use function iterator_to_array;
  */
 class Renderer
 {
-    public const VARIABLE_CONTENT = 'content';
+    public const string VARIABLE_CONTENT = 'content';
 
     /**
      * @var string[]

@@ -26,8 +26,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=8.2",
-    "icanboogie/accessor": "^6.0",
+    "php": ">=8.4",
     "psr/container": "^2.0"
   },
   "require-dev": {

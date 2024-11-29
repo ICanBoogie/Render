@@ -10,7 +10,7 @@ interface Engine
     /**
      * The pathname of the template being rendered.
      */
-    public const VAR_TEMPLATE_PATHNAME = '__TEMPLATE_PATHNAME__';
+    public const string VAR_TEMPLATE_PATHNAME = '__TEMPLATE_PATHNAME__';
 
     /**
      * Renders a template.

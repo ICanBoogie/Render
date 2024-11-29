@@ -1,12 +1,36 @@
 # CHANGELOG
 
+## v7.0
+
+### New Requirements
+
+PHP 8.4+
+
+### New features
+
+None
+
+### Deprecated Features
+
+None
+
+### Backward Incompatible Changes
+
+None
+
+### Other changes
+
+None
+
+
+
 ## v0.6 to v6.0
 
 ### New Requirements
 
 PHP 8.2+
 
-### Breaking changes
+### Backward Incompatible Changes
 
 - `EngineCollection` has been removed in favor of the new concept of engine providers. The new engine
 provider `Mutable` has similar features, in the sense that it can be modified to add more engines.

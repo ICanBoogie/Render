@@ -21,7 +21,7 @@ use function ob_start;
  */
 final class PHPEngine implements Engine
 {
-    private const FORBIDDEN_VAR_THIS = 'this';
+    private const string FORBIDDEN_VAR_THIS = 'this';
 
     /**
      * @throws Throwable

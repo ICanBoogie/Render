@@ -2,16 +2,16 @@
 
 namespace ICanBoogie\Render;
 
-final class RenderOptions
+final readonly class RenderOptions
 {
     /**
      * @param array<string, mixed> $locals
      */
     public function __construct(
-        public readonly ?string $template = null,
-        public readonly ?string $partial = null,
-        public readonly ?string $layout = null,
-        public readonly array $locals = [],
+        public ?string $template = null,
+        public ?string $partial = null,
+        public ?string $layout = null,
+        public array $locals = [],
     ) {
     }
 }

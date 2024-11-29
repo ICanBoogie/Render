@@ -10,7 +10,7 @@ use const PATHINFO_EXTENSION;
 
 final class ExtensionResolver
 {
-    public const EXTENSION_DOT = '.';
+    public const string EXTENSION_DOT = '.';
 
     public static function resolve(string $pathname): ?string
     {

@@ -2,7 +2,6 @@
 
 namespace ICanBoogie\Render;
 
-use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\ActiveRecord\Query;
 
 use function basename;
@@ -13,24 +12,13 @@ use function substr;
 
 /**
  * Representation of a template name.
- *
- * @property-read string $as_template Name as template name.
- * @property-read string $as_partial Name as partial name.
- * @property-read string $as_layout Name as layout name.
  */
 final class TemplateName
 {
-    /**
-     * @uses get_as_template
-     * @uses get_as_partial
-     * @uses get_as_layout
-     */
-    use AccessorTrait;
-
-    public const TEMPLATE_PREFIX_VIEW = '';
-    public const TEMPLATE_PREFIX_LAYOUT = '@';
-    public const TEMPLATE_PREFIX_PARTIAL = '_';
-    public const TEMPLATE_NAMESPACE_SEPARATOR = '/';
+    public const string TEMPLATE_PREFIX_VIEW = '';
+    public const string TEMPLATE_PREFIX_LAYOUT = '@';
+    public const string TEMPLATE_PREFIX_PARTIAL = '_';
+    public const string TEMPLATE_NAMESPACE_SEPARATOR = '/';
 
     /**
      * @var array<string, self>
@@ -82,25 +70,28 @@ final class TemplateName
         return $basename;
     }
 
-    private function get_as_template(): string
+    /**
+     * Template name.
+     */
+    public string $as_template
     {
-        return $this->name;
+        get => $this->name;
     }
 
     /**
-     * Returns the name as partial name.
+     * Partial template name.
      */
-    private function get_as_partial(): string
+    public string $as_partial
     {
-        return $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
+        get => $this->with_prefix(self::TEMPLATE_PREFIX_PARTIAL);
     }
 
     /**
-     * Returns the name as layout name.
+     * Layout template name.
      */
-    protected function get_as_layout(): string
+    public string $as_layout
     {
-        return $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
+        get => $this->with_prefix(self::TEMPLATE_PREFIX_LAYOUT);
     }
 
     /**
